@@ -2,7 +2,9 @@
 
 package Graph;
 
-import java.util.ArrayList;import java.util.Collection;import java.util.Hashtable;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Hashtable;
 
 /**
  * Represents a generic undirected unweighted graph.

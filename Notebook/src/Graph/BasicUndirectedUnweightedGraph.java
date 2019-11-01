@@ -32,7 +32,7 @@ public class BasicUndirectedUnweightedGraph
     // Constructor
 
     /**
-     * Creates a BasicUndirectedUnweightedGraph object with N vertexes labeled from 0 to N.
+     * Creates a BasicUndirectedUnweightedGraph object with N vertexes labeled from 0 to N-1.
      * @param N The number of vertexes to add to the graph.
      */
     public BasicUndirectedUnweightedGraph(int N)
@@ -72,6 +72,7 @@ public class BasicUndirectedUnweightedGraph
 
     /**
      * Adds an edge between two vertexes. Doesn't check for duplicates and allows self-cycles.
+     * If it is the case that the edge is a self-cycle, it will add it once.
      * @param pVertex1 The first vertex.
      * @param pVertex2 The second vertex.
      */
@@ -95,12 +96,9 @@ public class BasicUndirectedUnweightedGraph
      */
     public void addEdgeChecked(int pVertex1, int pVertex2)
     {
-        if(pVertex1 == pVertex2 || adjacent[pVertex1].contains(pVertex2))
-            return;
-        adjacent[pVertex1].add(pVertex2);
-        adjacent[pVertex2].add(pVertex1);
-        ++E;
-    }
+        if(pVertex1!=pVertex2 && !adjacent[pVertex1].contains(pVertex2))
+            { adjacent[pVertex1].add(pVertex2); adjacent[pVertex2].add(pVertex1); ++E; }
+        }
 
     /**
      * @param pVertex The vertex whose adjacent collection is desired.
