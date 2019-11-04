@@ -80,6 +80,7 @@ public class BasicUndirectedUnweightedCCGraph
 
     /**
      * Adds an edge between two vertexes. Doesn't check for duplicates and allows self-cycles.
+     * If it is the case that the edge is a self-cycle, it will add it once.
      * @param pVertex1 The first vertex.
      * @param pVertex2 The second vertex.
      */

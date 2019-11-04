@@ -6,6 +6,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Hashtable;
 
+// TODO finish the implementation and do the tests of the graph. Maybe implement more constructors.
+// TODO the structure remains unfinished and untested.
+
 /**
  * Represents a generic undirected unweighted graph.
  */
@@ -14,9 +17,14 @@ public class UndirectedUnweightedGraph<K>
     // Constants
 
     /**
-     * Represents the initial capacity of the adjacent list and
+     * Represents the initial capacity of the graph's tables (nodes and edges).
      */
     private static final int INITIAL_CAPACITY = 7;
+
+    /**
+     * Represents the initial capacity of a node's adjacent list.
+     */
+    private static int LIST_CAPACITY = 10;
 
     // Attributes
 
@@ -61,7 +69,7 @@ public class UndirectedUnweightedGraph<K>
 
     /**
      * Creates an UndirectedUnweightedGraph object with the given initial capacity.
-     * @param pInitialCapacity The initial capacity of the graph.
+     * @param pInitialCapacity The initial capacity of the graph's nodes.
      */
     public UndirectedUnweightedGraph(int pInitialCapacity)
     {
@@ -72,6 +80,10 @@ public class UndirectedUnweightedGraph<K>
         numberToKey = new Hashtable<>(pInitialCapacity);
     }
 
+    /**
+     * Creates an UndirectedUnweightedGraph object with the given keys (nodes).
+     * @param pKeys The graph's initial keys (nodes).
+     */
     public UndirectedUnweightedGraph(K[] pKeys)
     {
         V = pKeys.length;
@@ -81,7 +93,28 @@ public class UndirectedUnweightedGraph<K>
         numberToKey = new Hashtable<>(pKeys.length);
         for(int i = 0; i < pKeys.length; ++i)
         {
-            adjacent.add(new ArrayList<>(INITIAL_CAPACITY));
+            adjacent.add(new ArrayList<>(LIST_CAPACITY));
+            keyToNumber.put(pKeys[i], i);
+            numberToKey.put(i, pKeys[i]);
+        }
+    }
+
+    /**
+     * Creates an UndirectedUnweightedGraph object with the given keys (nodes).
+     * @param pKeys The graph's initial keys (nodes).
+     * @param pCapacityLists The graph's adjacency list capacity for each node.
+     */
+    public UndirectedUnweightedGraph(K[] pKeys, int pCapacityLists)
+    {
+        V = pKeys.length;
+        E = 0;
+        LIST_CAPACITY = pCapacityLists;
+        adjacent = new ArrayList<>(pKeys.length);
+        keyToNumber = new Hashtable<>(pKeys.length);
+        numberToKey = new Hashtable<>(pKeys.length);
+        for(int i = 0; i < pKeys.length; ++i)
+        {
+            adjacent.add(new ArrayList<>(LIST_CAPACITY));
             keyToNumber.put(pKeys[i], i);
             numberToKey.put(i, pKeys[i]);
         }
@@ -119,8 +152,16 @@ public class UndirectedUnweightedGraph<K>
      * @param pVertex Vertex to add to the graph.
      */
     public void addVertex(K pVertex)
+    { addVertex(pVertex, LIST_CAPACITY); }
+
+    /**
+     * Adds a vertex to the graph. Doesn't check if the vertex already exists.
+     * @param pVertex Vertex to add to the graph.
+     * @param pCapacityList The node's adjacency list capacity.
+     */
+    public void addVertex(K pVertex, int pCapacityList)
     {
-        adjacent.add(V, new ArrayList<>(INITIAL_CAPACITY));
+        adjacent.add(V, new ArrayList<>(pCapacityList));
         keyToNumber.put(pVertex, V);
         numberToKey.put(V, pVertex);
         ++V;
@@ -132,10 +173,19 @@ public class UndirectedUnweightedGraph<K>
      * @param pVertex Vertex to add to the graph.
      */
     public void addVertexChecked(K pVertex)
+    { addVertexChecked(pVertex, LIST_CAPACITY); }
+
+    /**
+     * Adds a vertex to the graph. Checks if the vertex already exists. If it does,
+     * the vertex isn't added.
+     * @param pVertex Vertex to add to the graph.
+     * @param pCapacityList The node's adjacency list capacity.
+     */
+    public void addVertexChecked(K pVertex, int pCapacityList)
     {
         if(keyToNumber.containsKey(pVertex))
             return;
-        adjacent.add(V, new ArrayList<>(INITIAL_CAPACITY));
+        adjacent.add(V, new ArrayList<>(pCapacityList));
         keyToNumber.put(pVertex, V);
         numberToKey.put(V, pVertex);
         ++V;
@@ -143,6 +193,7 @@ public class UndirectedUnweightedGraph<K>
 
     /**
      * Adds an edge between two vertexes. Doesn't check for duplicates and allows self-cycles.
+     * If it is the case that the edge is a self-cycle, it will add it once.
      * @param pVertex1 The first vertex.
      * @param pVertex2 The second vertex.
      */
@@ -198,7 +249,7 @@ public class UndirectedUnweightedGraph<K>
         adjacent.set(num, edges);
     }
 
-    // TODO
+    // TODO finish and check implementation.
     /**
      * WARNING: doesn't check for duplicates in the given edges.
 * @param pVertex
