@@ -16,13 +16,13 @@ The purpose of this project is, to some extent, to be a **recipe book** of data 
 
 ------------
 
-####Remarks
+#### Remarks
 This project was started in the summer of 2019. As it is still quite young, not all structures and solutions have been covered and optimized. However, in time, the contents will match the vision. It is just a matter of patience.
 
-####Log
+#### Log
 - **November 4 of 2019**: the BasicUndirectedUnweightedGraph, BasicUndirectedUnweightedCCGraph, BasicUnionFinder and ExpandableUnionFinder structures are fully tested and operational.
 
 ------------
 
-######Language
+###### Language
 - **CC**: *Connected Component*. Meant for graphs, it means that the structure keeps track of connected components within the graph.
