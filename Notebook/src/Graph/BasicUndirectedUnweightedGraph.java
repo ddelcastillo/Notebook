@@ -96,7 +96,7 @@ public class BasicUndirectedUnweightedGraph
      */
     public void addEdgeChecked(int pVertex1, int pVertex2)
     {
-        if(pVertex1!=pVertex2 && !adjacent[pVertex1].contains(pVertex2))
+        if(pVertex1 != pVertex2 && pVertex1 < V && pVertex1 >= 0 && pVertex2 < V && pVertex2 >= 0 && !adjacent[pVertex1].contains(pVertex2))
             { adjacent[pVertex1].add(pVertex2); adjacent[pVertex2].add(pVertex1); ++E; }
         }
 

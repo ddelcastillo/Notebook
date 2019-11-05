@@ -46,6 +46,7 @@ public class BasicUnionFinder implements IUnionFinder
     // Methods
 
     /**
+     * Doesn't check if x is a valid box. For this, use rootChecked.
      * Finds the root of the given box.
      * @param x The box.
      * @return The root of the box.
@@ -54,8 +55,18 @@ public class BasicUnionFinder implements IUnionFinder
     { return (par[x] < 0 ? x : (par[x] = root(par[x]))); }
 
     /**
+     * Checks that x is a valid box.
+     * Finds the root of the given box.
+     * @param x The box.
+     * @return The root of the box.
+     */
+    public Integer rootChecked(int x)
+    { return (x >= 0 && x < par.length) ? null : root(x); }
+
+    /**
+     * Doesn't check if x and y are valid boxes. For this, use mergeChecked.
      * Merges the two boxes such that the box with fewer items is placed in the other box.
-     * The box with the fewer items will then contain the index to it's root.
+     * The box with fewer items will then contain the index to it's root.
      * @param x The first box.
      * @param y The second box.
      */
@@ -76,15 +87,38 @@ public class BasicUnionFinder implements IUnionFinder
         --numBoxes;
     }
 
+    /**
+     * Checks that both boxes are valid.
+     * Merges the two boxes such that the box with fewer items is placed in the other box.
+     * The box with fewer items will then contain the index to it's root.
+     * @param x The first box.
+     * @param y The second box.
+     */
+    public void mergeChecked(int x, int y)
+    {
+        if(x >= 0 && y >= 0 && x < par.length && y < par.length)
+            merge(x, y);
+    }
+
     // Extra methods
 
     /**
+     * Doesn't check that x is a valid box. For this, use sizeChecked.
      * Returns either the size of the box if it's not connected or the size of the union if it is.
      * @param x The box.
      * @return The size of the box.
      */
     public int size(int x)
     { return -par[root(x)]; }
+
+    /**
+     * Checks that x is a valid box.
+     * Returns either the size of the box if it's not connected or the size of the union if it is.
+     * @param x The box.
+     * @return The size of the box.
+     */
+    public Integer sizeChecked(int x)
+    { return (x >= 0 && x < par.length) ? size(x) : null; }
 
     /**
      * @return The number of boxes that are not in union (including super-boxes).

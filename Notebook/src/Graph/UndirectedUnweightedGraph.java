@@ -39,9 +39,15 @@ public class UndirectedUnweightedGraph<K>
     private int E;
 
     /**
-     * The array of adjacent list for each vertex.
+     * The array of adjacent list of vertexes for each vertex as numbers.
      */
-    private ArrayList<ArrayList<Integer>> adjacent;
+    private ArrayList<ArrayList<Integer>> adjacentNumber;
+
+    // TODO complete integrate the adjacent of just keys.
+    /**
+     * The array of adjacent list of vertexes for each vertex as key.
+     */
+    private ArrayList<ArrayList<K>> adjacentKey;
 
     /**
      * The table that accesses the given number to a certain key.
@@ -62,7 +68,8 @@ public class UndirectedUnweightedGraph<K>
     {
         V = 0;
         E = 0;
-        adjacent = new ArrayList<>(INITIAL_CAPACITY);
+        adjacentNumber = new ArrayList<>(INITIAL_CAPACITY);
+        adjacentKey = new ArrayList<>(INITIAL_CAPACITY);
         keyToNumber = new Hashtable<>(INITIAL_CAPACITY);
         numberToKey = new Hashtable<>(INITIAL_CAPACITY);
     }
@@ -75,7 +82,8 @@ public class UndirectedUnweightedGraph<K>
     {
         V = 0;
         E = 0;
-        adjacent = new ArrayList<>(pInitialCapacity);
+        adjacentNumber = new ArrayList<>(pInitialCapacity);
+        adjacentKey = new ArrayList<>(pInitialCapacity);
         keyToNumber = new Hashtable<>(pInitialCapacity);
         numberToKey = new Hashtable<>(pInitialCapacity);
     }
@@ -88,12 +96,13 @@ public class UndirectedUnweightedGraph<K>
     {
         V = pKeys.length;
         E = 0;
-        adjacent = new ArrayList<>(pKeys.length);
+        adjacentNumber = new ArrayList<>(pKeys.length);
+        adjacentKey = new ArrayList<>(pKeys.length);
         keyToNumber = new Hashtable<>(pKeys.length);
         numberToKey = new Hashtable<>(pKeys.length);
         for(int i = 0; i < pKeys.length; ++i)
         {
-            adjacent.add(new ArrayList<>(LIST_CAPACITY));
+            adjacentNumber.add(new ArrayList<>(LIST_CAPACITY));
             keyToNumber.put(pKeys[i], i);
             numberToKey.put(i, pKeys[i]);
         }
@@ -109,12 +118,13 @@ public class UndirectedUnweightedGraph<K>
         V = pKeys.length;
         E = 0;
         LIST_CAPACITY = pCapacityLists;
-        adjacent = new ArrayList<>(pKeys.length);
+        adjacentNumber = new ArrayList<>(pKeys.length);
+        adjacentKey = new ArrayList<>(pKeys.length);
         keyToNumber = new Hashtable<>(pKeys.length);
         numberToKey = new Hashtable<>(pKeys.length);
         for(int i = 0; i < pKeys.length; ++i)
         {
-            adjacent.add(new ArrayList<>(pCapacityLists));
+            adjacentNumber.add(new ArrayList<>(pCapacityLists));
             keyToNumber.put(pKeys[i], i);
             numberToKey.put(i, pKeys[i]);
         }
@@ -128,7 +138,8 @@ public class UndirectedUnweightedGraph<K>
     {
         this.V = pGraph.V;
         this.E = pGraph.E;
-        this.adjacent = (ArrayList<ArrayList<Integer>>) pGraph.adjacent.clone();
+        this.adjacentNumber = (ArrayList<ArrayList<Integer>>) pGraph.adjacentNumber.clone();
+        this.adjacentKey = (ArrayList<ArrayList<K>>) pGraph.adjacentKey.clone();
         this.keyToNumber = (Hashtable<K, Integer>) pGraph.keyToNumber.clone();
         this.numberToKey = (Hashtable<Integer, K>) pGraph.numberToKey.clone();
     }
@@ -161,7 +172,8 @@ public class UndirectedUnweightedGraph<K>
      */
     public void addVertex(K pVertex, int pCapacityList)
     {
-        adjacent.add(V, new ArrayList<>(pCapacityList));
+        adjacentNumber.add(V, new ArrayList<>(pCapacityList));
+        adjacentKey.add(V, new ArrayList<>(pCapacityList));
         keyToNumber.put(pVertex, V);
         numberToKey.put(V, pVertex);
         ++V;
@@ -185,7 +197,8 @@ public class UndirectedUnweightedGraph<K>
     {
         if(keyToNumber.containsKey(pVertex))
             return;
-        adjacent.add(V, new ArrayList<>(pCapacityList));
+        adjacentNumber.add(V, new ArrayList<>(pCapacityList));
+        adjacentKey.add(V, new ArrayList<>(pCapacityList));
         keyToNumber.put(pVertex, V);
         numberToKey.put(V, pVertex);
         ++V;
@@ -203,16 +216,19 @@ public class UndirectedUnweightedGraph<K>
         if(pVertex1.equals(pVertex2))
         {
             int num = keyToNumber.get(pVertex1);
-            adjacent.get(num).add(num);
+            adjacentNumber.get(num).add(num);
+            adjacentKey.get(num).add(pVertex1);
         }
         else
         {
             int num1 = keyToNumber.get(pVertex1);
             int num2 = keyToNumber.get(pVertex2);
-            adjacent.get(num1).add(num2);
-            adjacent.get(num2).add(num1);
-            ++E;
+            adjacentNumber.get(num1).add(num2);
+            adjacentNumber.get(num2).add(num1);
+            adjacentKey.get(num1).add(pVertex2);
+            adjacentKey.get(num2).add(pVertex1);
         }
+        ++E;
     }
 
     /**
@@ -225,60 +241,27 @@ public class UndirectedUnweightedGraph<K>
         if(pVertex1.equals(pVertex2))
             return;
         int num1 = keyToNumber.get(pVertex1);
-        int num2 = keyToNumber.get(pVertex2);
-        if(adjacent.get(num1).contains(num2))
+        if(adjacentKey.get(num1).contains(pVertex2))
             return;
-        adjacent.get(num1).add(num2);
-        adjacent.get(num2).add(num1);
+        int num2 = keyToNumber.get(pVertex2);
+        adjacentNumber.get(num1).add(num2);
+        adjacentNumber.get(num2).add(num1);
+        adjacentKey.get(num1).add(pVertex2);
+        adjacentKey.get(num2).add(pVertex1);
         ++E;
     }
 
-    /**
-     * <b>WARNING</b>: May cause incoherence and errors if it adds ghost edges.
-     * Replaces the vertex's edges by the ones given. Updates the number of edges.
-     * The method does not update the vertexes in the given edge collection to have the given
-     * vertex as an adjacent vertex, in the case they don't. Doesn't check if a vertex in the collection
-     * doesn't exist. Doesn't check if the given vertex exists. For all that, use the setEdgesChecked method.
-     * This means that if the collection of edge Y has edge X, then edge X won't be checked to
-     * ensure it exists and contains edge Y in its adjacent's list.
-     * @param pVertex The vertex whose edges will be replaced.
-     * @param pEdges The vertex's new collection of edges.
-     */
-    public void setEdges(K pVertex, Collection<K> pEdges)
-    {
-        int num = keyToNumber.get(pVertex);
-        ArrayList<Integer> newEdges = new ArrayList<>(pEdges.size());
-        for(K key : pEdges)
-            newEdges.add(keyToNumber.get(key));
-        adjacent.set(num, newEdges);
-        E += (pEdges.size() - adjacent.get(num).size());
-    }
+    // TODO finish implementation of adjacent method.
 
-    // TODO finish and check implementation.
     /**
-     * WARNING: doesn't check for duplicates in the given edges.
-* @param pVertex
-* @param pEdges
+     * @param pVertex The vertex whose adjacent collection is desired.
+     * @return Collection corresponding to the adjacent vertexes of the given vertex, null
+     * if the vertex is invalid (less than 0 or greater than N-1) or the vertex hasn't been added.
      */
-    public void setEdgesChecked(K pVertex, Collection<K> pEdges)
-    {
-        int num, numTemp, numEdges;
-        num = keyToNumber.get(pVertex);
-        numEdges = -adjacent.get(num).size();
-        ArrayList<Integer> edges = new ArrayList<>(pEdges.size());
-        for(K key : pEdges)
-        {
-            numTemp = keyToNumber.get(key);
-            if(!adjacent.get(numTemp).contains(num))
-            { adjacent.get(numTemp).add(num); ++numEdges; }
-            edges.add(numTemp);
-        }
-    }
-
     public Collection<K> adjacent(K pVertex)
     {
         int num = keyToNumber.get(pVertex);
-        ArrayList<Integer> adjNum = adjacent.get(num);
+        ArrayList<Integer> adjNum = adjacentNumber.get(num);
         ArrayList<K> adjKey = new ArrayList<>(adjNum.size());
         for(Integer i : adjNum)
             adjKey.add(numberToKey.get(i));

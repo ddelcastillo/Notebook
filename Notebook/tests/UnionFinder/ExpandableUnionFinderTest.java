@@ -123,10 +123,10 @@ public class ExpandableUnionFinderTest
             assertEquals("The value should be -1.", (int) par.get(key), -1);
             assertEquals("The root of the key should be itself.", unionFinder.root(key), key);
         }
-        // Tests that repeated boxes aren't added.
+        // Tests that repeated boxes are added. Now box 1's size is restarted and box counter's are now broken.
         unionFinder.add(1);
         assertEquals("The size should be 3.", unionFinder.parents().size(), 3);
-        assertEquals("The number of boxes should be 3.", unionFinder.totalRoots(), 3);
+        assertEquals("The number of boxes should be 4.", unionFinder.totalRoots(), 4);
         par = unionFinder.parents();
         iterator = par.keySet().iterator();
         while(iterator.hasNext())

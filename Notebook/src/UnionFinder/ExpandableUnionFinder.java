@@ -78,7 +78,7 @@ public class ExpandableUnionFinder implements IUnionFinder
     // Methods
 
     /**
-     * Finds the root of the given box.
+     * Finds the root of the given box. Doesn't check if x is a valid box.
      * @param x The box.
      * @return The root of the box.
      */
@@ -96,8 +96,17 @@ public class ExpandableUnionFinder implements IUnionFinder
     }
 
     /**
+     * Finds the root of the given box. Checks that x is a valid box.
+     * @param x The box.
+     * @return The root of the box or null if the box doesn't exist.
+     */
+    public Integer rootChecked(int x)
+    { return par.containsKey(x) ? root(x) : null; }
+
+    /**
+     * WARNING: doesn't check if x and y are valid boxes. For this, use mergeChecked.
      * Merges the two boxes such that the box with fewer items is placed in the other box.
-     * The box with the fewer items will then contain the index to it's root.
+     * The box with fewer items will then contain the index to it's root.
      * @param x The first box.
      * @param y The second box.
      */
@@ -117,28 +126,57 @@ public class ExpandableUnionFinder implements IUnionFinder
         --numBoxes;
     }
 
+    /**
+     * Merges the two boxes such that the box with fewer items is placed in the other box.
+     * The box with fewer items will then contain the index to it's root. Checks that both boxes are valid.
+     * @param x The first box.
+     * @param y The second box.
+     */
+    public void mergeChecked(int x, int y)
+    {
+        if(par.containsKey(x) && par.containsKey(y))
+            merge(x, y);
+    }
+
     // Extra methods
 
     /**
-     * Adds a box if it doesn't exist.
+     * Adds a box. Doesn't check if the box already exists.
      * @param x The number of the box.
      */
     public void add(int x)
     {
+        par.put(x, -1);
+        ++numBoxes;
+    }
+
+    /**
+     * Adds a box if it doesn't already exist.
+     * @param x The number of the box.
+     */
+    public void addChecked(int x)
+    {
         if(!par.containsKey(x))
-        {
-            par.put(x, -1);
-            ++numBoxes;
-        }
+            add(x);
     }
 
     /**
      * Returns either the size of the box if it's not connected or the size of the union if it is.
+     * Doesn't check if the box already exists.
      * @param x The box.
      * @return The size of the box.
      */
     public int size(int x)
     { return -par.get(root(x)); }
+
+    /**
+     * Returns either the size of the box if it's not connected, the size of the union if it is,
+     * or null if the box doesn't exist. Doesn't check if the box already exists.
+     * @param x The box.
+     * @return The size of the box or null if the box doesn't exist.
+     */
+    public Integer sizeChecked(int x)
+    { return par.contains(x) ? size(x) : null; }
 
     /**
      * @return The number of boxes that are not in union (including super-boxes).
