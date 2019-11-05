@@ -3,7 +3,7 @@
 ------------
 
 ### Purpose
-The purpose of this project is, to some extent, be a **recipe book** of data structures and other interesting code applications. This, providing clear documentations and detailed step-by-step tests.
+To some extent, the purpose of this project is to be a **recipe book** of data structures and other interesting code applications. This, providing clear documentations and detailed step-by-step tests.
 
 ### Vision
 - To provide **algorithmically optimized structure**s for a whole spectrum of needs: from basic union finders to generic weighted graphs. This, will all kind of design variations in order to adjust to any specific needs.
