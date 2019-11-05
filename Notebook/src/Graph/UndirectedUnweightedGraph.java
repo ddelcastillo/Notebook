@@ -114,7 +114,7 @@ public class UndirectedUnweightedGraph<K>
         numberToKey = new Hashtable<>(pKeys.length);
         for(int i = 0; i < pKeys.length; ++i)
         {
-            adjacent.add(new ArrayList<>(LIST_CAPACITY));
+            adjacent.add(new ArrayList<>(pCapacityLists));
             keyToNumber.put(pKeys[i], i);
             numberToKey.put(i, pKeys[i]);
         }
@@ -234,19 +234,24 @@ public class UndirectedUnweightedGraph<K>
     }
 
     /**
+     * <b>WARNING</b>: May cause incoherence and errors if it adds ghost edges.
      * Replaces the vertex's edges by the ones given. Updates the number of edges.
-     * WARNING: does not update the vertexes in the edge collection to have the given
-     * vertex as an adjacent vertex in the case they don't. For that, use the setEdgesChecked method.
+     * The method does not update the vertexes in the given edge collection to have the given
+     * vertex as an adjacent vertex, in the case they don't. Doesn't check if a vertex in the collection
+     * doesn't exist. Doesn't check if the given vertex exists. For all that, use the setEdgesChecked method.
+     * This means that if the collection of edge Y has edge X, then edge X won't be checked to
+     * ensure it exists and contains edge Y in its adjacent's list.
      * @param pVertex The vertex whose edges will be replaced.
      * @param pEdges The vertex's new collection of edges.
      */
     public void setEdges(K pVertex, Collection<K> pEdges)
     {
         int num = keyToNumber.get(pVertex);
-        ArrayList<Integer> edges = new ArrayList<>(pEdges.size());
+        ArrayList<Integer> newEdges = new ArrayList<>(pEdges.size());
         for(K key : pEdges)
-            edges.add(keyToNumber.get(key));
-        adjacent.set(num, edges);
+            newEdges.add(keyToNumber.get(key));
+        adjacent.set(num, newEdges);
+        E += (pEdges.size() - adjacent.get(num).size());
     }
 
     // TODO finish and check implementation.
