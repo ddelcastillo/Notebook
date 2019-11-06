@@ -176,7 +176,7 @@ public class ExpandableUnionFinder implements IUnionFinder
      * @return The size of the box or null if the box doesn't exist.
      */
     public Integer sizeChecked(int x)
-    { return par.contains(x) ? size(x) : null; }
+    { return par.containsKey(x) ? size(x) : null; }
 
     /**
      * @return The number of boxes that are not in union (including super-boxes).
