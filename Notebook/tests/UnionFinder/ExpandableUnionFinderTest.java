@@ -111,7 +111,28 @@ public class ExpandableUnionFinderTest
         }
     }
 
-    // TODO Test of initialization of union finder with stored information.
+    /**
+     * Tests that a union finder given stored information is correctly initialized.
+     */
+    @Test
+    public void initializationTest5()
+    {
+        setup2();
+        unionFinder.merge(1, 2);
+        unionFinder.merge(8, 9);
+        ExpandableUnionFinder newUnionFinder = new ExpandableUnionFinder(unionFinder);
+        // Since boxes 1 and 2, and 8 and 9 are merged, there should be 8 boxes but par of size 10.
+        assertNotNull("The union finder shouldn't be null.", newUnionFinder);
+        assertEquals("The maximum size should be 10.", newUnionFinder.parents().size(), 10);
+        assertEquals("The number of boxes should be 8.", newUnionFinder.totalRoots(), 8);
+        // The roots should  be stored.
+        assertEquals("The root should be itself.", newUnionFinder.root(1), 1);
+        assertEquals("The root should be 1.", newUnionFinder.root(2), 1);
+        assertEquals("The root should be itself.", newUnionFinder.root(8), 8);
+        assertEquals("The root should be 8.", newUnionFinder.root(9), 8);
+        assertEquals("The size should be 2.", newUnionFinder.size(2), 2);
+        assertEquals("The size should be 2.", newUnionFinder.size(8), 2);
+    }
 
     /**
      * Tests that the union finder adds boxes properly.

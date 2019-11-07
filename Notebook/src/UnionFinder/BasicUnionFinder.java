@@ -61,7 +61,7 @@ public class BasicUnionFinder implements IUnionFinder
      * @return The root of the box.
      */
     public Integer rootChecked(int x)
-    { return (x >= 0 && x < par.length) ? null : root(x); }
+    { return (x >= 0 && x < par.length) ? root(x) : null; }
 
     /**
      * Doesn't check if x and y are valid boxes. For this, use mergeChecked.
