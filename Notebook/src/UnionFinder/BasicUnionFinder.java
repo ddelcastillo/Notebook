@@ -39,8 +39,8 @@ public class BasicUnionFinder implements IUnionFinder
     public BasicUnionFinder(BasicUnionFinder pUnionFinder)
     {
         this.numBoxes = pUnionFinder.numBoxes;
-        this.par = new int[pUnionFinder.numBoxes];
-        System.arraycopy(pUnionFinder.par, 0, this.par, 0, pUnionFinder.numBoxes);
+        this.par = new int[pUnionFinder.par.length];
+        System.arraycopy(pUnionFinder.par, 0, this.par, 0, pUnionFinder.par.length);
     }
 
     // Methods

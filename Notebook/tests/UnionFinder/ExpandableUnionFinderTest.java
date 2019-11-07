@@ -111,6 +111,8 @@ public class ExpandableUnionFinderTest
         }
     }
 
+    // TODO Test of initialization of union finder with stored information.
+
     /**
      * Tests that the union finder adds boxes properly.
      */

@@ -19,7 +19,7 @@ public class BasicUnionFinderTest
     // Setup
 
     /**
-     * Initializes the union finder with a capacity of 10 boxes.
+     * Initializes the union finder with a capacity of 10 boxes labeled from 0 to 9.
      */
     @Before
     public void setup()
@@ -33,10 +33,10 @@ public class BasicUnionFinderTest
     @Test
     public void testInitialization1()
     {
-        // At the beginning, everything starts as -1.
         assertNotNull("The union finder shouldn't be null.", unionFinder);
         assertEquals("The maximum size should be 10.", unionFinder.parents().length, 10);
         assertEquals("The number of boxes should be 10.", unionFinder.totalRoots(), 10);
+        // At the beginning, everything starts as -1.
         int[] par = unionFinder.parents();
         for(int act : par)
             assertEquals("The value should be -1.", act, -1);
@@ -49,13 +49,36 @@ public class BasicUnionFinderTest
     public void testInitialization2()
     {
         BasicUnionFinder newUnionFinder = new BasicUnionFinder(unionFinder);
-        // At the beginning, everything starts as -1.
         assertNotNull("The union finder shouldn't be null.", newUnionFinder);
         assertEquals("The maximum size should be 10.", newUnionFinder.parents().length, 10);
         assertEquals("The number of boxes should be 10.", newUnionFinder.totalRoots(), 10);
+        // At the beginning, everything starts as -1.
         int[] par = newUnionFinder.parents();
         for(int act : par)
             assertEquals("The value should be -1.", act, -1);
+    }
+
+    /**
+     * Tests that a union finder given stored information is correctly initialized.
+     */
+    @Test
+    public void testInitialization3()
+    {
+        setup();
+        unionFinder.merge(1, 2);
+        unionFinder.merge(8, 9);
+        BasicUnionFinder newUnionFinder = new BasicUnionFinder(unionFinder);
+        // Since boxes 1 and 2, and 8 and 9 are merged, there should be 8 boxes but par of size 10.
+        assertNotNull("The union finder shouldn't be null.", newUnionFinder);
+        assertEquals("The maximum size should be 10.", newUnionFinder.parents().length, 10);
+        assertEquals("The number of boxes should be 8.", newUnionFinder.totalRoots(), 8);
+        // The roots should  be stored.
+        assertEquals("The root should be itself.", newUnionFinder.root(1), 1);
+        assertEquals("The root should be 1.", newUnionFinder.root(2), 1);
+        assertEquals("The root should be itself.", newUnionFinder.root(8), 8);
+        assertEquals("The root should be 8.", newUnionFinder.root(9), 8);
+        assertEquals("The size should be 2.", newUnionFinder.size(2), 2);
+        assertEquals("The size should be 2.", newUnionFinder.size(8), 2);
     }
 
     /**
