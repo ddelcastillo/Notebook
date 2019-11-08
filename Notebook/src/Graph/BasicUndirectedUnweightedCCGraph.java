@@ -2,7 +2,7 @@
 
 package Graph;
 
-import UnionFinder.BasicUnionFinder;
+import UnionFinder.BasicNumUnionFinder;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -33,7 +33,7 @@ public class BasicUndirectedUnweightedCCGraph
     /**
      * The graph's union finder.
      */
-    private BasicUnionFinder unionFinder;
+    private BasicNumUnionFinder unionFinder;
 
     // Constructor
 
@@ -46,7 +46,7 @@ public class BasicUndirectedUnweightedCCGraph
         V = N;
         E = 0;
         adjacent = (ArrayList<Integer>[]) new ArrayList[N];
-        unionFinder = new BasicUnionFinder(N);
+        unionFinder = new BasicNumUnionFinder(N);
         for(int v = 0; v < V; ++v)
             adjacent[v] = new ArrayList<>();
     }
@@ -60,7 +60,7 @@ public class BasicUndirectedUnweightedCCGraph
         this.V = pGraph.V;
         this.E = pGraph.E;
         this.adjacent = (ArrayList<Integer>[]) new ArrayList[pGraph.V];
-        this.unionFinder = new BasicUnionFinder(pGraph.unionFinder);
+        this.unionFinder = new BasicNumUnionFinder(pGraph.unionFinder);
         System.arraycopy(pGraph.adjacent, 0, this.adjacent, 0, pGraph.V);
     }
 

@@ -3,8 +3,6 @@ package UnionFinder;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.lang.reflect.Array;
-
 import static org.junit.Assert.*;
 
 /**
@@ -17,7 +15,7 @@ public class BasicUnionFinderTest
     /**
      * The union finder.
      */
-    private BasicUnionFinder unionFinder;
+    private BasicNumUnionFinder unionFinder;
 
     // Setup
 
@@ -26,7 +24,7 @@ public class BasicUnionFinderTest
      */
     @Before
     public void setup()
-    { unionFinder = new BasicUnionFinder(10); }
+    { unionFinder = new BasicNumUnionFinder(10); }
 
     // Tests
 
@@ -51,7 +49,7 @@ public class BasicUnionFinderTest
     @Test
     public void initializationTest2()
     {
-        BasicUnionFinder newUnionFinder = new BasicUnionFinder(unionFinder);
+        BasicNumUnionFinder newUnionFinder = new BasicNumUnionFinder(unionFinder);
         assertNotNull("The union finder shouldn't be null.", newUnionFinder);
         assertEquals("The maximum size should be 10.", newUnionFinder.parents().length, 10);
         assertEquals("The number of boxes should be 10.", newUnionFinder.totalRoots(), 10);
@@ -69,7 +67,7 @@ public class BasicUnionFinderTest
     {
         unionFinder.merge(1, 2);
         unionFinder.merge(8, 9);
-        BasicUnionFinder newUnionFinder = new BasicUnionFinder(unionFinder);
+        BasicNumUnionFinder newUnionFinder = new BasicNumUnionFinder(unionFinder);
         // Since boxes 1 and 2, and 8 and 9 are merged, there should be 8 boxes but par of size 10.
         assertNotNull("The union finder shouldn't be null.", newUnionFinder);
         assertEquals("The maximum size should be 10.", newUnionFinder.parents().length, 10);

@@ -11,7 +11,7 @@ import Util.Checked;
 (note = "Methods with the 'Checked' signature enforce additional checks to avoid errors and to\n" +
 " ensure the structure's correctness in exchange of efficiency. For fastest results, use\n" +
 " the non 'Checked' methods, however, these are liable to: IndexOutOfBounds exceptions.")
-public class BasicUnionFinder implements IUnionFinder
+public class BasicNumUnionFinder implements INumUnionFinder
 {
     // Attributes
 
@@ -31,7 +31,7 @@ public class BasicUnionFinder implements IUnionFinder
      * Creates a BasicUnionFinder object with N boxes labeled from 0 to N-1.
      * @param N The number of boxes to add to the union finder.
      */
-    public BasicUnionFinder(int N)
+    public BasicNumUnionFinder(int N)
     {
         numBoxes = N;
         par = new int[N];
@@ -43,7 +43,7 @@ public class BasicUnionFinder implements IUnionFinder
      * Creates a BasicUnionFinder object copy of the given union finder.
      * @param pUnionFinder The union finder to copy.
      */
-    public BasicUnionFinder(BasicUnionFinder pUnionFinder)
+    public BasicNumUnionFinder(BasicNumUnionFinder pUnionFinder)
     {
         this.numBoxes = pUnionFinder.numBoxes;
         this.par = new int[pUnionFinder.par.length];

@@ -1,7 +1,7 @@
 // @formatter:off
 package UnionFinder;
 
-import org.junit.Test;import org.junit.rules.ExpectedException;
+import org.junit.Test;
 
 import java.util.Hashtable;
 import java.util.Iterator;
@@ -15,7 +15,7 @@ public class ExpandableUnionFinderTest
     /**
      * The union finder.
      */
-    private ExpandableUnionFinder unionFinder;
+    private ExpandableNumUnionFinder unionFinder;
 
     // Setup
 
@@ -23,13 +23,13 @@ public class ExpandableUnionFinderTest
      * Creates an empty expandable union finder.
      */
     private void setup1()
-    { unionFinder = new ExpandableUnionFinder(); }
+    { unionFinder = new ExpandableNumUnionFinder(); }
 
     /**
      * Creates an expandable union finder with nodes 0 to 9.
      */
     private void setup2()
-    { unionFinder = new ExpandableUnionFinder(10); }
+    { unionFinder = new ExpandableNumUnionFinder(10); }
 
     /**
      * Creates an expandable union finder with nodes 2, 3, 5 and 7.
@@ -37,7 +37,7 @@ public class ExpandableUnionFinderTest
     private void setup3()
     {
         int[] indexes = {2, 3, 5, 7};
-        unionFinder = new ExpandableUnionFinder(indexes);
+        unionFinder = new ExpandableNumUnionFinder(indexes);
     }
 
     // Tests
@@ -99,7 +99,7 @@ public class ExpandableUnionFinderTest
     {
         setup3();
         int[] indexes = {2, 3, 5, 7};
-        ExpandableUnionFinder newUnionFinder = new ExpandableUnionFinder(unionFinder);
+        ExpandableNumUnionFinder newUnionFinder = new ExpandableNumUnionFinder(unionFinder);
         assertNotNull("The union finder shouldn't be null.", newUnionFinder);
         assertEquals("The size should be 4.", newUnionFinder.parents().size(), 4);
         assertEquals("The number of boxes should be 4.", newUnionFinder.totalRoots(), 4);
@@ -120,7 +120,7 @@ public class ExpandableUnionFinderTest
         setup2();
         unionFinder.merge(1, 2);
         unionFinder.merge(8, 9);
-        ExpandableUnionFinder newUnionFinder = new ExpandableUnionFinder(unionFinder);
+        ExpandableNumUnionFinder newUnionFinder = new ExpandableNumUnionFinder(unionFinder);
         // Since boxes 1 and 2, and 8 and 9 are merged, there should be 8 boxes but par of size 10.
         assertNotNull("The union finder shouldn't be null.", newUnionFinder);
         assertEquals("The maximum size should be 10.", newUnionFinder.parents().size(), 10);
@@ -364,7 +364,7 @@ public class ExpandableUnionFinderTest
     {
         setup1();
         unionFinder.add(2); unionFinder.add(3); unionFinder.add(5);
-        ExpandableUnionFinder newUnionFinder = new ExpandableUnionFinder(unionFinder);
+        ExpandableNumUnionFinder newUnionFinder = new ExpandableNumUnionFinder(unionFinder);
         newUnionFinder.add(7);
         assertEquals("The size should be 3.", unionFinder.parents().size(), 3);
         assertEquals("The number of boxes should be 3.", unionFinder.totalRoots(), 3);
