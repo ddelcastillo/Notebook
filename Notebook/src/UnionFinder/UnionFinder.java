@@ -38,6 +38,8 @@ public class UnionFinder<K> implements IUnionFinder<K>
     }
 
     // TODO root checked.
+    public Integer rootChecked(K pBox)
+    { return keyToNumber.containsKey(pBox) ? numUnionFinder.root(keyToNumber.get(pBox)) : null; }
 
     public void merge(K pBox1, K pBox2)
     {
