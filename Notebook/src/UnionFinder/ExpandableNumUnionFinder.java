@@ -1,7 +1,7 @@
 // @formatter:off
 package UnionFinder;
 
-import Util.Checked;import java.util.Hashtable;
+import Util.Checked;import java.util.Collection;import java.util.Hashtable;
 import java.util.Iterator;
 
 /**
@@ -59,8 +59,20 @@ public class ExpandableNumUnionFinder implements INumUnionFinder
     {
         numBoxes = pBoxes.length;
         par = new Hashtable<>(pBoxes.length);
-        for(int i : pBoxes)
-            par.put(i, -1);
+        for(int box : pBoxes)
+            par.put(box, -1);
+    }
+
+    /**
+     * Creates an ExpandableUnionFinder object with the given box indexes.
+     * @param pBoxes The indexes of the boxes to add to the union finder.
+     */
+    public ExpandableNumUnionFinder(Collection<Integer> pBoxes)
+    {
+        numBoxes = pBoxes.size();
+        par = new Hashtable<>(pBoxes.size());
+        for(int box : pBoxes)
+            par.put(box, -1);
     }
 
     /**

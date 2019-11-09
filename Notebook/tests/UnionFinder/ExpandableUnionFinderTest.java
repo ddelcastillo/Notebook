@@ -3,7 +3,7 @@ package UnionFinder;
 
 import org.junit.Test;
 
-import java.util.Hashtable;
+import java.awt.*;import java.util.ArrayList;import java.util.Collection;import java.util.Hashtable;
 import java.util.Iterator;
 
 import static org.junit.Assert.*;
@@ -92,10 +92,32 @@ public class ExpandableUnionFinderTest
     }
 
     /**
-     * Tests that the union finder is correctly initialized as a copy of a given graph.
+     * Tests that the union finder with nodes 2, 3, 5 and 7 is correctly initialized.
      */
     @Test
     public void initializationTest4()
+    {
+        int[] indexes = {2, 3, 5, 7};
+        ArrayList<Integer> array = new ArrayList<>();
+        for(int index : indexes)
+            array.add(index);
+        unionFinder = new ExpandableNumUnionFinder(array);
+        assertNotNull("The union finder shouldn't be null.", unionFinder);
+        assertEquals("The size should be 4.", unionFinder.parents().size(), 4);
+        assertEquals("The number of boxes should be 4.", unionFinder.totalRoots(), 4);
+        Hashtable<Integer, Integer> par = unionFinder.parents();
+        for(int i : indexes)
+        {
+            assertTrue("The table should contain the key.", par.containsKey(i));
+            assertEquals("The value should be -1.", (int) par.get(i), -1);
+        }
+    }
+
+    /**
+     * Tests that the union finder is correctly initialized as a copy of a given graph.
+     */
+    @Test
+    public void initializationTest5()
     {
         setup3();
         int[] indexes = {2, 3, 5, 7};
@@ -115,7 +137,7 @@ public class ExpandableUnionFinderTest
      * Tests that a union finder given stored information is correctly initialized.
      */
     @Test
-    public void initializationTest5()
+    public void initializationTest6()
     {
         setup2();
         unionFinder.merge(1, 2);
