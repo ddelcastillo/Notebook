@@ -17,7 +17,7 @@ public class ExpandableUnionFinderTest
      */
     private ExpandableNumUnionFinder unionFinder;
 
-    // Setup
+    // Setups
 
     /**
      * Creates an empty expandable union finder.
@@ -26,13 +26,13 @@ public class ExpandableUnionFinderTest
     { unionFinder = new ExpandableNumUnionFinder(); }
 
     /**
-     * Creates an expandable union finder with nodes 0 to 9.
+     * Creates an expandable union finder with boxes labeled from 0 to 9.
      */
     private void setup2()
     { unionFinder = new ExpandableNumUnionFinder(10); }
 
     /**
-     * Creates an expandable union finder with nodes 2, 3, 5 and 7.
+     * Creates an expandable union finder with boxes whose labels are 2, 3, 5 and 7.
      */
     private void setup3()
     {
@@ -55,7 +55,7 @@ public class ExpandableUnionFinderTest
     }
 
     /**
-     * Tests that the union finder with nodes 0 to 9 is correctly initialized.
+     * Tests that the union finder with boxes labeled from 0 to 9 is correctly initialized.
      */
     @Test
     public void initializationTest2()
@@ -73,7 +73,7 @@ public class ExpandableUnionFinderTest
     }
 
     /**
-     * Tests that the union finder with nodes 2, 3, 5 and 7 is correctly initialized.
+     * Tests that the union finder with boxes whose labels are 2, 3, 5 and 7 is correctly initialized.
      */
     @Test
     public void initializationTest3()
@@ -92,7 +92,7 @@ public class ExpandableUnionFinderTest
     }
 
     /**
-     * Tests that the union finder with nodes 2, 3, 5 and 7 is correctly initialized.
+     * Tests that the union finder with boxes whose labels are 2, 3, 5 and 7 is correctly initialized.
      */
     @Test
     public void initializationTest4()
@@ -114,7 +114,7 @@ public class ExpandableUnionFinderTest
     }
 
     /**
-     * Tests that the union finder is correctly initialized as a copy of a given graph.
+     * Tests that the union finder is correctly initialized as a copy of a given expandable union finder.
      */
     @Test
     public void initializationTest5()
@@ -134,7 +134,7 @@ public class ExpandableUnionFinderTest
     }
 
     /**
-     * Tests that a union finder given stored information is correctly initialized.
+     * Tests that an expandable union finder given stored information is correctly initialized.
      */
     @Test
     public void initializationTest6()

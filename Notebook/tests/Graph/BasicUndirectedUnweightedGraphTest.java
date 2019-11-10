@@ -19,7 +19,7 @@ public class BasicUndirectedUnweightedGraphTest
      */
     private BasicUndirectedUnweightedGraph graph;
 
-    // Setup
+    // Setups
 
     /**
      * Initializes the graph with 5 nodes.

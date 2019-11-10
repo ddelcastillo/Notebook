@@ -1,136 +1,219 @@
+// @formatter:off
 package UnionFinder;
 
 import java.util.Collection;
 import java.util.Hashtable;
 import java.util.Iterator;
 
-// TODO Documentations.
 // TODO tests.
 
+/**
+ * Class that represents a generic union finder of boxes with type K.
+ * @author Daniel del Castillo A. https://github.com/ddelcastillo
+ */
 public class UnionFinder<K> implements IUnionFinder<K>
 {
     // Attributes
 
+    /**
+     * The counter to assign boxes in the numerical union finder.
+     */
     private int N;
 
+    /**
+     * The numerical union finder that manages the boxes with their assigned numbers.
+     */
     private ExpandableNumUnionFinder numUnionFinder;
 
-    private Hashtable<K, Integer> keyToNumber;
+    /**
+     * The table that accesses the given number to a certain box.
+     */
+    private Hashtable<K, Integer> boxToNumber;
 
-    private Hashtable<Integer, K> numberToKey;
+    /**
+     * The table that accesses the assigned box of a given number.
+     */
+    private Hashtable<Integer, K> numberToBox;
 
-    // Constructor
+    // Constructors
 
+    /**
+     * Creates an UnionFinder object.
+     */
     public UnionFinder()
     {
         numUnionFinder = new ExpandableNumUnionFinder();
-        keyToNumber = new Hashtable<>();
-        numberToKey = new Hashtable<>();
+        boxToNumber = new Hashtable<>();
+        numberToBox = new Hashtable<>();
         N = 0;
     }
 
+    /**
+     * Creates an ExpandableUnionFinder object with the given boxes.
+     * @param pBoxes The objects of the boxes to add to the union finder.
+     */
     public UnionFinder(K[] pBoxes)
     {
         numUnionFinder = new ExpandableNumUnionFinder(pBoxes.length);
-        keyToNumber = new Hashtable<>(pBoxes.length);
-        numberToKey = new Hashtable<>(pBoxes.length);
+        boxToNumber = new Hashtable<>(pBoxes.length);
+        numberToBox = new Hashtable<>(pBoxes.length);
         for(K box : pBoxes)
         {
-            keyToNumber.put(box, N);
-            numberToKey.put(N, box);
+            boxToNumber.put(box, N);
+            numberToBox.put(N, box);
             ++N;
         }
     }
 
+    /**
+     * Creates an ExpandableUnionFinder object with the given boxes.
+     * @param pBoxes The objects of the boxes to add to the union finder.
+     */
     public UnionFinder(Collection<K> pBoxes)
     {
         numUnionFinder = new ExpandableNumUnionFinder(pBoxes.size());
-        keyToNumber = new Hashtable<>(pBoxes.size());
-        numberToKey = new Hashtable<>(pBoxes.size());
+        boxToNumber = new Hashtable<>(pBoxes.size());
+        numberToBox = new Hashtable<>(pBoxes.size());
         for(K box : pBoxes)
         {
-            keyToNumber.put(box, N);
-            numberToKey.put(N, box);
+            boxToNumber.put(box, N);
+            numberToBox.put(N, box);
             ++N;
         }
     }
 
+    /**
+     * Creates an UnionFinder object copy of the given union finder.
+     * @param pUnionFinder The union finder to copy.
+     */
     public UnionFinder(UnionFinder pUnionFinder)
     {
         this.numUnionFinder = new ExpandableNumUnionFinder(pUnionFinder.numUnionFinder);
-        this.keyToNumber = new Hashtable<>(pUnionFinder.totalRoots());
-        this.numberToKey = new Hashtable<>(pUnionFinder.totalRoots());
-        Iterator<K> iterator = pUnionFinder.keyToNumber.keySet().iterator();
+        this.boxToNumber = new Hashtable<>(pUnionFinder.totalRoots());
+        this.numberToBox = new Hashtable<>(pUnionFinder.totalRoots());
+        Iterator<K> iterator = pUnionFinder.boxToNumber.keySet().iterator();
         K key;
         int value;
         while(iterator.hasNext())
         {
             key = iterator.next();
-            value = (int) pUnionFinder.keyToNumber.get(key);
-            this.keyToNumber.put(key, value);
-            this.numberToKey.put(value, key);
+            value = (int) pUnionFinder.boxToNumber.get(key);
+            this.boxToNumber.put(key, value);
+            this.numberToBox.put(value, key);
         }
     }
 
     // Methods
 
-    public int root(K pBox)
-    {
-        int index = keyToNumber.get(pBox);
-        return numUnionFinder.root(index);
-    }
+    /**
+     * Doesn't check if pBox is a valid box. For this, use rootChecked.
+     * Finds the root of the given box.
+     * @param pBox The box.
+     * @return The root of the box.
+     */
+    public K root(K pBox)
+    { return numberToBox.get(numUnionFinder.root(boxToNumber.get(pBox))); }
 
-    public Integer rootChecked(K pBox)
-    { return keyToNumber.containsKey(pBox) ? numUnionFinder.root(keyToNumber.get(pBox)) : null; }
+    /**
+     * Finds the root of the given box. Checks that pBox is a valid box.
+     * @param pBox The box.
+     * @return The root of the box or null if the box doesn't exist.
+     */
+    public K rootChecked(K pBox)
+    { return boxToNumber.containsKey(pBox) ? root(pBox) : null; }
 
+    /**
+     * Doesn't check if pBox1 and pBox2 are valid boxes. For this, use mergeChecked.
+     * Merges the two boxes such that the box with fewer items is placed in the other box.
+     * The box with fewer items will then contain the index to it's root.
+     * @param pBox1 The first box.
+     * @param pBox2 The second box.
+     */
     public void merge(K pBox1, K pBox2)
-    { numUnionFinder.merge(keyToNumber.get(pBox1), keyToNumber.get(pBox2)); }
+    { numUnionFinder.merge(boxToNumber.get(pBox1), boxToNumber.get(pBox2)); }
 
+    /**
+     * Merges the two boxes such that the box with fewer items is placed in the other box.
+     * The box with fewer items will then contain the index to it's root. Checks that both boxes are valid.
+     * @param pBox1 The first box.
+     * @param pBox2 The second box.
+     */
     public void mergeChecked(K pBox1, K pBox2)
     {
-        if(keyToNumber.containsKey(pBox1) && keyToNumber.containsKey(pBox2))
+        if(boxToNumber.containsKey(pBox1) && boxToNumber.containsKey(pBox2))
             merge(pBox1, pBox2);
     }
 
     // Extra methods
 
+    /**
+     * Doesn't check if the box already exists. For this, use addChecked.
+     * Adds a box.
+     * @param pBox The number of the box.
+     */
     public void add(K pBox)
     {
-        keyToNumber.put(pBox, N);
-        numberToKey.put(N, pBox);
+        boxToNumber.put(pBox, N);
+        numberToBox.put(N, pBox);
         numUnionFinder.add(N);
         ++N;
     }
 
+    /**
+     * Adds a box if it doesn't already exist.
+     * @param pBox The number of the box.
+     */
     public void addChecked(K pBox)
     {
-        if(keyToNumber.containsKey(pBox))
+        if(boxToNumber.containsKey(pBox))
             return;
         add(pBox);
     }
 
+    /**
+     * Doesn't check if the box exists. For this, use sizeChecked.
+     * Returns either the size of the box if it's not connected or the size of the union if it is.
+     * @param pBox The box.
+     * @return The size of the box.
+     */
     public int size(K pBox)
-    { return numUnionFinder.size(keyToNumber.get(pBox)); }
+    { return numUnionFinder.size(boxToNumber.get(pBox)); }
 
+    /**
+     * Returns either the size of the box if it's not connected, the size of the union if it is,
+     * or null if the box doesn't exist. Checks if the box exists.
+     * @param pBox The box.
+     * @return The size of the box or null if the box doesn't exist.
+     */
     public Integer sizeChecked(K pBox)
-    { return keyToNumber.containsKey(pBox) ? size(pBox) : null; }
+    { return boxToNumber.containsKey(pBox) ? size(pBox) : null; }
 
+    /**
+     * @return The number of boxes that are not in union (including super-boxes).
+     */
     public int totalRoots()
     { return numUnionFinder.totalRoots(); }
 
-    public Hashtable<K, Integer> par()
+    /**
+     * @return The Hashtable with the parents.
+     */
+    public Hashtable<K, K> parents()
     {
-        Hashtable<K, Integer> par = new Hashtable<>(N);
-        for(K box : keyToNumber.keySet())
-            par.put(box, numUnionFinder.root(keyToNumber.get(box)));
+        Hashtable<K, K> par = new Hashtable<>(N);
+        for(K box : boxToNumber.keySet())
+            par.put(box, numberToBox.get(numUnionFinder.root(boxToNumber.get(box))));
         return par;
     }
 
+    /**
+     * Transcripts the union finder's contents into a String.
+     * @return The String with the union finder's contents.
+     */
     public String toString()
     {
         StringBuilder sb = new StringBuilder("Size: " + N + "\n");
-        for(K box : keyToNumber.keySet())
-            sb.append(box.toString()).append(": ").append(keyToNumber.get(box)).append("\n");
+        for(K box : boxToNumber.keySet())
+            sb.append(box.toString()).append(": ").append(boxToNumber.get(box)).append("\n");
         return sb.toString();
     }
 }

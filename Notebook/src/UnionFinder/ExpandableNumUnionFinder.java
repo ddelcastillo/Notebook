@@ -28,7 +28,7 @@ public class ExpandableNumUnionFinder implements INumUnionFinder
      */
     private Hashtable<Integer, Integer> par;
 
-    // Constructor
+    // Constructors
 
     /**
      * Creates an ExpandableUnionFinder object.
@@ -96,7 +96,8 @@ public class ExpandableNumUnionFinder implements INumUnionFinder
     // Methods
 
     /**
-     * Finds the root of the given box. Doesn't check if x is a valid box.
+     * Doesn't check if x is a valid box. For this, use rootChecked.
+     * Finds the root of the given box.
      * @param x The box.
      * @return The root of the box.
      */
@@ -122,7 +123,7 @@ public class ExpandableNumUnionFinder implements INumUnionFinder
     { return par.containsKey(x) ? root(x) : null; }
 
     /**
-     * WARNING: doesn't check if x and y are valid boxes. For this, use mergeChecked.
+     * Doesn't check if x and y are valid boxes. For this, use mergeChecked.
      * Merges the two boxes such that the box with fewer items is placed in the other box.
      * The box with fewer items will then contain the index to it's root.
      * @param x The first box.
@@ -159,7 +160,8 @@ public class ExpandableNumUnionFinder implements INumUnionFinder
     // Extra methods
 
     /**
-     * Adds a box. Doesn't check if the box already exists.
+     * Doesn't check if the box already exists. For this, use addChecked.
+     * Adds a box.
      * @param x The number of the box.
      */
     public void add(int x)
@@ -179,8 +181,8 @@ public class ExpandableNumUnionFinder implements INumUnionFinder
     }
 
     /**
+     * Doesn't check if the box exists. For this, use sizeChecked.
      * Returns either the size of the box if it's not connected or the size of the union if it is.
-     * Doesn't check if the box already exists.
      * @param x The box.
      * @return The size of the box.
      */
@@ -189,7 +191,7 @@ public class ExpandableNumUnionFinder implements INumUnionFinder
 
     /**
      * Returns either the size of the box if it's not connected, the size of the union if it is,
-     * or null if the box doesn't exist. Doesn't check if the box already exists.
+     * or null if the box doesn't exist. Check if the box exists.
      * @param x The box.
      * @return The size of the box or null if the box doesn't exist.
      */
@@ -203,7 +205,7 @@ public class ExpandableNumUnionFinder implements INumUnionFinder
     { return numBoxes; }
 
     /**
-     * @return The Hashtable with the parents.
+     * @return The Hashtable with the parents. 0 if its itself, -x for the parent x.
      */
     public Hashtable<Integer, Integer> parents()
     { return par; }

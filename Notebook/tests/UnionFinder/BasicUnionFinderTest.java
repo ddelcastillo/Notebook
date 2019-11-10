@@ -17,7 +17,7 @@ public class BasicUnionFinderTest
      */
     private BasicNumUnionFinder unionFinder;
 
-    // Setup
+    // Setups
 
     /**
      * Initializes the union finder with a capacity of 10 boxes labeled from 0 to 9.

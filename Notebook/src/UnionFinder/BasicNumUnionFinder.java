@@ -25,7 +25,7 @@ public class BasicNumUnionFinder implements INumUnionFinder
      */
     private int[] par;
 
-    // Constructor
+    // Constructors
 
     /**
      * Creates a BasicUnionFinder object with N boxes labeled from 0 to N-1.

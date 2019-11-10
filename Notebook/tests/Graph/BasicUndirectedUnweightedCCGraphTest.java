@@ -21,7 +21,7 @@ public class BasicUndirectedUnweightedCCGraphTest
      */
     private BasicUndirectedUnweightedCCGraph graph;
 
-    // Setup
+    // Setups
 
     /**
      * Initializes the graph with 5 nodes.

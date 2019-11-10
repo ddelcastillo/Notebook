@@ -8,16 +8,16 @@ public interface IUnionFinder<K>
     // Basic required methods
     /**
      * Finds the root of the given box.
-     * @param x The box.
+     * @param pBox The box.
      * @return The root of the box.
      */
-    int root(K x);
+    K root(K pBox);
 
     /**
      * Merges the two boxes such that the box with fewer items is placed in the other box.
      * The box with the fewer items will then contain the index to it's root.
-     * @param x The first box.
-     * @param y The second box.
+     * @param pBox1 The first box.
+     * @param pBox2 The second box.
      */
-    void merge(K x, K y);
+    void merge(K pBox1, K pBox2);
 }
