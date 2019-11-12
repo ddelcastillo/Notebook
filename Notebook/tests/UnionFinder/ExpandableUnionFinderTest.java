@@ -278,7 +278,7 @@ public class ExpandableUnionFinderTest
      * Tests that the union finder adds and checks boxes properly.
      */
     @Test
-    public void testAddChecked()
+    public void addCheckedTest()
     {
         setup1();
         // A box 10 will be added:
