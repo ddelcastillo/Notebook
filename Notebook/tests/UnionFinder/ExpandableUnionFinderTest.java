@@ -173,7 +173,6 @@ public class ExpandableUnionFinderTest
         while(iterator.hasNext())
         {
             key = iterator.next();
-            assertTrue("The table should contain the key.", par.containsKey(key));
             assertEquals("The value should be -1.", (int) par.get(key), -1);
             assertEquals("The root of the key should be itself.", unionFinder.root(key), key);
         }
@@ -188,7 +187,6 @@ public class ExpandableUnionFinderTest
         while(iterator.hasNext())
         {
             key = iterator.next();
-            assertTrue("The table should contain the key.", par.containsKey(key));
             assertEquals("The value should be -1.", (int) par.get(key), -1);
             assertEquals("The root of the key should be itself.", unionFinder.root(key), key);
         }
@@ -247,11 +245,11 @@ public class ExpandableUnionFinderTest
         assertEquals("The root of the box should be 10.", unionFinder.root(20), 10);
         assertEquals("The root of the box should be 10.", unionFinder.root(30), 10);
         // Since the root of 20 is 10, and the size of 10 is 1, and 20 was merged with 30 and 20
-        // pointed to box 10, then box 10 will undergo an increment of 1.
+        // which pointed to box 10, then box 10 will undergo an increment of 1.
         assertEquals("The size of the union should be 2.", unionFinder.size(10), 2);
         assertEquals("The size of the union should be 2.", unionFinder.size(20), 2);
         assertEquals("The size of the union should be 2.", unionFinder.size(30), 2);
-        // Now boxes 10 and 30 will be merged. Nothing should change, however broken the numbers are.
+        // Now boxes 10 and 30 will be merged. Nothing should change however broken the numbers are.
         unionFinder.merge(10, 30);
         assertEquals("The size should be 3.", unionFinder.parents().size(), 3);
         assertEquals("The number of boxes should be 2.", unionFinder.totalRoots(), 2);
@@ -260,10 +258,20 @@ public class ExpandableUnionFinderTest
         assertEquals("The root of the box should be 10.", unionFinder.root(20), 10);
         assertEquals("The root of the box should be 10.", unionFinder.root(30), 10);
         // Since the root of 20 is 10, and the size of 10 is 1, and 20 was merged with 30 and 20
-        // pointed to box 10, then box 10 will undergo an increment of 1.
+        // which pointed to box 10, then box 10 will undergo an increment of 1.
         assertEquals("The size of the union should be 2.", unionFinder.size(10), 2);
         assertEquals("The size of the union should be 2.", unionFinder.size(20), 2);
         assertEquals("The size of the union should be 2.", unionFinder.size(30), 2);
+    }
+
+    /**
+     * Tests that the root of a non-existent box ends up with a NullPointerException.
+     */
+    @Test(expected = NullPointerException.class)
+    public void addTest3()
+    {
+        // Searching for the key should result in null.
+        setup1(); unionFinder.root(100);
     }
 
     /**
