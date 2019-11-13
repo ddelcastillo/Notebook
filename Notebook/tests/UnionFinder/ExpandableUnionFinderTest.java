@@ -329,7 +329,7 @@ public class ExpandableUnionFinderTest
      * Tests that the union finder finds and assigns roots properly.
      */
     @Test
-    public void testRoot1()
+    public void rootTest1()
     {
         setup1();
         // Boxes 10 and 30 will be added:
@@ -357,7 +357,7 @@ public class ExpandableUnionFinderTest
      * Tests that the root of a non-existent box ends up with a NullPointerException.
      */
     @Test(expected = NullPointerException.class)
-    public void testRoot2()
+    public void rootTest2()
     {
         setup2();
         unionFinder.root(200);
@@ -384,22 +384,6 @@ public class ExpandableUnionFinderTest
         assertNull("The root should be null since it doesn't exist.", unionFinder.rootChecked(200));
         assertNull("The root should be null since it doesn't exist.", unionFinder.rootChecked(10));
         assertNull("The root should be null since it doesn't exist.", unionFinder.rootChecked(-200));
-    }
-
-    /**
-     * Tests that the union finder copy doesn't add items to the original union finder.
-     */
-    @Test
-    public void copyTest()
-    {
-        setup1();
-        unionFinder.add(2); unionFinder.add(3); unionFinder.add(5);
-        ExpandableNumUnionFinder newUnionFinder = new ExpandableNumUnionFinder(unionFinder);
-        newUnionFinder.add(7);
-        assertEquals("The size should be 3.", unionFinder.parents().size(), 3);
-        assertEquals("The number of boxes should be 3.", unionFinder.totalRoots(), 3);
-        assertEquals("The size should be 4.", newUnionFinder.parents().size(), 4);
-        assertEquals("The number of boxes should be 4.", newUnionFinder.totalRoots(), 4);
     }
 
     /**
