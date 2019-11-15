@@ -389,4 +389,10 @@ public class UnionFinderTest
         assertNull("The root should be null since it doesn't exist.", unionFinder.rootChecked("x"));
         assertNull("The root should be null since it doesn't exist.", unionFinder.rootChecked("hi"));
     }
+
+    @Test
+    public void mergeTest1()
+    {
+
+    }
 }
