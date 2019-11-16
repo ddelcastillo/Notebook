@@ -491,4 +491,98 @@ public class UnionFinderTest
         setup2();
         unionFinder.merge("z", "y");
     }
+
+    /**
+     * Tests that the merge function works properly.
+     */
+    @Test
+    public void mergeCheckedTest()
+    {
+        setup3();
+        // Boxes y and x will be added.
+        unionFinder.add("y"); unionFinder.add("x");
+        assertEquals("The number of boxes should be 10.", 10, unionFinder.totalRoots());
+        assertEquals("The number of boxes should be 10.", 10, unionFinder.parents().size());
+        Hashtable<String, String> parents = unionFinder.parents();
+        for(String box : parents.keySet())
+        {
+            assertEquals("The root should be itself.", box, unionFinder.root(box));
+            assertEquals("The value should be itself.", box, parents.get(box));
+            assertEquals("The size should be 1.", 1, unionFinder.size(box));
+        }
+        // Now, boxes a and b are merged, c and d, and x and y.
+        unionFinder.mergeChecked("a", "b"); unionFinder.mergeChecked("c", "d"); unionFinder.mergeChecked("x", "y");
+        assertEquals("The number of boxes should be 7.", 7, unionFinder.totalRoots());
+        assertEquals("The number of boxes should be 10.", 10, unionFinder.parents().size());
+        // The root of b should be a, the root of d should be c and the root of y should be x.
+        assertEquals("The root should be a.", "a", unionFinder.root("b"));
+        assertEquals("The root should be c.", "c", unionFinder.root("d"));
+        assertEquals("The root should be x.", "x", unionFinder.root("y"));
+        // The other boxes should be themselves as root. The size of super-boxes a-b, c-d and x-y should be 2. The rest, 1.
+        parents = unionFinder.parents();
+        for(String box : parents.keySet())
+        {
+            switch (box)
+            {
+                case "b":
+                case "d":
+                case "y":
+                    assertEquals("The size should be 2.", 2, unionFinder.size(box));
+                    break;
+                case "a":
+                case "c":
+                case "x":
+                    assertEquals("The size should be 2.", 2, unionFinder.size(box));
+                    assertEquals("The root should be itself.", box, unionFinder.root(box));
+                    assertEquals("The value should be itself.", box, parents.get(box));
+                    break;
+                default:
+                    assertEquals("The root should be itself.", box, unionFinder.root(box));
+                    assertEquals("The value should be itself.", box, parents.get(box));
+                    assertEquals("The size should be 1.", 1, unionFinder.size(box));
+            }
+        }
+        // Now, super-boxes c-d and x-y will be merged.
+        unionFinder.mergeChecked("x", "d");
+        // Non-existent boxes s and t, u and w will be merged. Nothing should change.
+        unionFinder.mergeChecked("s", "t"); unionFinder.mergeChecked("t", "u");
+        assertEquals("The number of boxes should be 6.", 6, unionFinder.totalRoots());
+        assertEquals("The number of boxes should be 10.", 10, unionFinder.parents().size());
+        // The root of c, d and y should be x.
+        assertEquals("The root should be x.", "x", unionFinder.root("c"));
+        assertEquals("The root should be x.", "x", unionFinder.root("d"));
+        assertEquals("The root should be x.", "x", unionFinder.root("y"));
+        // The root of b should still be a.
+        assertEquals("The root should be a.", "a", unionFinder.root("b"));
+        // The other boxes should be themselves as root. The size of super-boxes c-d-x-y and a-b is 4 and 2, respectively. The rest, 1.
+        parents = unionFinder.parents();
+        for(String box : parents.keySet())
+        {
+            switch (box)
+            {
+                case "b":
+                    assertEquals("The size should be 2.", 2, unionFinder.size(box));
+                    break;
+                case "a":
+                    assertEquals("The size should be 2.", 2, unionFinder.size(box));
+                    assertEquals("The root should be itself.", box, unionFinder.root(box));
+                    assertEquals("The value should be itself.", box, parents.get(box));
+                    break;
+                case "c":
+                case "d":
+                case "y":
+                    assertEquals("The size should be 4.", 4, unionFinder.size(box));
+                    break;
+                case "x":
+                    assertEquals("The size should be 4.", 4, unionFinder.size(box));
+                    assertEquals("The root should be itself.", box, unionFinder.root(box));
+                    assertEquals("The value should be itself.", box, parents.get(box));
+                    break;
+                default:
+                    assertEquals("The root should be itself.", box, unionFinder.root(box));
+                    assertEquals("The value should be itself.", box, parents.get(box));
+                    assertEquals("The size should be 1.", 1, unionFinder.size(box));
+            }
+        }
+    }
 }
