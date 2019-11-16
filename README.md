@@ -19,8 +19,8 @@ To some extent, the purpose of this project is to be a **recipe book** of data s
 #### Remarks
 This project was started in the summer of 2019. As it is still quite young, not all structures and solutions have been covered or optimized. However, in time, the idea is for the contents to match the vision. It is just a matter of patience.
 
-#### Log
-- **November 4 of 2019**: the BasicUndirectedUnweightedGraph, BasicUndirectedUnweightedCCGraph, BasicUnionFinder and ExpandableUnionFinder structures are fully tested and operational.
+#### Latest comment:
+**November 16 of 2019**: Currently working on properly developing the union finders (regular methods, checked methods and respective tests) and annotation such that future graph implementations that use them won't have any problems. 
 
 ------------
 

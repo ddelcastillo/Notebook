@@ -493,7 +493,7 @@ public class UnionFinderTest
     }
 
     /**
-     * Tests that the merge function works properly.
+     * Tests that the union finder checks and merges boxes properly.
      */
     @Test
     public void mergeCheckedTest()
@@ -584,5 +584,96 @@ public class UnionFinderTest
                     assertEquals("The size should be 1.", 1, unionFinder.size(box));
             }
         }
+    }
+
+    /**
+     * Tests that the union finder keeps track of box sizes properly.
+     */
+    @Test
+    public void sizeTest1()
+    {
+        setup2();
+        // Boxes x, y and z will be added.
+        unionFinder.add("x"); unionFinder.add("y"); unionFinder.add("z");
+        // There should be 7 boxes: a, b, c, d, x, y and z.
+        assertEquals("The number of boxes should be 7.", 7, unionFinder.totalRoots());
+        // The size of all boxes should be 1.
+        Hashtable<String, String> parents = unionFinder.parents();
+        for(String box : parents.keySet())
+        { assertEquals("The size should be 1.", 1, unionFinder.size(box)); }
+        // Now boxes a, b and c will me merged.
+        unionFinder.merge("a", "b"); unionFinder.merge("b", "c");
+        assertEquals("The number of boxes should be 5.", 5, unionFinder.totalRoots());
+        // The size of super-box a-b-c should be 3. The rest, 1.
+        parents = unionFinder.parents();
+        for(String box : parents.keySet())
+        {
+            switch(box)
+            {
+                case "a":
+                case "b":
+                case "c":
+                    assertEquals("The size should be 3.", 3, unionFinder.size(box));
+                    break;
+                default:
+                    assertEquals("The size should be 1.", 1, unionFinder.size(box));
+            }
+        }
+        // Boxes y and x will me merged.
+        unionFinder.merge("y", "x");
+        assertEquals("The number of boxes should be 4.", 4, unionFinder.totalRoots());
+        // The size of super-boxes a-b-c and y-x should be 3 and 2, respectively. The rest, 1.
+        parents = unionFinder.parents();
+        for(String box : parents.keySet())
+        {
+            switch(box)
+            {
+                case "a":
+                case "b":
+                case "c":
+                    assertEquals("The size should be 3.", 3, unionFinder.size(box));
+                    break;
+                case "x":
+                case "y":
+                    assertEquals("The size should be 2.", 2, unionFinder.size(box));
+                    break;
+                default:
+                    assertEquals("The size should be 1.", 1, unionFinder.size(box));
+            }
+        }
+        // Super boxes a-b-c and y-x will be merged.
+        unionFinder.merge("b", "y");
+        assertEquals("The number of boxes should be 3.", 3, unionFinder.totalRoots());
+        // The size of super box a-b-c-y-x should be 5. The rest, 1.
+        parents = unionFinder.parents();
+        for(String box : parents.keySet())
+        {
+            switch(box)
+            {
+                case "a":
+                case "b":
+                case "c":
+                case "x":
+                case "y":
+                    assertEquals("The size should be 5.", 5, unionFinder.size(box));
+                    break;
+                default:
+                    assertEquals("The size should be 1.", 1, unionFinder.size(box));
+            }
+        }
+        // Last boxes will be merged: z and d, with super box a-b-c-d-y-x.
+        unionFinder.merge("z", "d"); unionFinder.merge("z", "c");
+        assertEquals("The number of boxes should be 1.", 1, unionFinder.totalRoots());
+        //
+    }
+
+    /**
+     * Tests that the size of a non-existent box ends up with a NullPointerException.
+     */
+    @Test(expected = NullPointerException.class)
+    public void sizeTest2()
+    {
+        setup2();
+        unionFinder.size("z");
     }
 }
