@@ -34,13 +34,14 @@ public class BasicUnionFinderTest
     @Test
     public void initializationTest1()
     {
+        // The union shouldn't be null and should have 10 parents (10 boxes).
         assertNotNull("The union finder shouldn't be null.", unionFinder);
-        assertEquals("The maximum size should be 10.", unionFinder.parents().length, 10);
-        assertEquals("The number of boxes should be 10.", unionFinder.totalRoots(), 10);
-        // At the beginning, everything starts as -1.
+        assertEquals("The number of parents should be 10.", 10, unionFinder.parents().length);
+        assertEquals("The number of boxes should be 10.",10, unionFinder.totalRoots());
+        // At the beginning, every box should be its own parent.
         int[] par = unionFinder.parents();
         for(int act : par)
-            assertEquals("The value should be -1.", act, -1);
+            assertEquals("The parent should be itself.", act, par[act]);
     }
 
     /**
@@ -50,13 +51,14 @@ public class BasicUnionFinderTest
     public void initializationTest2()
     {
         BasicNumUnionFinder newUnionFinder = new BasicNumUnionFinder(unionFinder);
+        // The new union finder shouldn't be null and should have 10 parents (10 boxes).
         assertNotNull("The union finder shouldn't be null.", newUnionFinder);
-        assertEquals("The maximum size should be 10.", newUnionFinder.parents().length, 10);
-        assertEquals("The number of boxes should be 10.", newUnionFinder.totalRoots(), 10);
-        // At the beginning, everything starts as -1.
+        assertEquals("The number of parents should be 10.", 10, newUnionFinder.parents().length);
+        assertEquals("The number of boxes should be 10.", 10, newUnionFinder.totalRoots());
+        // At the beginning, every box should be its own parent.
         int[] par = newUnionFinder.parents();
         for(int act : par)
-            assertEquals("The value should be -1.", act, -1);
+            assertEquals("The parent should be itself.", act, par[act]);
     }
 
     /**
@@ -65,20 +67,20 @@ public class BasicUnionFinderTest
     @Test
     public void initializationTest3()
     {
+        // Boxes 1 and 2, and 8 and 9 will be merged.
         unionFinder.merge(1, 2);
         unionFinder.merge(8, 9);
+        // A new union finder is created (with the stored information of the merges).
         BasicNumUnionFinder newUnionFinder = new BasicNumUnionFinder(unionFinder);
         // Since boxes 1 and 2, and 8 and 9 are merged, there should be 8 boxes but par of size 10.
         assertNotNull("The union finder shouldn't be null.", newUnionFinder);
-        assertEquals("The maximum size should be 10.", newUnionFinder.parents().length, 10);
-        assertEquals("The number of boxes should be 8.", newUnionFinder.totalRoots(), 8);
-        // The roots should  be stored.
-        assertEquals("The root should be itself.", newUnionFinder.root(1), 1);
-        assertEquals("The root should be 1.", newUnionFinder.root(2), 1);
-        assertEquals("The root should be itself.", newUnionFinder.root(8), 8);
-        assertEquals("The root should be 8.", newUnionFinder.root(9), 8);
-        assertEquals("The size should be 2.", newUnionFinder.size(2), 2);
-        assertEquals("The size should be 2.", newUnionFinder.size(8), 2);
+        assertEquals("The number of parents should be 10.", 10, newUnionFinder.parents().length);
+        assertEquals("The number of boxes should be 8.", 8, newUnionFinder.totalRoots());
+        // The roots should be stored properly stored.
+        assertEquals("The root should be itself.", 1, newUnionFinder.root(1));
+        assertEquals("The root should be itself.", 8, newUnionFinder.root(8));
+        assertEquals("The root should be 1.", 1, newUnionFinder.root(2));
+        assertEquals("The root should be 8.", 8, newUnionFinder.root(9));
     }
 
     /**
@@ -87,20 +89,24 @@ public class BasicUnionFinderTest
     @Test
     public void testRoot1()
     {
-        for(int i = 0; i < unionFinder.parents().length; ++i)
-            assertEquals("The root should be itself.", unionFinder.root(i), i);
-        // Boxes 8 and 9 are merged. Everything should stay the same except for 9:
+        // At the beginning, the root of all boxes should be themselves.
+        for(int box = 0; box < unionFinder.parents().length; ++box)
+            assertEquals("The root should be itself.", box, unionFinder.root(box));
+        // Boxes 8 and 9 are merged. Everything should stay the same except for 9.
         unionFinder.merge(8, 9);
-        for(int i = 0; i < unionFinder.parents().length-1; ++i)
-            assertEquals("The root should be itself.", unionFinder.root(i), i);
-        assertEquals("The root should be 8.", unionFinder.root(9), 8);
-        // Boxes 6 and 5 are merged. Nothing should change other than 5:
+        for(int box = 0; box < unionFinder.parents().length-1; ++box)
+            assertEquals("The root should be itself.", box, unionFinder.root(box));
+        // The root of 9 should be 8.
+        assertEquals("The root should be 8.", 8, unionFinder.root(9));
+        // Boxes 6 and 5 are merged. Nothing should change other than 5 and 9.
         unionFinder.merge(6, 5);
-        int[] keys = {0, 1, 2, 3, 4, 6, 7, 8};
-        for(int i : keys)
-            assertEquals("The root should be itself.", unionFinder.root(i), i);
-        assertEquals("The root should be 8.", unionFinder.root(9), 8);
-        assertEquals("The root should be 6.", unionFinder.root(5), 6);
+        // To make things easier, all boxes except 5 and 9 are initialized in an array.
+        int[] boxes = {0, 1, 2, 3, 4, 6, 7, 8};
+        for(int box : boxes)
+            assertEquals("The root should be itself.", box, unionFinder.root(box));
+        // The root of 9 should be 8, and the root of 5 should be 6.
+        assertEquals("The root should be 8.", 8, unionFinder.root(9));
+        assertEquals("The root should be 6.", 6, unionFinder.root(5));
     }
 
     /**
@@ -118,24 +124,29 @@ public class BasicUnionFinderTest
     @Test
     public void testRootChecked()
     {
-        for(int i = 0; i < unionFinder.parents().length; ++i)
-            assertEquals("The root should be itself.", (int) unionFinder.rootChecked(i), i);
-        // Boxes 8 and 9 are merged. Everything should stay the same except for 9:
+        // At the beginning, the root of all boxes should be themselves.
+        for(int box = 0; box < unionFinder.parents().length; ++box)
+            assertEquals("The root should be itself.", box, unionFinder.root(box));
+        // Boxes 8 and 9 are merged. Everything should stay the same except for 9.
         unionFinder.merge(8, 9);
-        for(int i = 0; i < unionFinder.parents().length-1; ++i)
-            assertEquals("The root should be itself.", (int) unionFinder.rootChecked(i), i);
-        assertEquals("The root should be 8.", (int) unionFinder.rootChecked(9), 8);
-        // Boxes 6 and 5 are merged. Nothing should change other than 5:
+        for(int box = 0; box < unionFinder.parents().length-1; ++box)
+            assertEquals("The root should be itself.", box, unionFinder.root(box));
+        // The root of 9 should be 8.
+        assertEquals("The root should be 8.", 8, unionFinder.root(9));
+        // Boxes 6 and 5 are merged. Nothing should change other than 5 and 9.
         unionFinder.merge(6, 5);
-        int[] keys = {0, 1, 2, 3, 4, 6, 7, 8};
-        for(int i : keys)
-            assertEquals("The root should be itself.", (int) unionFinder.rootChecked(i), i);
-        assertEquals("The root should be 8.", (int) unionFinder.rootChecked(9), 8);
-        assertEquals("The root should be 6.", (int) unionFinder.rootChecked(5), 6);
-        // Now, a root of a non-existent box is retrieved:
+        // To make things easier, all boxes except 5 and 9 are initialized in an array.
+        int[] boxes = {0, 1, 2, 3, 4, 6, 7, 8};
+        for(int box : boxes)
+            assertEquals("The root should be itself.", box, unionFinder.root(box));
+        // The root of 9 should be 8, and the root of 5 should be 6.
+        assertEquals("The root should be 8.", 8, unionFinder.root(9));
+        assertEquals("The root should be 6.", 6, unionFinder.root(5));
+        // Now, the root of a non existent box should return null.
         assertNull("The root should be null.", unionFinder.rootChecked(100));
-        assertNull("The root should be null.", unionFinder.rootChecked(10));
         assertNull("The root should be null.", unionFinder.rootChecked(-20));
+        assertNull("The root should be null.", unionFinder.rootChecked(10));
+        assertNull("The root should be null.", unionFinder.rootChecked(-1));
     }
 
     /**
@@ -144,27 +155,30 @@ public class BasicUnionFinderTest
     @Test
     public void mergeTest1()
     {
-        // Merges boxes 0 and 1. Since they have the same size, box 1 is merged into box 0.
+        // Boxes 0 and 1 are merged. Since they have the same size, box 1 is merged into box 0.
         unionFinder.merge(0, 1);
-        assertEquals("The value should be -2.", unionFinder.parents()[0], -2);
-        assertEquals("The value should be 0", unionFinder.parents()[1], 0);
-        // Checks that the root of 0 is 0, and the root of 1 is 0 (since it merged):
-        assertEquals("The root should be 0.", unionFinder.root(0), 0);
-        assertEquals("The root should be 0.", unionFinder.root(1), 0);
+        // 0 should still be its own parent, the parent of 1 should be 0.
+        assertEquals("The parent should be itself.", 0, unionFinder.parents()[0]);
+        assertEquals("The parent should be 0.", 0, unionFinder.parents()[1]);
+        // Checks that the root of 0 is 0, and the root of 1 is 0 (since it merged).
+        assertEquals("The root should be 0.", 0, unionFinder.root(0));
+        assertEquals("The root should be 0.", 0, unionFinder.root(1));
         // Checks that the root of the remaining numbers are unchanged.
-        for(int i = 2; i < unionFinder.parents().length; ++i)
-            assertEquals("The root should be " + i + ".", unionFinder.root(i), i);
-        // Merges boxes 0 and 9. Since 9 is smaller, it's merged into box 0.
+        for(int box = 2; box < unionFinder.parents().length; ++box)
+            assertEquals("The root should be " + box + ".", box, unionFinder.root(box));
+        // Boxes 0 and 9 are merged. Since 9 is smaller, it's merged into box 0.
         unionFinder.merge(0, 9);
-        assertEquals("The value should be -3.", unionFinder.parents()[0], -3);
-        assertEquals("The value should be 0.", unionFinder.parents()[9], 0);
-        //Checks that the root of 0 is 0, and the root of 9 is 0 (since it merged):
-        assertEquals("The root should be 0.", unionFinder.root(0), 0);
-        assertEquals("The root should be 0.", unionFinder.root(9), 0);
+        // 0 should still be its own parent, the parent of 9 should be 0.
+        assertEquals("The parent should be itself.", 0, unionFinder.parents()[0]);
+        assertEquals("The parent should be 0.", 0, unionFinder.parents()[1]);
+        assertEquals("The parent should be 0.", 0, unionFinder.parents()[9]);
+        //Checks that the root of 0 is 0, and the root of 9 is 0 (since it merged).
+        assertEquals("The root should be 0.", 0, unionFinder.root(0));
+        assertEquals("The root should be 0.", 0, unionFinder.root(1));
+        assertEquals("The root should be 0.", 0, unionFinder.root(9));
         //Checks that the root of the remaining numbers are unchanged.
-        assertEquals("The root should be 0.", unionFinder.root(1), 0);
-        for(int i = 2; i < unionFinder.parents().length-1; ++i)
-            assertEquals("The root should be " + i + ".", unionFinder.root(i), i);
+        for(int box = 2; box < unionFinder.parents().length-1; ++box)
+            assertEquals("The root should be " + box + ".", box, unionFinder.root(box));
     }
 
     /**
@@ -182,41 +196,35 @@ public class BasicUnionFinderTest
     @Test
     public void mergeCheckedTest()
     {
-        // Merges boxes 0 and 1. Since they have the same size, box 1 is merged into box 0.
-        unionFinder.mergeChecked(0, 1);
-        assertEquals("The value should be -2.", unionFinder.parents()[0], -2);
-        assertEquals("The value should be 0", unionFinder.parents()[1], 0);
-        // Checks that the root of 0 is 0, and the root of 1 is 0 (since it merged):
-        assertEquals("The root should be 0.", unionFinder.root(0), 0);
-        assertEquals("The root should be 0.", unionFinder.root(1), 0);
+        // Boxes 0 and 1 are merged. Since they have the same size, box 1 is merged into box 0.
+        unionFinder.merge(0, 1);
+        // 0 should still be its own parent, the parent of 1 should be 0.
+        assertEquals("The parent should be itself.", 0, unionFinder.parents()[0]);
+        assertEquals("The parent should be 0.", 0, unionFinder.parents()[1]);
+        // Checks that the root of 0 is 0, and the root of 1 is 0 (since it merged).
+        assertEquals("The root should be 0.", 0, unionFinder.root(0));
+        assertEquals("The root should be 0.", 0, unionFinder.root(1));
         // Checks that the root of the remaining numbers are unchanged.
-        for(int i = 2; i < unionFinder.parents().length; ++i)
-            assertEquals("The root should be " + i + ".", unionFinder.root(i), i);
-        // Merges boxes 0 and 9. Since 9 is smaller, it's merged into box 0.
-        unionFinder.mergeChecked(0, 9);
-        assertEquals("The value should be -3.", unionFinder.parents()[0], -3);
-        assertEquals("The value should be 0.", unionFinder.parents()[9], 0);
-        //Checks that the root of 0 is 0, and the root of 9 is 0 (since it merged):
-        assertEquals("The root should be 0.", unionFinder.root(0), 0);
-        assertEquals("The root should be 0.", unionFinder.root(9), 0);
-        //Checks that the root of the remaining numbers are unchanged.
-        assertEquals("The root should be 0.", unionFinder.root(1), 0);
-        for(int i = 2; i < unionFinder.parents().length-1; ++i)
-            assertEquals("The root should be " + i + ".", unionFinder.root(i), i);
-        // Merging non-existent boxes shouldn't fail or change anything:
+        for(int box = 2; box < unionFinder.parents().length; ++box)
+            assertEquals("The root should be " + box + ".", box, unionFinder.root(box));
+        // Boxes 0 and 9 are merged. Since 9 is smaller, it's merged into box 0.
+        unionFinder.merge(0, 9);
+        // Non existent boxes are merged. Nothing should happen.
         unionFinder.mergeChecked(10, 11);
         unionFinder.mergeChecked(-10, 200);
         unionFinder.mergeChecked(10, -200);
         unionFinder.mergeChecked(-10, -20);
-        assertEquals("The value should be -3.", unionFinder.parents()[0], -3);
-        assertEquals("The value should be 0.", unionFinder.parents()[9], 0);
-        //Checks that the root of 0 is 0, and the root of 9 is 0:
-        assertEquals("The root should be 0.", unionFinder.root(0), 0);
-        assertEquals("The root should be 0.", unionFinder.root(9), 0);
+        // 0 should still be its own parent, the parent of 9 should be 0.
+        assertEquals("The parent should be itself.", 0, unionFinder.parents()[0]);
+        assertEquals("The parent should be 0.", 0, unionFinder.parents()[1]);
+        assertEquals("The parent should be 0.", 0, unionFinder.parents()[9]);
+        //Checks that the root of 0 is 0, and the root of 9 is 0 (since it merged).
+        assertEquals("The root should be 0.", 0, unionFinder.root(0));
+        assertEquals("The root should be 0.", 0, unionFinder.root(1));
+        assertEquals("The root should be 0.", 0, unionFinder.root(9));
         //Checks that the root of the remaining numbers are unchanged.
-        assertEquals("The root should be 0.", unionFinder.root(1), 0);
-        for(int i = 2; i < unionFinder.parents().length-1; ++i)
-            assertEquals("The root should be " + i + ".", unionFinder.root(i), i);
+        for(int box = 2; box < unionFinder.parents().length-1; ++box)
+            assertEquals("The root should be " + box + ".", box, unionFinder.root(box));
     }
 
     /**
@@ -225,30 +233,39 @@ public class BasicUnionFinderTest
     @Test
     public void sizeTest1()
     {
-        for(int i = 0; i < unionFinder.parents().length; ++i)
-            assertEquals("The value should be 1.", unionFinder.size(i), 1);
-        int[] keys = {1, 4, 6, 8, 9};
+        // At the beginning, the size of all boxes should be 1.
+        for(int box = 0; box < unionFinder.parents().length; ++box)
+            assertEquals("The value should be 1.", 1, unionFinder.size(box));
+        // Boxes 2 and 5 are merged.
         unionFinder.mergeChecked(2, 5);
-        for(int key : keys)
+        // To make things easier, all boxes except 2 and 5 are initialized in an array.
+        int[] boxes = {1, 3, 4, 6, 7, 8, 9};
+        // The size of all other boxes other than 2 and 5 should be 5.
+        for(int box : boxes)
+            assertEquals("The value should be 1.", 1, unionFinder.size(box));
+        // The size of super box 2-5 is 2.
+        assertEquals("The size should be 2.", 2, unionFinder.size(2));
+        assertEquals("The size should be 2.", 2, unionFinder.size(5));
+        // All boxes other than 2, 5 and 7 are initialized in an array.
+        boxes = new int[] {1, 3, 4, 6, 8, 9};
+        unionFinder.merge(2, 7);
+        for(int key : boxes)
+            assertEquals("The value should be 1.", 1, unionFinder.size(key));
+        // The size of super box 2-5-7 should be 3.
+        assertEquals("The size should be 3.", 3, unionFinder.size(2));
+        assertEquals("The size should be 3.", 3, unionFinder.size(5));
+        assertEquals("The size should be 3.", 3, unionFinder.size(7));
+        // Boxes 3 and 7 are merged.
+        unionFinder.merge(3, 7);
+        // All boxes other than 2, 3, 5 and 7 are initialized in an array.
+        boxes = new int[] {1, 4, 6, 8, 9};
+        for(int key : boxes)
             assertEquals("The value should be 1.", (int) unionFinder.sizeChecked(key), 1);
-        assertEquals("The size should be 2.", unionFinder.size(2), 2);
-        assertEquals("The size should be 1.", unionFinder.size(3), 1);
-        assertEquals("The size should be 2.", unionFinder.size(5), 2);
-        assertEquals("The size should be 1.", unionFinder.size(7), 1);
-        unionFinder.mergeChecked(2, 7);
-        for(int key : keys)
-            assertEquals("The value should be 1.", (int) unionFinder.sizeChecked(key), 1);
-        assertEquals("The size should be 3.", unionFinder.size(2), 3);
-        assertEquals("The size should be 1.", unionFinder.size(3), 1);
-        assertEquals("The size should be 3.", unionFinder.size(5), 3);
-        assertEquals("The size should be 3.", unionFinder.size(7), 3);
-        unionFinder.mergeChecked(3, 7);
-        for(int key : keys)
-            assertEquals("The value should be 1.", (int) unionFinder.sizeChecked(key), 1);
-        assertEquals("The size should be 4.", unionFinder.size(2), 4);
-        assertEquals("The size should be 4.", unionFinder.size(3), 4);
-        assertEquals("The size should be 4.", unionFinder.size(5), 4);
-        assertEquals("The size should be 4.", unionFinder.size(7), 4);
+        // The size of super box 2-3-5-7 should be 4.
+        assertEquals("The size should be 4.", 4, unionFinder.size(2));
+        assertEquals("The size should be 4.", 4, unionFinder.size(3));
+        assertEquals("The size should be 4.", 4, unionFinder.size(5));
+        assertEquals("The size should be 4.", 4, unionFinder.size(7));
     }
 
     /**
@@ -266,34 +283,47 @@ public class BasicUnionFinderTest
     @Test
     public void sizeCheckedTest()
     {
-        for(int i = 0; i < unionFinder.parents().length; ++i)
-            assertEquals("The value should be 1.", (int) unionFinder.sizeChecked(i), 1);
+        // At the beginning, the size of all boxes should be 1.
+        for(int box = 0; box < unionFinder.parents().length; ++box)
+            assertEquals("The value should be 1.", 1, (int) unionFinder.sizeChecked(box));
+        // Boxes 2 and 5 are merged.
         unionFinder.mergeChecked(2, 5);
-        assertEquals("The size should be 2.", (int) unionFinder.sizeChecked(2), 2);
-        assertEquals("The size should be 1.", (int) unionFinder.sizeChecked(3), 1);
-        assertEquals("The size should be 2.", (int) unionFinder.sizeChecked(5), 2);
-        assertEquals("The size should be 1.", (int) unionFinder.sizeChecked(7), 1);
-        unionFinder.mergeChecked(2, 7);
-        assertEquals("The size should be 3.", (int) unionFinder.sizeChecked(2), 3);
-        assertEquals("The size should be 1.", (int) unionFinder.sizeChecked(3), 1);
-        assertEquals("The size should be 3.", (int) unionFinder.sizeChecked(5), 3);
-        assertEquals("The size should be 3.", (int) unionFinder.sizeChecked(7), 3);
-        unionFinder.mergeChecked(3, 7);
-        assertEquals("The size should be 4.", (int) unionFinder.sizeChecked(2), 4);
-        assertEquals("The size should be 4.", (int) unionFinder.sizeChecked(3), 4);
-        assertEquals("The size should be 4.", (int) unionFinder.sizeChecked(5), 4);
-        assertEquals("The size should be 4.", (int) unionFinder.sizeChecked(7), 4);
-        // Sizes of non-existent boxes should  be null:
+        // To make things easier, all boxes except 2 and 5 are initialized in an array.
+        int[] boxes = {1, 3, 4, 6, 7, 8, 9};
+        // The size of all other boxes other than 2 and 5 should be 5.
+        for(int box : boxes)
+            assertEquals("The value should be 1.", 1, (int) unionFinder.sizeChecked(box));
+        // The size of super box 2-5 is 2.
+        assertEquals("The size should be 2.", 2, (int) unionFinder.sizeChecked(2));
+        assertEquals("The size should be 2.", 2, (int) unionFinder.sizeChecked(5));
+        // All boxes other than 2, 5 and 7 are initialized in an array.
+        boxes = new int[] {1, 3, 4, 6, 8, 9};
+        unionFinder.merge(2, 7);
+        for(int key : boxes)
+            assertEquals("The value should be 1.", 1, unionFinder.size(key));
+        // The size of super box 2-5-7 should be 3.
+        assertEquals("The size should be 3.", 3, (int) unionFinder.sizeChecked(2));
+        assertEquals("The size should be 3.", 3, (int) unionFinder.sizeChecked(5));
+        assertEquals("The size should be 3.", 3, (int) unionFinder.sizeChecked(7));
+        // Sizes of non-existent boxes should  be null. Nothing else should change.
         assertNull("The size should be null.", unionFinder.sizeChecked(100));
         assertNull("The size should be null.", unionFinder.sizeChecked(200));
         assertNull("The size should be null.", unionFinder.sizeChecked(-10));
-        int[] keys = {1, 4, 6, 8, 9};
-        for(int key : keys)
+        // Boxes 3 and 7 are merged.
+        unionFinder.merge(3, 7);
+        // All boxes other than 2, 3, 5 and 7 are initialized in an array.
+        boxes = new int[] {1, 4, 6, 8, 9};
+        for(int key : boxes)
             assertEquals("The value should be 1.", (int) unionFinder.sizeChecked(key), 1);
-        assertEquals("The size should be 4.", (int) unionFinder.sizeChecked(2), 4);
-        assertEquals("The size should be 4.", (int) unionFinder.sizeChecked(3), 4);
-        assertEquals("The size should be 4.", (int) unionFinder.sizeChecked(5), 4);
-        assertEquals("The size should be 4.", (int) unionFinder.sizeChecked(7), 4);
+        // The size of super box 2-3-5-7 should be 4.
+        assertEquals("The size should be 4.", 4, (int) unionFinder.sizeChecked(2));
+        assertEquals("The size should be 4.", 4, (int) unionFinder.sizeChecked(3));
+        assertEquals("The size should be 4.", 4, (int) unionFinder.sizeChecked(5));
+        assertEquals("The size should be 4.", 4, (int) unionFinder.sizeChecked(7));
+        // Sizes of non-existent boxes should  be null. Nothing else should change.
+        assertNull("The size should be null.", unionFinder.sizeChecked(100));
+        assertNull("The size should be null.", unionFinder.sizeChecked(200));
+        assertNull("The size should be null.", unionFinder.sizeChecked(-10));
     }
 
     /**

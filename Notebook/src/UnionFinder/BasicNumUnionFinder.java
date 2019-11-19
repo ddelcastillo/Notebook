@@ -137,7 +137,12 @@ public class BasicNumUnionFinder implements INumUnionFinder
      * @return The array of parents.
      */
     public int[] parents()
-    { return par; }
+    {
+        int[] parents = new int[par.length];
+        for(int i = 0; i < par.length; ++i)
+        { parents[i] = root(i); }
+        return parents;
+    }
 
     /**
      * Transcripts the union finder's contents into a String.
