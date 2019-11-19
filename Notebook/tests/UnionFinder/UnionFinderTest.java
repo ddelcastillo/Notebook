@@ -9,6 +9,9 @@ import java.util.Iterator;
 
 import static org.junit.Assert.*;
 
+/**
+ * Tests that the UnionFinder class works properly.
+ */
 public class UnionFinderTest
 {
     // Attributes

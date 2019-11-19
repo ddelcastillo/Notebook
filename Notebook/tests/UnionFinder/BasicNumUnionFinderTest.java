@@ -6,7 +6,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
- * Tests that the BasicUnionFinder class works properly.
+ * Tests that the BasicNumUnionFinder class works properly.
  */
 public class BasicNumUnionFinderTest
 {

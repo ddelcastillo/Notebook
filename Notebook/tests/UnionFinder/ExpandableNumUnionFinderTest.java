@@ -8,6 +8,9 @@ import java.util.Iterator;
 
 import static org.junit.Assert.*;
 
+/**
+ * Tests that the ExpandableNumUnionFinder class works properly.
+ */
 public class ExpandableNumUnionFinderTest
 {
     // Attributes
