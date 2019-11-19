@@ -1,3 +1,4 @@
+// @formatter:off
 package UnionFinder;
 
 import org.junit.Test;

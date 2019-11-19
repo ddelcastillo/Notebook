@@ -6,14 +6,14 @@ import java.util.Iterator;
 
 /**
  * Class that represents an expandable numerical union finder that isn't
- * restrained by the box's number label.
+ * restrained by the box's number label, i.e., to any specific range.
  * @author Daniel del Castillo A. https://github.com/ddelcastillo
  */
 @Checked
-(note = "Methods with the 'Checked' signature enforce additional checks to avoid errors and to\n" +
-" ensure the structure's correctness in exchange of efficiency. For fastest results, use\n" +
-" the non 'Checked' methods, however, these are liable to: NullPointer exceptions, box size\n" +
-" mismatches and wrong tracking of the number of boxes.")
+(note = "Methods with the 'Checked' signature enforce additional checks to avoid errors and to " +
+"ensure the structure's correctness in exchange of efficiency. For fastest results, use " +
+"the non 'Checked' methods, however, these are liable to: NullPointer exceptions, box size " +
+"mismatches and wrong tracking of the number of boxes.")
 public class ExpandableNumUnionFinder implements INumUnionFinder
 {
     // Attributes

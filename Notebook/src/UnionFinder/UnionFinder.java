@@ -1,7 +1,7 @@
 // @formatter:off
 package UnionFinder;
 
-import java.util.Collection;
+import Util.Checked;import java.util.Collection;
 import java.util.Hashtable;
 import java.util.Iterator;
 
@@ -11,6 +11,11 @@ import java.util.Iterator;
  * Class that represents a generic union finder of boxes with type K.
  * @author Daniel del Castillo A. https://github.com/ddelcastillo
  */
+@Checked
+(note = "Methods with the 'Checked' signature enforce additional checks to avoid errors and to " +
+"ensure the structure's correctness in exchange of efficiency. For fastest results, use " +
+"the non 'Checked' methods, however, these are liable to: NullPointer exceptions, key-value " +
+"mismatches in the corresponding hashtable and wrong tracking of the number of boxes.")
 public class UnionFinder<K> implements IUnionFinder<K>
 {
     // Attributes
