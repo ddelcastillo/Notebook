@@ -8,7 +8,7 @@ import static org.junit.Assert.*;
 /**
  * Tests that the BasicUnionFinder class works properly.
  */
-public class BasicUnionFinderTest
+public class BasicNumUnionFinderTest
 {
     // Attributes
 
