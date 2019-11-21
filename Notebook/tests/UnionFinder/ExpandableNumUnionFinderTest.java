@@ -53,8 +53,8 @@ public class ExpandableNumUnionFinderTest
     {
         setup1();
         assertNotNull("The union finder shouldn't be null.", unionFinder);
-        assertEquals("The size should be 0.", unionFinder.parents().size(), 0);
-        assertEquals("The number of boxes should be 0.", unionFinder.totalRoots(), 0);
+        assertEquals("The size should be 0.", 0, unionFinder.parents().size());
+        assertEquals("The number of boxes should be 0.", 0, unionFinder.totalRoots());
     }
 
     /**
