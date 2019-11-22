@@ -199,7 +199,7 @@ public class ExpandableNumUnionFinder implements INumUnionFinder
     { return par.containsKey(x) ? size(x) : null; }
 
     /**
-     * @return The number of boxes that are not in union (including super-boxes).
+     * @return The hashtable of parents.
      */
     public int totalRoots()
     { return numBoxes; }
@@ -208,7 +208,12 @@ public class ExpandableNumUnionFinder implements INumUnionFinder
      * @return The Hashtable with the parents. 0 if its itself, -x for the parent x.
      */
     public Hashtable<Integer, Integer> parents()
-    { return par; }
+    {
+        Hashtable<Integer, Integer> parents = new Hashtable<>(par.size());
+        for(Integer box : par.keySet())
+            parents.put(box, root(box));
+        return parents;
+    }
 
     /**
      * Transcripts the union finder's contents into a String.

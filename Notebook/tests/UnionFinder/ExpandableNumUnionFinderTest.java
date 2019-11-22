@@ -45,6 +45,8 @@ public class ExpandableNumUnionFinderTest
 
     // Tests
 
+    // TODO Document step-bys-step tests.
+
     /**
      * Tests that the empty union finder is correctly initialized.
      */
@@ -65,13 +67,13 @@ public class ExpandableNumUnionFinderTest
     {
         setup2();
         assertNotNull("The union finder shouldn't be null.", unionFinder);
-        assertEquals("The size should be 10.", unionFinder.parents().size(), 10);
-        assertEquals("The number of boxes should be 10.", unionFinder.totalRoots(), 10);
+        assertEquals("The size should be 10.", 10, unionFinder.parents().size());
+        assertEquals("The number of boxes should be 10.", 10, unionFinder.totalRoots());
         Hashtable<Integer, Integer> par = unionFinder.parents();
         for(int i = 0; i < par.size(); ++i)
         {
             assertTrue("The table should contain the key.", par.containsKey(i));
-            assertEquals("The value should be -1.", (int) par.get(i), -1);
+            assertEquals("The parent should be itself.", (int) par.get(i), i);
         }
     }
 
@@ -84,15 +86,17 @@ public class ExpandableNumUnionFinderTest
         setup3();
         int[] indexes = {2, 3, 5, 7};
         assertNotNull("The union finder shouldn't be null.", unionFinder);
-        assertEquals("The size should be 4.", unionFinder.parents().size(), 4);
-        assertEquals("The number of boxes should be 4.", unionFinder.totalRoots(), 4);
+        assertEquals("The size should be 4.", 4, unionFinder.parents().size());
+        assertEquals("The number of boxes should be 4.", 4, unionFinder.totalRoots());
         Hashtable<Integer, Integer> par = unionFinder.parents();
         for(int i : indexes)
         {
             assertTrue("The table should contain the key.", par.containsKey(i));
-            assertEquals("The value should be -1.", (int) par.get(i), -1);
+            assertEquals("The parent should be itself.", i, (int) par.get(i));
         }
     }
+
+    // TODO Fix everything to match new parents() method.
 
     /**
      * Tests that the union finder with boxes whose labels are 2, 3, 5 and 7 is correctly initialized.
