@@ -54,6 +54,7 @@ public class ExpandableNumUnionFinderTest
     public void initializationTest1()
     {
         setup1();
+        // The union shouldn't be null and should have 0 parents and boxes.
         assertNotNull("The union finder shouldn't be null.", unionFinder);
         assertEquals("The size should be 0.", 0, unionFinder.parents().size());
         assertEquals("The number of boxes should be 0.", 0, unionFinder.totalRoots());
@@ -66,15 +67,14 @@ public class ExpandableNumUnionFinderTest
     public void initializationTest2()
     {
         setup2();
+        // The union shouldn't be null and should have 10 parents (10 boxes).
         assertNotNull("The union finder shouldn't be null.", unionFinder);
         assertEquals("The size should be 10.", 10, unionFinder.parents().size());
         assertEquals("The number of boxes should be 10.", 10, unionFinder.totalRoots());
-        Hashtable<Integer, Integer> par = unionFinder.parents();
-        for(int i = 0; i < par.size(); ++i)
-        {
-            assertTrue("The table should contain the key.", par.containsKey(i));
-            assertEquals("The parent should be itself.", (int) par.get(i), i);
-        }
+        // At the beginning, every box should be its own parent.
+        Hashtable<Integer, Integer> parents = unionFinder.parents();
+        for(int box = 0; box < parents.size(); ++box)
+            assertEquals("The parent should be itself.", (int) parents.get(box), box);
     }
 
     /**
@@ -84,19 +84,16 @@ public class ExpandableNumUnionFinderTest
     public void initializationTest3()
     {
         setup3();
-        int[] indexes = {2, 3, 5, 7};
+        // The union shouldn't be null and should have 4 parents (4 boxes).
+        int[] boxes = {2, 3, 5, 7};
         assertNotNull("The union finder shouldn't be null.", unionFinder);
         assertEquals("The size should be 4.", 4, unionFinder.parents().size());
         assertEquals("The number of boxes should be 4.", 4, unionFinder.totalRoots());
-        Hashtable<Integer, Integer> par = unionFinder.parents();
-        for(int i : indexes)
-        {
-            assertTrue("The table should contain the key.", par.containsKey(i));
-            assertEquals("The parent should be itself.", i, (int) par.get(i));
-        }
+        // At the beginning, every box should be its own parent.
+        Hashtable<Integer, Integer> parents = unionFinder.parents();
+        for(int box : boxes)
+            assertEquals("The parent should be itself.", box, (int) parents.get(box));
     }
-
-    // TODO Fix everything to match new parents() method.
 
     /**
      * Tests that the union finder with boxes whose labels are 2, 3, 5 and 7 is correctly initialized.
@@ -104,20 +101,19 @@ public class ExpandableNumUnionFinderTest
     @Test
     public void initializationTest4()
     {
-        int[] indexes = {2, 3, 5, 7};
+        int[] boxes = {2, 3, 5, 7};
         ArrayList<Integer> array = new ArrayList<>();
-        for(int index : indexes)
-            array.add(index);
+        for(int box : boxes)
+            array.add(box);
         unionFinder = new ExpandableNumUnionFinder(array);
+        // The union shouldn't be null and should have 4 parents (4 boxes).
         assertNotNull("The union finder shouldn't be null.", unionFinder);
-        assertEquals("The size should be 4.", unionFinder.parents().size(), 4);
-        assertEquals("The number of boxes should be 4.", unionFinder.totalRoots(), 4);
-        Hashtable<Integer, Integer> par = unionFinder.parents();
-        for(int i : indexes)
-        {
-            assertTrue("The table should contain the key.", par.containsKey(i));
-            assertEquals("The value should be -1.", (int) par.get(i), -1);
-        }
+        assertEquals("The size should be 4.", 4, unionFinder.parents().size());
+        assertEquals("The number of boxes should be 4.", 4, unionFinder.totalRoots());
+        // At the beginning, every box should be its own parent.
+        Hashtable<Integer, Integer> parents = unionFinder.parents();
+        for(int box : boxes)
+            assertEquals("The parent should be itself.", box, (int) parents.get(box));
     }
 
     /**
@@ -127,17 +123,16 @@ public class ExpandableNumUnionFinderTest
     public void initializationTest5()
     {
         setup3();
-        int[] indexes = {2, 3, 5, 7};
+        int[] boxes = {2, 3, 5, 7};
         ExpandableNumUnionFinder newUnionFinder = new ExpandableNumUnionFinder(unionFinder);
+        // The union shouldn't be null and should have 4 parents (4 boxes).
         assertNotNull("The union finder shouldn't be null.", newUnionFinder);
-        assertEquals("The size should be 4.", newUnionFinder.parents().size(), 4);
-        assertEquals("The number of boxes should be 4.", newUnionFinder.totalRoots(), 4);
-        Hashtable<Integer, Integer> par = newUnionFinder.parents();
-        for(int i : indexes)
-        {
-            assertTrue("The table should contain the key.", par.containsKey(i));
-            assertEquals("The value should be -1.", (int) par.get(i), -1);
-        }
+        assertEquals("The size should be 4.", 4, newUnionFinder.parents().size());
+        assertEquals("The number of boxes should be 4.", 4, newUnionFinder.totalRoots());
+        // At the beginning, every box should be its own parent.
+        Hashtable<Integer, Integer> parents = newUnionFinder.parents();
+        for(int box : boxes)
+            assertEquals("The parent should be itself.", box, (int) parents.get(box));
     }
 
     /**
@@ -147,21 +142,23 @@ public class ExpandableNumUnionFinderTest
     public void initializationTest6()
     {
         setup2();
+        // Boxes 1 and 2, and 8 and 9 are merged.
         unionFinder.merge(1, 2);
         unionFinder.merge(8, 9);
         ExpandableNumUnionFinder newUnionFinder = new ExpandableNumUnionFinder(unionFinder);
-        // Since boxes 1 and 2, and 8 and 9 are merged, there should be 8 boxes but par of size 10.
+        // Since boxes 1 and 2, and 8 and 9 are merged, there should be 8 boxes but parents of size 10.
+        // The union shouldn't be null.
         assertNotNull("The union finder shouldn't be null.", newUnionFinder);
-        assertEquals("The maximum size should be 10.", newUnionFinder.parents().size(), 10);
-        assertEquals("The number of boxes should be 8.", newUnionFinder.totalRoots(), 8);
-        // The roots should  be stored.
-        assertEquals("The root should be itself.", newUnionFinder.root(1), 1);
-        assertEquals("The root should be 1.", newUnionFinder.root(2), 1);
-        assertEquals("The root should be itself.", newUnionFinder.root(8), 8);
-        assertEquals("The root should be 8.", newUnionFinder.root(9), 8);
-        assertEquals("The size should be 2.", newUnionFinder.size(2), 2);
-        assertEquals("The size should be 2.", newUnionFinder.size(8), 2);
+        assertEquals("The maximum size should be 10.", 10, newUnionFinder.parents().size());
+        assertEquals("The number of boxes should be 8.", 8, newUnionFinder.totalRoots());
+        // The roots should  be stored correctly.
+        assertEquals("The root should be itself.", 1, newUnionFinder.root(1));
+        assertEquals("The root should be 1.", 1, newUnionFinder.root(2));
+        assertEquals("The root should be itself.", 8, newUnionFinder.root(8));
+        assertEquals("The root should be 8.", 8, newUnionFinder.root(9));
     }
+
+    // TODO Fix everything to match new parents() method.
 
     /**
      * Tests that the union finder adds boxes properly.
