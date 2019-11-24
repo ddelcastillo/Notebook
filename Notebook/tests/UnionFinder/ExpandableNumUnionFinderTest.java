@@ -156,6 +156,22 @@ public class ExpandableNumUnionFinderTest
         assertEquals("The root should be 1.", 1, newUnionFinder.root(2));
         assertEquals("The root should be itself.", 8, newUnionFinder.root(8));
         assertEquals("The root should be 8.", 8, newUnionFinder.root(9));
+        Hashtable<Integer, Integer> parents = newUnionFinder.parents();
+        // The parent of 2 should be 1 and the parent of 9 should be 8. The rest, the parent should be themselves.
+        for(Integer box : parents.keySet())
+        {
+            switch(box)
+            {
+                case 2:
+                    assertEquals("The parent should be 1.", 1, (int) parents.get(box));
+                    break;
+                case 9:
+                    assertEquals("The parent should be 8.", 8, (int) parents.get(box));
+                    break;
+                default:
+                    assertEquals("The parent should be itself.", box, parents.get(box));
+            }
+        }
     }
 
     // TODO Fix everything to match new parents() method.
