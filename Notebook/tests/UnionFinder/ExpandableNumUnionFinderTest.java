@@ -285,67 +285,57 @@ public class ExpandableNumUnionFinderTest
     }
 
     /**
-     * Tests that the root of a non-existent box ends up with a NullPointerException.
-     */
-    @Test(expected = NullPointerException.class)
-    public void addTest3()
-    {
-        // Searching for the key should result in null.
-        setup1(); unionFinder.root(100);
-    }
-
-    // TODO fix parents.
-
-    /**
      * Tests that the union finder adds and checks boxes properly.
      */
     @Test
     public void addCheckedTest()
     {
         setup1();
-        // A box 10 will be added:
-        unionFinder.addChecked(10);
-        assertEquals("The size should be 1.", unionFinder.parents().size(), 1);
-        assertEquals("The number of boxes should be 1.", unionFinder.totalRoots(), 1);
-        // Another box 20 will be added:
-        unionFinder.addChecked(20);
-        assertEquals("The size should be 2.", unionFinder.parents().size(), 2);
-        assertEquals("The number of boxes should be 2.", unionFinder.totalRoots(), 2);
-        // Another box 30 will be added:
-        unionFinder.addChecked(30);
-        assertEquals("The size should be 3.", unionFinder.parents().size(), 3);
-        assertEquals("The number of boxes should be 3.", unionFinder.totalRoots(), 3);
-        // Boxes 10 and 20 will be merged. Now, there should be 2 boxes:
+        // Box 10 will be added.
+        unionFinder.add(10);
+        assertEquals("The number of parents should be 1.", 1, unionFinder.parents().size());
+        assertEquals("The number of boxes should be 1.", 1, unionFinder.totalRoots());
+        // Box 20 will be added.
+        unionFinder.add(20);
+        assertEquals("The number of parents should be 2.", 2, unionFinder.parents().size());
+        assertEquals("The number of boxes should be 2.", 2, unionFinder.totalRoots());
+        // Box 30 will be added.
+        unionFinder.add(30);
+        assertEquals("The number of parents should be 3.", 3, unionFinder.parents().size());
+        assertEquals("The number of boxes should be 3.", 3, unionFinder.totalRoots());
+        // Boxes 10 and 20 will be merged. Now, there should be 2 boxes.
         unionFinder.merge(10, 20);
-        assertEquals("The size should be 3.", unionFinder.parents().size(), 3);
-        assertEquals("The number of boxes should be 2.", unionFinder.totalRoots(), 2);
-        assertEquals("The root of the box should be itself.", unionFinder.root(10), 10);
-        assertEquals("The root of the box should be 10.", unionFinder.root(20), 10);
-        assertEquals("The root of the box should be itself.", unionFinder.root(30), 30);
-        assertEquals("The size of the union should be 2.", unionFinder.size(10), 2);
-        assertEquals("The size of the union should be 2.", unionFinder.size(20), 2);
-        assertEquals("The size of the union should be 1.", unionFinder.size(30), 1);
+        assertEquals("The number of parents should be 3.", 3, unionFinder.parents().size());
+        assertEquals("The number of boxes should be 2.", 2, unionFinder.totalRoots());
+        assertEquals("The root of the box should be itself.", 10, unionFinder.root(10));
+        assertEquals("The root of the box should be 10.", 10, unionFinder.root(20));
+        assertEquals("The root of the box should be itself.", 30, unionFinder.root(30));
+        assertEquals("The size of the union should be 2.", 2, unionFinder.size(10));
+        assertEquals("The size of the union should be 2.", 2, unionFinder.size(20));
+        assertEquals("The size of the union should be 1.", 1, unionFinder.size(30));
         // Now box 10 will be added again. Nothing should happen, as bos 10 already exists.
         unionFinder.addChecked(10);
-        assertEquals("The size should be 3.", unionFinder.parents().size(), 3);
-        assertEquals("The number of boxes should be 2.", unionFinder.totalRoots(), 2);
-        assertEquals("The root of the box should be itself.", unionFinder.root(10), 10);
-        assertEquals("The root of the box should be 10.", unionFinder.root(20), 10);
-        assertEquals("The root of the box should be itself.", unionFinder.root(30), 30);
-        assertEquals("The size of the union should be 2.", unionFinder.size(10), 2);
-        assertEquals("The size of the union should be 2.", unionFinder.size(20), 2);
-        assertEquals("The size of the union should be 1.", unionFinder.size(30), 1);
+        assertEquals("The number of parents should be 3.", 3, unionFinder.parents().size());
+        assertEquals("The number of boxes should be 2.", 2, unionFinder.totalRoots());
+        assertEquals("The root of the box should be itself.", 10, unionFinder.root(10));
+        assertEquals("The root of the box should be 10.", 10, unionFinder.root(20));
+        assertEquals("The root of the box should be itself.", 30, unionFinder.root(30));
+        assertEquals("The size of the union should be 2.", 2, unionFinder.size(10));
+        assertEquals("The size of the union should be 2.", 2, unionFinder.size(20));
+        assertEquals("The size of the union should be 1.", 1, unionFinder.size(30));
         // Boxes 10 and 20 will be added and boxes 10 and 20 will be merged again. Nothing should happen.
         unionFinder.addChecked(10); unionFinder.addChecked(20); unionFinder.merge(10, 20);
-        assertEquals("The size should be 3.", unionFinder.parents().size(), 3);
-        assertEquals("The number of boxes should be 2.", unionFinder.totalRoots(), 2);
-        assertEquals("The root of the box should be itself.", unionFinder.root(10), 10);
-        assertEquals("The root of the box should be 10.", unionFinder.root(20), 10);
-        assertEquals("The root of the box should be itself.", unionFinder.root(30), 30);
-        assertEquals("The size of the union should be 2.", unionFinder.size(10), 2);
-        assertEquals("The size of the union should be 2.", unionFinder.size(20), 2);
-        assertEquals("The size of the union should be 1.", unionFinder.size(30), 1);
+        assertEquals("The number of parents should be 3.", 3, unionFinder.parents().size());
+        assertEquals("The number of boxes should be 2.", 2, unionFinder.totalRoots());
+        assertEquals("The root of the box should be itself.", 10, unionFinder.root(10));
+        assertEquals("The root of the box should be 10.", 10, unionFinder.root(20));
+        assertEquals("The root of the box should be itself.", 30, unionFinder.root(30));
+        assertEquals("The size of the union should be 2.", 2, unionFinder.size(10));
+        assertEquals("The size of the union should be 2.", 2, unionFinder.size(20));
+        assertEquals("The size of the union should be 1.", 1, unionFinder.size(30));
     }
+
+    // TODO fix parents.
 
     /**
      * Tests that the union finder finds and assigns roots properly.
