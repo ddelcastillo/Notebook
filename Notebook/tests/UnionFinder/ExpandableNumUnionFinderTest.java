@@ -344,25 +344,29 @@ public class ExpandableNumUnionFinderTest
     public void rootTest1()
     {
         setup1();
-        // Boxes 10 and 30 will be added:
+        // Boxes 10 and 30 will be added.
         unionFinder.add(10); unionFinder.add(30);
-        assertEquals("The root of the box should be itself.", unionFinder.root(10), 10);
-        assertEquals("The root of the box should be itself.", unionFinder.root(30), 30);
-        // Box 20 will be added:
+        // The root of both boxes should be themselves.
+        assertEquals("The root of the box should be itself.", 10, unionFinder.root(10));
+        assertEquals("The root of the box should be itself.", 30, unionFinder.root(30));
+        // Box 20 will be added.
         unionFinder.add(20);
-        assertEquals("The root of the box should be itself.", unionFinder.root(10), 10);
-        assertEquals("The root of the box should be itself.", unionFinder.root(20), 20);
-        assertEquals("The root of the box should be itself.", unionFinder.root(30), 30);
-        // Boxes 10 and 30 will be merged:
+        // The roof of the three boxes should be themselves.
+        assertEquals("The root of the box should be itself.", 10, unionFinder.root(10));
+        assertEquals("The root of the box should be itself.", 20, unionFinder.root(20));
+        assertEquals("The root of the box should be itself.", 30, unionFinder.root(30));
+        // Boxes 10 and 30 will be merged.
         unionFinder.merge(10, 30);
-        assertEquals("The root of the box should be itself.", unionFinder.root(10), 10);
-        assertEquals("The root of the box should be itself.", unionFinder.root(20), 20);
-        assertEquals("The root of the box should be 10.", unionFinder.root(30), 10);
-        // Boxes 30 and 20 will be merged:
+        // The root of boxes 10 and 20 should be themselves, but the root of 30 is now 10.
+        assertEquals("The root of the box should be itself.", 10, unionFinder.root(10));
+        assertEquals("The root of the box should be itself.", 20, unionFinder.root(20));
+        assertEquals("The root of the box should be 10.", 10, unionFinder.root(30));
+        // Boxes 30 and 20 will be merged.
         unionFinder.merge(30, 20);
-        assertEquals("The root of the box should be itself.", unionFinder.root(10), 10);
-        assertEquals("The root of the box should be 10.", unionFinder.root(20), 10);
-        assertEquals("The root of the box should be 10.", unionFinder.root(30), 10);
+        // Now, the root of 20 should be the same root as 30, i.e., 10. The root of 10 should still be itself.
+        assertEquals("The root of the box should be itself.", 10, unionFinder.root(10));
+        assertEquals("The root of the box should be 10.", 10, unionFinder.root(20));
+        assertEquals("The root of the box should be 10.", 10, unionFinder.root(30));
     }
 
     /**
