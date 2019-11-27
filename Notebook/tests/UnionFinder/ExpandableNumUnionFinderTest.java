@@ -386,17 +386,10 @@ public class ExpandableNumUnionFinderTest
     public void rootCheckedTest()
     {
         setup2();
-        Hashtable<Integer, Integer> par = unionFinder.parents();
-        Iterator<Integer> iterator = par.keySet().iterator();
-        int key;
-        while(iterator.hasNext())
-        {
-            key = iterator.next();
-            assertTrue("The table should contain the key.", par.containsKey(key));
-            assertEquals("The value should be -1.", (int) par.get(key), -1);
-            assertEquals("The root of the key should be itself.", (int) unionFinder.rootChecked(key), key);
-        }
-        // Access to non-existent boxes should return null:
+        Hashtable<Integer, Integer> parents = unionFinder.parents();
+        for(Integer box : parents.keySet())
+            assertEquals("The parent should be itself.", box, unionFinder.rootChecked(box));
+        // Access to non-existent boxes should return null.
         assertNull("The root should be null since it doesn't exist.", unionFinder.rootChecked(200));
         assertNull("The root should be null since it doesn't exist.", unionFinder.rootChecked(10));
         assertNull("The root should be null since it doesn't exist.", unionFinder.rootChecked(-200));
