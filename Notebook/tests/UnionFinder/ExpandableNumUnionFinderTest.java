@@ -385,10 +385,30 @@ public class ExpandableNumUnionFinderTest
     @Test
     public void rootCheckedTest()
     {
-        setup2();
-        Hashtable<Integer, Integer> parents = unionFinder.parents();
-        for(Integer box : parents.keySet())
-            assertEquals("The parent should be itself.", box, unionFinder.rootChecked(box));
+        setup1();
+        // Boxes 10 and 30 will be added.
+        unionFinder.add(10); unionFinder.add(30);
+        // The root of both boxes should be themselves.
+        assertEquals("The root of the box should be itself.", 10, (int) unionFinder.rootChecked(10));
+        assertEquals("The root of the box should be itself.", 30, (int) unionFinder.rootChecked(30));
+        // Box 20 will be added.
+        unionFinder.add(20);
+        // The roof of the three boxes should be themselves.
+        assertEquals("The root of the box should be itself.", 10, (int) unionFinder.rootChecked(10));
+        assertEquals("The root of the box should be itself.", 20, (int) unionFinder.rootChecked(20));
+        assertEquals("The root of the box should be itself.", 30, (int) unionFinder.rootChecked(30));
+        // Boxes 10 and 30 will be merged.
+        unionFinder.merge(10, 30);
+        // The root of boxes 10 and 20 should be themselves, but the root of 30 is now 10.
+        assertEquals("The root of the box should be itself.", 10, (int) unionFinder.rootChecked(10));
+        assertEquals("The root of the box should be itself.", 20, (int) unionFinder.rootChecked(20));
+        assertEquals("The root of the box should be 10.", 10, (int) unionFinder.rootChecked(30));
+        // Boxes 30 and 20 will be merged.
+        unionFinder.merge(30, 20);
+        // Now, the root of 20 should be the same root as 30, i.e., 10. The root of 10 should still be itself.
+        assertEquals("The root of the box should be itself.", 10, (int) unionFinder.rootChecked(10));
+        assertEquals("The root of the box should be 10.", 10, (int) unionFinder.rootChecked(20));
+        assertEquals("The root of the box should be 10.", 10, (int) unionFinder.rootChecked(30));
         // Access to non-existent boxes should return null.
         assertNull("The root should be null since it doesn't exist.", unionFinder.rootChecked(200));
         assertNull("The root should be null since it doesn't exist.", unionFinder.rootChecked(10));
