@@ -555,27 +555,37 @@ public class ExpandableNumUnionFinderTest
         for(Integer box : parents.keySet())
             assertEquals("The size should be 1.", 1, unionFinder.size(box));
         unionFinder.mergeChecked(2, 5);
+        // Since boxes 2 and 5 are merged, their super-box is of size 2. The rest, 1.
+        assertEquals("The number of boxes should be 3.", 3, unionFinder.totalRoots());
         assertEquals("The size should be 2.", 2, unionFinder.size(2));
         assertEquals("The size should be 1.", 1, unionFinder.size(3));
         assertEquals("The size should be 2.", 2, unionFinder.size(5));
         assertEquals("The size should be 1.", 1, unionFinder.size(7));
         unionFinder.mergeChecked(2, 7);
+        // Since boxes 2 and 7 are merged, their super-box is of size 3. The rest, 1.
+        assertEquals("The number of boxes should be 2.", 2, unionFinder.totalRoots());
         assertEquals("The size should be 3.", 3, unionFinder.size(2));
         assertEquals("The size should be 1.", 1, unionFinder.size(3));
         assertEquals("The size should be 3.", 3, unionFinder.size(5));
         assertEquals("The size should be 3.", 3, unionFinder.size(7));
         unionFinder.mergeChecked(3, 7);
+        // All of the boxes are merged, so there should be a single super-box of size 4.
+        assertEquals("The number of boxes should be 1.", 1, unionFinder.totalRoots());
         assertEquals("The size should be 4.", 4, unionFinder.size(2));
         assertEquals("The size should be 4.", 4, unionFinder.size(3));
         assertEquals("The size should be 4.", 4, unionFinder.size(5));
         assertEquals("The size should be 4.", 4, unionFinder.size(7));
         unionFinder.addChecked(100);
+        // The super box 2-3-5-7 should still have a size of 4, and the new box 100, size 1.
+        assertEquals("The number of boxes should be 2.", 2, unionFinder.totalRoots());
         assertEquals("The size should be 4.", 4, unionFinder.size(2));
         assertEquals("The size should be 4.", 4, unionFinder.size(3));
         assertEquals("The size should be 4.", 4, unionFinder.size(5));
         assertEquals("The size should be 4.", 4, unionFinder.size(7));
         assertEquals("The size should be 1.", 1, unionFinder.size(100));
         unionFinder.mergeChecked(2, 100);
+        // All of the boxes are merged, so there should be a single super-box of size 5.
+        assertEquals("The number of boxes should be 1.", 1, unionFinder.totalRoots());
         assertEquals("The size should be 5.", 5, unionFinder.size(2));
         assertEquals("The size should be 5.", 5, unionFinder.size(3));
         assertEquals("The size should be 5.", 5, unionFinder.size(5));
