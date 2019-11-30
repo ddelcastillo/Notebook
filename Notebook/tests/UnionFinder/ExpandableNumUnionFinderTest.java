@@ -550,41 +550,37 @@ public class ExpandableNumUnionFinderTest
     public void sizeTest1()
     {
         setup3();
-        Hashtable<Integer, Integer> par = unionFinder.parents();
-        Iterator<Integer> iterator = par.keySet().iterator();
-        int key;
-        while(iterator.hasNext())
-        {
-            key = iterator.next();
-            assertEquals("The value should be 1.", unionFinder.size(key), 1);
-        }
+        Hashtable<Integer, Integer> parents = unionFinder.parents();
+        // The size of every box at the beginning should be 1.
+        for(Integer box : parents.keySet())
+            assertEquals("The size should be 1.", 1, unionFinder.size(box));
         unionFinder.mergeChecked(2, 5);
-        assertEquals("The size should be 2.", unionFinder.size(2), 2);
-        assertEquals("The size should be 1.", unionFinder.size(3), 1);
-        assertEquals("The size should be 2.", unionFinder.size(5), 2);
-        assertEquals("The size should be 1.", unionFinder.size(7), 1);
+        assertEquals("The size should be 2.", 2, unionFinder.size(2));
+        assertEquals("The size should be 1.", 1, unionFinder.size(3));
+        assertEquals("The size should be 2.", 2, unionFinder.size(5));
+        assertEquals("The size should be 1.", 1, unionFinder.size(7));
         unionFinder.mergeChecked(2, 7);
-        assertEquals("The size should be 3.", unionFinder.size(2), 3);
-        assertEquals("The size should be 1.", unionFinder.size(3), 1);
-        assertEquals("The size should be 3.", unionFinder.size(5), 3);
-        assertEquals("The size should be 3.", unionFinder.size(7), 3);
+        assertEquals("The size should be 3.", 3, unionFinder.size(2));
+        assertEquals("The size should be 1.", 1, unionFinder.size(3));
+        assertEquals("The size should be 3.", 3, unionFinder.size(5));
+        assertEquals("The size should be 3.", 3, unionFinder.size(7));
         unionFinder.mergeChecked(3, 7);
-        assertEquals("The size should be 4.", unionFinder.size(2), 4);
-        assertEquals("The size should be 4.", unionFinder.size(3), 4);
-        assertEquals("The size should be 4.", unionFinder.size(5), 4);
-        assertEquals("The size should be 4.", unionFinder.size(7), 4);
+        assertEquals("The size should be 4.", 4, unionFinder.size(2));
+        assertEquals("The size should be 4.", 4, unionFinder.size(3));
+        assertEquals("The size should be 4.", 4, unionFinder.size(5));
+        assertEquals("The size should be 4.", 4, unionFinder.size(7));
         unionFinder.addChecked(100);
-        assertEquals("The size should be 4.", unionFinder.size(2), 4);
-        assertEquals("The size should be 4.", unionFinder.size(3), 4);
-        assertEquals("The size should be 4.", unionFinder.size(7), 4);
-        assertEquals("The size should be 4.", unionFinder.size(5), 4);
-        assertEquals("The size should be 1.", unionFinder.size(100), 1);
+        assertEquals("The size should be 4.", 4, unionFinder.size(2));
+        assertEquals("The size should be 4.", 4, unionFinder.size(3));
+        assertEquals("The size should be 4.", 4, unionFinder.size(5));
+        assertEquals("The size should be 4.", 4, unionFinder.size(7));
+        assertEquals("The size should be 1.", 1, unionFinder.size(100));
         unionFinder.mergeChecked(2, 100);
-        assertEquals("The size should be 5.", unionFinder.size(2), 5);
-        assertEquals("The size should be 5.", unionFinder.size(3), 5);
-        assertEquals("The size should be 5.", unionFinder.size(7), 5);
-        assertEquals("The size should be 5.", unionFinder.size(5), 5);
-        assertEquals("The size should be 5.", unionFinder.size(100), 5);
+        assertEquals("The size should be 5.", 5, unionFinder.size(2));
+        assertEquals("The size should be 5.", 5, unionFinder.size(3));
+        assertEquals("The size should be 5.", 5, unionFinder.size(5));
+        assertEquals("The size should be 5.", 5, unionFinder.size(7));
+        assertEquals("The size should be 5.", 5, unionFinder.size(100));
     }
 
     /**
