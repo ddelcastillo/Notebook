@@ -610,24 +610,47 @@ public class ExpandableNumUnionFinderTest
     public void testSizeChecked()
     {
         setup3();
-        Hashtable<Integer, Integer> par = unionFinder.parents();
-        Iterator<Integer> iterator = par.keySet().iterator();
-        int key;
-        while(iterator.hasNext())
-        {
-            key = iterator.next();
-            assertEquals("The value should be 1.", (int) unionFinder.sizeChecked(key), 1);
-        }
+        Hashtable<Integer, Integer> parents = unionFinder.parents();
+        // The size of every box at the beginning should be 1.
+        for(Integer box : parents.keySet())
+            assertEquals("The size should be 1.", 1, (int) unionFinder.sizeChecked(box));
         unionFinder.mergeChecked(2, 5);
-        assertEquals("The size should be 2.", (int) unionFinder.sizeChecked(2), 2);
-        assertEquals("The size should be 1.", (int) unionFinder.sizeChecked(3), 1);
-        assertEquals("The size should be 2.", (int) unionFinder.sizeChecked(5), 2);
-        assertEquals("The size should be 1.", (int) unionFinder.sizeChecked(7), 1);
+        // Since boxes 2 and 5 are merged, their super-box is of size 2. The rest, 1.
+        assertEquals("The number of boxes should be 3.", 3, unionFinder.totalRoots());
+        assertEquals("The size should be 2.", 2, (int) unionFinder.sizeChecked(2));
+        assertEquals("The size should be 1.", 1, (int) unionFinder.sizeChecked(3));
+        assertEquals("The size should be 2.", 2, (int) unionFinder.sizeChecked(5));
+        assertEquals("The size should be 1.", 1, (int) unionFinder.sizeChecked(7));
         unionFinder.mergeChecked(2, 7);
-        assertEquals("The size should be 3.", (int) unionFinder.sizeChecked(2), 3);
-        assertEquals("The size should be 1.", (int) unionFinder.sizeChecked(3), 1);
-        assertEquals("The size should be 3.", (int) unionFinder.sizeChecked(5), 3);
-        assertEquals("The size should be 3.", (int) unionFinder.sizeChecked(7), 3);
+        // Since boxes 2 and 7 are merged, their super-box is of size 3. The rest, 1.
+        assertEquals("The number of boxes should be 2.", 2, unionFinder.totalRoots());
+        assertEquals("The size should be 3.", 3, (int) unionFinder.sizeChecked(2));
+        assertEquals("The size should be 1.", 1, (int) unionFinder.sizeChecked(3));
+        assertEquals("The size should be 3.", 3, (int) unionFinder.sizeChecked(5));
+        assertEquals("The size should be 3.", 3, (int) unionFinder.sizeChecked(7));
+        unionFinder.mergeChecked(3, 7);
+        // All of the boxes are merged, so there should be a single super-box of size 4.
+        assertEquals("The number of boxes should be 1.", 1, unionFinder.totalRoots());
+        assertEquals("The size should be 4.", 4, (int) unionFinder.sizeChecked(2));
+        assertEquals("The size should be 4.", 4, (int) unionFinder.sizeChecked(3));
+        assertEquals("The size should be 4.", 4, (int) unionFinder.sizeChecked(5));
+        assertEquals("The size should be 4.", 4, (int) unionFinder.sizeChecked(7));
+        unionFinder.addChecked(100);
+        // The super box 2-3-5-7 should still have a size of 4, and the new box 100, size 1.
+        assertEquals("The number of boxes should be 2.", 2, unionFinder.totalRoots());
+        assertEquals("The size should be 4.", 4, (int) unionFinder.sizeChecked(2));
+        assertEquals("The size should be 4.", 4, (int) unionFinder.sizeChecked(3));
+        assertEquals("The size should be 4.", 4, (int) unionFinder.sizeChecked(5));
+        assertEquals("The size should be 4.", 4, (int) unionFinder.sizeChecked(7));
+        assertEquals("The size should be 1.", 1, (int) unionFinder.sizeChecked(100));
+        unionFinder.mergeChecked(2, 100);
+        // All of the boxes are merged, so there should be a single super-box of size 5.
+        assertEquals("The number of boxes should be 1.", 1, unionFinder.totalRoots());
+        assertEquals("The size should be 5.", 5, (int) unionFinder.sizeChecked(2));
+        assertEquals("The size should be 5.", 5, (int) unionFinder.sizeChecked(3));
+        assertEquals("The size should be 5.", 5, (int) unionFinder.sizeChecked(5));
+        assertEquals("The size should be 5.", 5, (int) unionFinder.sizeChecked(7));
+        assertEquals("The size should be 5.", 5, (int) unionFinder.sizeChecked(100));
         // The size check of a non-existent box shouldn't change anything.
         assertNull("The box size shouldn't exist.", unionFinder.sizeChecked(200));
         assertNull("The box size shouldn't exist.", unionFinder.sizeChecked(10));
