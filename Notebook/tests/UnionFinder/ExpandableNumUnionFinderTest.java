@@ -45,8 +45,6 @@ public class ExpandableNumUnionFinderTest
 
     // Tests
 
-    // TODO Document step-bys-step tests.
-
     /**
      * Tests that the empty union finder is correctly initialized.
      */
@@ -334,8 +332,6 @@ public class ExpandableNumUnionFinderTest
         assertEquals("The size of the union should be 2.", 2, unionFinder.size(20));
         assertEquals("The size of the union should be 1.", 1, unionFinder.size(30));
     }
-
-    // TODO fix parents.
 
     /**
      * Tests that the union finder finds and assigns roots properly.

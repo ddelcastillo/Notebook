@@ -58,8 +58,9 @@ public class UnionFinderTest
     public void initializationTest1()
     {
         setup1();
+        // At the beginning, the union finder shouldn't be null and shouldn't have boxes.
         assertNotNull("The union finder shouldn't be null.", unionFinder);
-        assertEquals("The size should be 0.", 0, unionFinder.parents().size());
+        assertEquals("The number of parents should be 0.", 0, unionFinder.parents().size());
         assertEquals("The number of boxes should be 0.", 0, unionFinder.totalRoots());
     }
 
