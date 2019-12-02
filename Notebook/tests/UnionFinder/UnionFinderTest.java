@@ -109,7 +109,7 @@ public class UnionFinderTest
         UnionFinder<String> newUnionFinder = new UnionFinder<String>(unionFinder);
         // At the beginning, the union finder shouldn't be null, and there should be 8 boxes and parents.
         assertNotNull("The union finder shouldn't be null.", newUnionFinder);
-        assertEquals("The size should be 8.", 8, newUnionFinder.parents().size());
+        assertEquals("The number of parents should be 8.", 8, newUnionFinder.parents().size());
         assertEquals("The number of boxes should be 8.", 8, newUnionFinder.totalRoots());
         Hashtable<String, String> par = newUnionFinder.parents();
         String[] boxes = {"a", "b", "c", "d", "e", "f", "g", "h"};
@@ -128,12 +128,8 @@ public class UnionFinderTest
         UnionFinder<String> newUnionFinder = new UnionFinder<String>(unionFinder);
         // Since boxes a and b, and c and d are merged, there should be 6 boxes but par of size 8.
         assertNotNull("The union finder shouldn't be null.", newUnionFinder);
-        assertEquals("The size should be 8.", 8, newUnionFinder.parents().size());
+        assertEquals("The number of parents should be 8.", 8, newUnionFinder.parents().size());
         assertEquals("The number of boxes should be 6.", 6, newUnionFinder.totalRoots());
-        Hashtable<String, String> par = newUnionFinder.parents();
-        String[] boxes = {"a", "b", "c", "d", "e", "f", "g", "h"};
-        for(String box : boxes)
-        { assertTrue("The table should contain the key.", par.containsKey(box)); }
         assertEquals("The root should be itself.", "a", newUnionFinder.root("a"));
         assertEquals("The root should be a.", "a", newUnionFinder.root("b"));
         assertEquals("The root should be itself.", "c", newUnionFinder.root("c"));
