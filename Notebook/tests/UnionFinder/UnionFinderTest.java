@@ -149,29 +149,30 @@ public class UnionFinderTest
         setup1();
         // Three boxes will be added: "a", "b" and "c".
         unionFinder.add("a"); unionFinder.add("b"); unionFinder.add("c");
-        assertEquals("The size should be 3.", unionFinder.parents().size(), 3);
-        assertEquals("The number of boxes should be 3.", unionFinder.totalRoots(), 3);
-        Hashtable<String, String> par = unionFinder.parents();
-        Iterator<String> iterator = par.keySet().iterator();
-        String key;
+        assertEquals("The number of parents should be 3.", 3, unionFinder.parents().size());
+        assertEquals("The number of boxes should be 3.", 3, unionFinder.totalRoots());
+        Hashtable<String, String> parents = unionFinder.parents();
+        Iterator<String> iterator = parents.keySet().iterator();
+        String box;
         while(iterator.hasNext())
         {
-            key = iterator.next();
-            assertEquals("The value should be itself.", par.get(key), key);
-            assertEquals("The root of the key should be itself.", unionFinder.root(key), key);
+            box = iterator.next();
+            // Same check in two different ways.
+            assertEquals("The parent should be itself.", box, parents.get(box));
+            assertEquals("The root of the key should be itself.", box, unionFinder.root(box));
         }
-        // Tests that repeated boxes are added. Now box a's size is restarted to -1 (unchanged, for this test)
+        // Tests that repeated boxes are added. Now box a's size is restarted to 1 (unchanged, for this test)
         // and box counter's are now broken (it marks 4 boxes when actually, there's still 3).
         unionFinder.add("a");
-        assertEquals("The size should be 3.", unionFinder.parents().size(), 3);
-        assertEquals("The number of boxes should be 4.", unionFinder.totalRoots(), 4);
-        par = unionFinder.parents();
-        iterator = par.keySet().iterator();
+        assertEquals("The size should be 3.", 3, unionFinder.parents().size());
+        assertEquals("The number of boxes should be 4.", 4, unionFinder.totalRoots());
+        parents = unionFinder.parents();
+        iterator = parents.keySet().iterator();
         while(iterator.hasNext())
         {
-            key = iterator.next();
-            assertEquals("The value should be itself.", par.get(key), key);
-            assertEquals("The root of the key should be itself.", unionFinder.root(key), key);
+            box = iterator.next();
+            assertEquals("The parent should be itself.", box, parents.get(box));
+            assertEquals("The root of the key should be itself.", box, unionFinder.root(box));
         }
     }
 

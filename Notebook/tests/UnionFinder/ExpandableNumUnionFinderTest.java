@@ -407,7 +407,7 @@ public class ExpandableNumUnionFinderTest
         assertEquals("The root of the box should be 10.", 10, (int) unionFinder.rootChecked(30));
         // Access to non-existent boxes should return null.
         assertNull("The root should be null since it doesn't exist.", unionFinder.rootChecked(200));
-        assertNull("The root should be null since it doesn't exist.", unionFinder.rootChecked(10));
+        assertNull("The root should be null since it doesn't exist.", unionFinder.rootChecked(11));
         assertNull("The root should be null since it doesn't exist.", unionFinder.rootChecked(-200));
     }
 
