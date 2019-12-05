@@ -184,28 +184,28 @@ public class UnionFinderTest
     public void addTest2()
     {
         setup1();
-        // A box 10 will be added:
+        // Box a will be added.
         unionFinder.add("a");
-        assertEquals("The size should be 1.", unionFinder.parents().size(), 1);
-        assertEquals("The number of boxes should be 1.", unionFinder.totalRoots(), 1);
-        // Another box 20 will be added:
+        assertEquals("The number of parents should be 1.", 1, unionFinder.parents().size());
+        assertEquals("The number of boxes should be 1.", 1, unionFinder.totalRoots());
+        // Box b will be added.
         unionFinder.add("b");
-        assertEquals("The size should be 2.", unionFinder.parents().size(), 2);
-        assertEquals("The number of boxes should be 2.", unionFinder.totalRoots(), 2);
-        // Another box 30 will be added:
+        assertEquals("The number of parents should be 2.", 2, unionFinder.parents().size());
+        assertEquals("The number of boxes should be 2.", 2, unionFinder.totalRoots());
+        // Box c will be added.
         unionFinder.add("c");
-        assertEquals("The size should be 3.", unionFinder.parents().size(), 3);
-        assertEquals("The number of boxes should be 3.", unionFinder.totalRoots(), 3);
-        // Boxes 10 and 20 will be merged. Now, there should be 2 boxes:
+        assertEquals("The number of parents should be 3.", 3, unionFinder.parents().size());
+        assertEquals("The number of boxes should be 3.", 3, unionFinder.totalRoots());
+        // Boxes a and b will be merged. Now, there should be 2 boxes.
         unionFinder.merge("a", "b");
-        assertEquals("The size should be 3.", unionFinder.parents().size(), 3);
-        assertEquals("The number of boxes should be 2.", unionFinder.totalRoots(), 2);
-        assertEquals("The root of the box should be itself.", unionFinder.root("a"), "a");
-        assertEquals("The root of the box should be a.", unionFinder.root("b"), "a");
-        assertEquals("The root of the box should be itself.", unionFinder.root("c"), "c");
-        assertEquals("The size of the union should be 2.", unionFinder.size("a"), 2);
-        assertEquals("The size of the union should be 2.", unionFinder.size("b"), 2);
-        assertEquals("The size of the union should be 1.", unionFinder.size("c"), 1);
+        assertEquals("The number of parents should be 3.", 3, unionFinder.parents().size());
+        assertEquals("The number of boxes should be 2.", 2, unionFinder.totalRoots());
+        assertEquals("The root of the box should be itself.", "a", unionFinder.root("a"));
+        assertEquals("The root of the box should be a.", "a", unionFinder.root("b"));
+        assertEquals("The root of the box should be itself.", "c", unionFinder.root("c"));
+        assertEquals("The size of the union should be 2.", 2, unionFinder.size("a"));
+        assertEquals("The size of the union should be 2.", 2, unionFinder.size("b"));
+        assertEquals("The size of the union should be 1.", 1, unionFinder.size("c"));
         // Now box a will be added again, which is a mistake. With the current implementation, the problem is:
         // a new key will be added to the numberToBox but not to the boxToNumber table (since a is already a key).
         // The union finder will generate a number (in this case, 3) meaning N = 3 and the number of boxes is 3.
@@ -216,43 +216,43 @@ public class UnionFinderTest
         // thus, there should 3 boxes (0-1 [a-b], 2[c], 3[wrong-a]). It is important to note that now original box
         // a is unreachable since its boxToNumber value was updated from 0 to 3 (so root("a") returns the 'wrong' a).
         // The only way to reach it is from the root of b, who is still in the numerical union finder, 0 (right a).
-        assertEquals("The size should be 3.", unionFinder.parents().size(), 3);
-        assertEquals("The number of boxes should be 3.", unionFinder.totalRoots(), 3);
-        assertEquals("The root of the box should be itself.", unionFinder.root("a"), "a");
-        assertEquals("The root of the box should be a.", unionFinder.root("b"), "a");
-        assertEquals("The root of the box should be itself.", unionFinder.root("c"), "c");
-        // Original box a is unreachable, thus, size("a") is the size of the wrong a, which is alone.
-        assertEquals("The size of the union should be 1.", unionFinder.size("a"), 1);
-        assertEquals("The size of the union should be 2.", unionFinder.size("b"), 2);
-        assertEquals("The size of the union should be 1.", unionFinder.size("c"), 1);
+        assertEquals("The number of parents should be 3.", 3, unionFinder.parents().size());
+        assertEquals("The number of boxes should be 3.", 3, unionFinder.totalRoots());
+        assertEquals("The root of the box should be itself.", "a", unionFinder.root("a"));
+        assertEquals("The root of the box should be a.", "a", unionFinder.root("b"));
+        assertEquals("The root of the box should be itself.", "c", unionFinder.root("c"));
+        // Original box a is unreachable, thus, size("a") is the size of the wrong a, which is alone (1).
+        assertEquals("The size of the union should be 1.", 1, unionFinder.size("a"));
+        assertEquals("The size of the union should be 2.", 2, unionFinder.size("b"));
+        assertEquals("The size of the union should be 1.", 1, unionFinder.size("c"));
         // Now, boxes b and c will be merged. This will mean there's a box of size 3 (right a)-b-c and the box wrong a,
         // so the number of boxes is 2. The root of a is still itself since the keyToNumber is still (a, 3).
         unionFinder.merge("b", "c");
-        assertEquals("The size should be 3.", unionFinder.parents().size(), 3);
-        assertEquals("The number of boxes should be 2.", unionFinder.totalRoots(), 2);
-        assertEquals("The root of the box should be itself.", unionFinder.root("a"), "a");
+        assertEquals("The size should be 3.", 3, unionFinder.parents().size());
+        assertEquals("The number of boxes should be 2.", 2, unionFinder.totalRoots());
+        assertEquals("The root of the box should be itself.", "a", unionFinder.root("a"));
         // The root of b is still a (the right a, with root 0). The root of c is also the correct a.
-        assertEquals("The root of the box should be a.", unionFinder.root("b"), "a");
-        assertEquals("The root of the box should be a.", unionFinder.root("c"), "a");
+        assertEquals("The root of the box should be a.", "a", unionFinder.root("b"));
+        assertEquals("The root of the box should be a.", "a", unionFinder.root("c"));
         // Now, the sizes of the boxes should be: box wrong a is 1, and super box (right a)-b-c is 3.
-        assertEquals("The size of the union should be 2.", unionFinder.size("a"), 1);
-        assertEquals("The size of the union should be 3.", unionFinder.size("b"), 3);
-        assertEquals("The size of the union should be 3.", unionFinder.size("c"), 3);
+        assertEquals("The size of the union should be 2.", 1, unionFinder.size("a"));
+        assertEquals("The size of the union should be 3.", 3, unionFinder.size("b"));
+        assertEquals("The size of the union should be 3.", 3, unionFinder.size("c"));
         // Now, a call to merge("a", "c") will end up in merging the box wrong a with box c, since the boxToNumber
-        // table still has the couple (a, 3). This means that now there is a single super box: (right a)-b-c-(wrong a).
+        // table still has the tuple (a, 3). This means that now there is a single super box: (right a)-b-c-(wrong a).
         // However, there are still 3 boxes (a, b and c), so the number of parents is still 3.
         unionFinder.merge("a", "c");
-        assertEquals("The size should be 3.", unionFinder.parents().size(), 3);
-        assertEquals("The number of boxes should be 1.", unionFinder.totalRoots(), 1);
+        assertEquals("The size should be 3.", 3, unionFinder.parents().size());
+        assertEquals("The number of boxes should be 1.", 1, unionFinder.totalRoots());
         // Oddly enough the root of wrong a is now correct a, but since they're the same, equality holds.
-        assertEquals("The root of the box should be itself.", unionFinder.root("a"), "a");
+        assertEquals("The root of the box should be itself.", "a", unionFinder.root("a"));
         // The root of b and c is still right a.
-        assertEquals("The root of the box should be a.", unionFinder.root("b"), "a");
-        assertEquals("The root of the box should be a.", unionFinder.root("c"), "a");
+        assertEquals("The root of the box should be a.", "a", unionFinder.root("b"));
+        assertEquals("The root of the box should be a.", "a", unionFinder.root("c"));
         // Now, since they're all in the same super box, the size of the unions should be 4.
-        assertEquals("The size of the union should be 4.", unionFinder.size("a"), 4);
-        assertEquals("The size of the union should be 4.", unionFinder.size("b"), 4);
-        assertEquals("The size of the union should be 4.", unionFinder.size("c"), 4);
+        assertEquals("The size of the union should be 4.", 4, unionFinder.size("a"));
+        assertEquals("The size of the union should be 4.", 4, unionFinder.size("b"));
+        assertEquals("The size of the union should be 4.", 4, unionFinder.size("c"));
     }
 
     /**
