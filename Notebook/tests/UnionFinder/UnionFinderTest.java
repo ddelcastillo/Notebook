@@ -337,19 +337,25 @@ public class UnionFinderTest
     public void rootTest1()
     {
         setup2();
-        // At the beginning, there are only 4 single boxes: a, b c and d. We merge a and b.
+        Hashtable<String, String> parents = unionFinder.parents();
+        for(String box : parents.keySet())
+        {
+            assertEquals("The value should be itself.", box, parents.get(box));
+            assertEquals("The root of the key should be itself.", box, unionFinder.root(box));
+        }
+        // At the beginning, there are only 4 single boxes: a, b c and d. Boxes a and b will be merged.
         unionFinder.merge("a", "b");
         assertEquals("The root should be itself.", "a", unionFinder.root("a"));
         assertEquals("The root should be a.", "a", unionFinder.root("b"));
         assertEquals("The root should be itself.", "c", unionFinder.root("c"));
         assertEquals("The root should be itself.", "d", unionFinder.root("d"));
-        // Now, we merge c and d:
+        // Boxes c and d will be merged.
         unionFinder.merge("c", "d");
         assertEquals("The root should be itself.", "a", unionFinder.root("a"));
         assertEquals("The root should be a.", "a", unionFinder.root("b"));
         assertEquals("The root should be itself.", "c", unionFinder.root("c"));
         assertEquals("The root should be c.", "c", unionFinder.root("d"));
-        // Finally, we merge c and b:
+        // Finally, boxes c and d are merged.
         unionFinder.merge("c", "b");
         assertEquals("The root should be c.", "c", unionFinder.root("a"));
         assertEquals("The root should be c.", "c", unionFinder.root("b"));
@@ -374,17 +380,31 @@ public class UnionFinderTest
     public void rootCheckedTest()
     {
         setup2();
-        Hashtable<String, String> par = unionFinder.parents();
-        Iterator<String> iterator = par.keySet().iterator();
-        String key;
-        while(iterator.hasNext())
+        Hashtable<String, String> parents = unionFinder.parents();
+        for(String box : parents.keySet())
         {
-            key = iterator.next();
-            assertTrue("The table should contain the key.", par.containsKey(key));
-            assertEquals("The value should be itself.", par.get(key), key);
-            assertEquals("The root of the key should be itself.", unionFinder.rootChecked(key), key);
+            assertEquals("The value should be itself.", box, parents.get(box));
+            assertEquals("The root of the key should be itself.", box, unionFinder.rootChecked(box));
         }
-        // Access to non-existent boxes should return null:
+        // At the beginning, there are only 4 single boxes: a, b c and d. Boxes a and b will be merged.
+        unionFinder.merge("a", "b");
+        assertEquals("The root should be itself.", "a", unionFinder.rootChecked("a"));
+        assertEquals("The root should be a.", "a", unionFinder.rootChecked("b"));
+        assertEquals("The root should be itself.", "c", unionFinder.rootChecked("c"));
+        assertEquals("The root should be itself.", "d", unionFinder.rootChecked("d"));
+        // Boxes c and d will be merged.
+        unionFinder.merge("c", "d");
+        assertEquals("The root should be itself.", "a", unionFinder.rootChecked("a"));
+        assertEquals("The root should be a.", "a", unionFinder.rootChecked("b"));
+        assertEquals("The root should be itself.", "c", unionFinder.rootChecked("c"));
+        assertEquals("The root should be c.", "c", unionFinder.rootChecked("d"));
+        // Finally, boxes c and d are merged.
+        unionFinder.merge("c", "b");
+        assertEquals("The root should be c.", "c", unionFinder.rootChecked("a"));
+        assertEquals("The root should be c.", "c", unionFinder.rootChecked("b"));
+        assertEquals("The root should be itself.", "c", unionFinder.rootChecked("c"));
+        assertEquals("The root should be c.", "c", unionFinder.rootChecked("d"));
+        // Access to non-existent boxes should return null.
         assertNull("The root should be null since it doesn't exist.", unionFinder.rootChecked("z"));
         assertNull("The root should be null since it doesn't exist.", unionFinder.rootChecked("x"));
         assertNull("The root should be null since it doesn't exist.", unionFinder.rootChecked("hi"));
