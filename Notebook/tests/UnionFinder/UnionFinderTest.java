@@ -424,8 +424,8 @@ public class UnionFinderTest
         Hashtable<String, String> parents = unionFinder.parents();
         for(String box : parents.keySet())
         {
-            assertEquals("The root should be itself.", box, unionFinder.root(box));
             assertEquals("The value should be itself.", box, parents.get(box));
+            assertEquals("The root should be itself.", box, unionFinder.root(box));
             assertEquals("The size should be 1.", 1, unionFinder.size(box));
         }
         // Now, boxes a and b are merged, c and d, and x and y.
