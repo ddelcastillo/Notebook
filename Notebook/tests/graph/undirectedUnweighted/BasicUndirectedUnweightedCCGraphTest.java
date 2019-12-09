@@ -38,7 +38,7 @@ public class BasicUndirectedUnweightedCCGraphTest
      * Tests that the graph is initialized properly.
      */
     @Test
-    public void initialization1()
+    public void initializationTest1()
     {
         assertNotNull("The graph shouldn't be null.", graph);
         assertEquals("The number of edges should be 0.", graph.E(), 0);
@@ -57,7 +57,7 @@ public class BasicUndirectedUnweightedCCGraphTest
      * Tests that the graph is initialized properly.
      */
     @Test
-    public void initialization2()
+    public void initializationTest2()
     {
         BasicUndirectedUnweightedCCGraph newGraph = new BasicUndirectedUnweightedCCGraph(graph);
         assertNotNull("The graph shouldn't be null.", newGraph);
@@ -77,7 +77,7 @@ public class BasicUndirectedUnweightedCCGraphTest
      * Tests that the graph adds edges properly.
      */
     @Test
-    public void testAddEdge()
+    public void addEdgeTest1()
     {
         // We will add the edge 0-4.
         graph.addEdge(0, 4);
@@ -133,10 +133,51 @@ public class BasicUndirectedUnweightedCCGraphTest
     }
 
     /**
+     * Tests that adding an edge between invalid nodes ends up in an IndexOutOfBoundsException.
+     */
+    @Test(expected = IndexOutOfBoundsException.class)
+    public void addEdgeTest2()
+    {
+        graph.addEdge(200, 201);
+    }
+
+    /**
+     * Tests that the number of components when adding edges updates properly.
+     */
+    @Test
+    public void addEdgeCheckedTest1()
+    {
+        // We will add the edge 0-4 and 0-1.
+        graph.addEdgeChecked(0, 4); graph.addEdgeChecked(0, 1);
+        assertEquals("There should be 3 components.", graph.numberOfComponents(), 3);
+        assertEquals("The size of the component should be 3.", graph.sizeOfComponent(0), 3);
+        assertEquals("The size of the component should be 3.", graph.sizeOfComponent(1), 3);
+        assertEquals("The size of the component should be 1.", graph.sizeOfComponent(2), 1);
+        assertEquals("The size of the component should be 1.", graph.sizeOfComponent(3), 1);
+        assertEquals("The size of the component should be 3.", graph.sizeOfComponent(4), 3);
+        // We will add the edge 2-3.
+        graph.addEdgeChecked(2, 3);
+        assertEquals("There should be 2 components.", graph.numberOfComponents(), 2);
+        assertEquals("The size of the component should be 3.", graph.sizeOfComponent(0), 3);
+        assertEquals("The size of the component should be 3.", graph.sizeOfComponent(1), 3);
+        assertEquals("The size of the component should be 2.", graph.sizeOfComponent(2), 2);
+        assertEquals("The size of the component should be 2.", graph.sizeOfComponent(3), 2);
+        assertEquals("The size of the component should be 3.", graph.sizeOfComponent(4), 3);
+        // Now we will join both components.
+        graph.addEdgeChecked(1, 2);
+        assertEquals("There should be 1 component.", graph.numberOfComponents(), 1);
+        assertEquals("The size of the component should be 5.", graph.sizeOfComponent(0), 5);
+        assertEquals("The size of the component should be 5.", graph.sizeOfComponent(1), 5);
+        assertEquals("The size of the component should be 5.", graph.sizeOfComponent(2), 5);
+        assertEquals("The size of the component should be 5.", graph.sizeOfComponent(3), 5);
+        assertEquals("The size of the component should be 5.", graph.sizeOfComponent(4), 5);
+    }
+
+    /**
      * Tests that the graph adds edges properly and checks that no self-cycles or double edges are formed.
      */
     @Test
-    public void testAddEdgeChecked1()
+    public void addEdgeCheckedTest2()
     {
         // We will add the edge 0-4.
         graph.addEdgeChecked(0, 4);
@@ -189,42 +230,10 @@ public class BasicUndirectedUnweightedCCGraphTest
     }
 
     /**
-     * Tests that the number of components when adding edges updates properly.
-     */
-    @Test
-    public void testAddEdgeChecked2()
-    {
-        // We will add the edge 0-4 and 0-1.
-        graph.addEdgeChecked(0, 4); graph.addEdgeChecked(0, 1);
-        assertEquals("There should be 3 components.", graph.numberOfComponents(), 3);
-        assertEquals("The size of the component should be 3.", graph.sizeOfComponent(0), 3);
-        assertEquals("The size of the component should be 3.", graph.sizeOfComponent(1), 3);
-        assertEquals("The size of the component should be 1.", graph.sizeOfComponent(2), 1);
-        assertEquals("The size of the component should be 1.", graph.sizeOfComponent(3), 1);
-        assertEquals("The size of the component should be 3.", graph.sizeOfComponent(4), 3);
-        // We will add the edge 2-3.
-        graph.addEdgeChecked(2, 3);
-        assertEquals("There should be 2 components.", graph.numberOfComponents(), 2);
-        assertEquals("The size of the component should be 3.", graph.sizeOfComponent(0), 3);
-        assertEquals("The size of the component should be 3.", graph.sizeOfComponent(1), 3);
-        assertEquals("The size of the component should be 2.", graph.sizeOfComponent(2), 2);
-        assertEquals("The size of the component should be 2.", graph.sizeOfComponent(3), 2);
-        assertEquals("The size of the component should be 3.", graph.sizeOfComponent(4), 3);
-        // Now we will join both components.
-        graph.addEdgeChecked(1, 2);
-        assertEquals("There should be 1 component.", graph.numberOfComponents(), 1);
-        assertEquals("The size of the component should be 5.", graph.sizeOfComponent(0), 5);
-        assertEquals("The size of the component should be 5.", graph.sizeOfComponent(1), 5);
-        assertEquals("The size of the component should be 5.", graph.sizeOfComponent(2), 5);
-        assertEquals("The size of the component should be 5.", graph.sizeOfComponent(3), 5);
-        assertEquals("The size of the component should be 5.", graph.sizeOfComponent(4), 5);
-    }
-
-    /**
      * Tests that the DFS algorithm works properly.
      */
     @Test
-    public void testDFS()
+    public void DFSTest()
     {
         BasicUndirectedUnweightedCCGraph newGraph = new BasicUndirectedUnweightedCCGraph(7);
         // The following edges are added: 0-1, 0-2, 2-3, 2-4, 1-4 and 5-6.
@@ -301,7 +310,7 @@ public class BasicUndirectedUnweightedCCGraphTest
      * Tests that the BFS algorithm works properly.
      */
     @Test
-    public void testBFS()
+    public void BFSTest()
     {
         BasicUndirectedUnweightedCCGraph newGraph = new BasicUndirectedUnweightedCCGraph(7);
         // The following edges are added: 0-1, 0-2, 2-3, 2-4, 1-4 and 5-6.

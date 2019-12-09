@@ -36,7 +36,7 @@ public class BasicUndirectedUnweightedGraphTest
      * Tests that the graph is initialized properly.
      */
     @Test
-    public void initialization1()
+    public void initializationTest1()
     {
         assertNotNull("The graph shouldn't be null.", graph);
         assertEquals("The number of edges should be 0.", graph.E(), 0);
@@ -53,7 +53,7 @@ public class BasicUndirectedUnweightedGraphTest
      * Tests that the graph is initialized properly.
      */
     @Test
-    public void initialization2()
+    public void initializationTest2()
     {
         BasicUndirectedUnweightedGraph newGraph = new BasicUndirectedUnweightedGraph(graph);
         assertNotNull("The graph shouldn't be null.", newGraph);
@@ -71,7 +71,7 @@ public class BasicUndirectedUnweightedGraphTest
      * Tests that the graph adds edges properly.
      */
     @Test
-    public void testAddEdge()
+    public void addEdgeTest1()
     {
         // We will add the edge 0-4.
         graph.addEdge(0, 4);
@@ -109,10 +109,19 @@ public class BasicUndirectedUnweightedGraphTest
     }
 
     /**
+     * Tests that adding an edge between invalid nodes ends up in an IndexOutOfBoundsException.
+     */
+    @Test(expected = IndexOutOfBoundsException.class)
+    public void addEdgeTest2()
+    {
+        graph.addEdge(200, 201);
+    }
+
+    /**
      * Tests that the graph adds edges properly and checks that no self-cycles or double edges are formed.
      */
     @Test
-    public void testAddEdgeChecked()
+    public void addEdgeCheckedTest()
     {
         // We will add the edge 0-4.
         graph.addEdgeChecked(0, 4);
@@ -151,7 +160,7 @@ public class BasicUndirectedUnweightedGraphTest
      * Tests that the DFS algorithm works properly.
      */
     @Test
-    public void testDFS()
+    public void DFSTest()
     {
         BasicUndirectedUnweightedGraph newGraph = new BasicUndirectedUnweightedGraph(7);
         // The following edges are added: 0-1, 0-2, 2-3, 2-4, 1-4 and 5-6.
@@ -228,7 +237,7 @@ public class BasicUndirectedUnweightedGraphTest
      * Tests that the BFS algorithm works properly.
      */
     @Test
-    public void testBFS()
+    public void BFSTest()
     {
         BasicUndirectedUnweightedGraph newGraph = new BasicUndirectedUnweightedGraph(7);
         // The following edges are added: 0-1, 0-2, 2-3, 2-4, 1-4 and 5-6.
