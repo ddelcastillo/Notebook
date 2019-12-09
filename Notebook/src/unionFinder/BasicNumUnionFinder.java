@@ -1,11 +1,12 @@
 // @formatter:off
-package UnionFinder;
+package unionFinder;
 
-import Util.Checked;
+import util.Checked;
 
 /**
  * Class that represents a simple numerical union finder for N boxes labeled from 0 to N-1.
  * @author Daniel del Castillo A. https://github.com/ddelcastillo
+ * Class finished and corrected as of 14/12/19.
  */
 @Checked
 (note = "Methods with the 'Checked' signature enforce additional checks to avoid errors and to\n" +

@@ -1,4 +1,4 @@
-package Main;
+package main;
 
 /**
  * Class that represents the project's initialization.

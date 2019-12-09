@@ -1,5 +1,5 @@
 // @formatter:off
-package UnionFinder;
+package unionFinder;
 
 import org.junit.Test;
 
@@ -11,6 +11,7 @@ import static org.junit.Assert.*;
 
 /**
  * Tests that the UnionFinder class works properly.
+ * Test completely tested, corrected, commented and revised as of 14/12/19.
  */
 public class UnionFinderTest
 {

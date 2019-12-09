@@ -1,4 +1,4 @@
-package Util;
+package util;
 
 /**
  * Class that represents a simple generic Pair than contains two items.

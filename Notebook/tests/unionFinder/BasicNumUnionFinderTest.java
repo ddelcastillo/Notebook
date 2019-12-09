@@ -1,4 +1,4 @@
-package UnionFinder;
+package unionFinder;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -14,6 +14,7 @@ public class BasicNumUnionFinderTest
 
     /**
      * The union finder.
+     * Test completely tested, corrected, commented and revised as of 14/12/19.
      */
     private BasicNumUnionFinder unionFinder;
 

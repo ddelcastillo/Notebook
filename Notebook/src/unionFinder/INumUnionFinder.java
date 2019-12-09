@@ -1,12 +1,11 @@
 // @formatter:off
-package UnionFinder;
+package unionFinder;
 
 /**
  * The API for the numerical union finder.
  */
 public interface INumUnionFinder
 {
-    // Basic required methods
         /**
      * Finds the root of the given box.
      * @param x The box.

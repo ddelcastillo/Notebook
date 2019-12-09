@@ -1,4 +1,4 @@
-package Util;
+package util;
 
 /**
  * Annotation to indicate that the class implements checked methods. That is,

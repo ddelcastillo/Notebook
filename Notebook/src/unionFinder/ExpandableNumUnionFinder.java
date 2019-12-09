@@ -1,13 +1,14 @@
 // @formatter:off
-package UnionFinder;
+package unionFinder;
 
-import Util.Checked;import java.util.Collection;import java.util.Hashtable;
+import util.Checked;import java.util.Collection;import java.util.Hashtable;
 import java.util.Iterator;
 
 /**
  * Class that represents an expandable numerical union finder that isn't
  * restrained by the box's number label, i.e., to any specific range.
  * @author Daniel del Castillo A. https://github.com/ddelcastillo
+ * Class finished and corrected as of 14/12/19.
  */
 @Checked
 (note = "Methods with the 'Checked' signature enforce additional checks to avoid errors and to " +

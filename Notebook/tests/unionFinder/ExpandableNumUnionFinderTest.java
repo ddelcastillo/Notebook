@@ -1,15 +1,16 @@
 // @formatter:off
-package UnionFinder;
+package unionFinder;
 
 import org.junit.Test;
 
-import java.awt.*;import java.util.ArrayList;import java.util.Collection;import java.util.Hashtable;
+import java.util.ArrayList;import java.util.Hashtable;
 import java.util.Iterator;
 
 import static org.junit.Assert.*;
 
 /**
  * Tests that the ExpandableNumUnionFinder class works properly.
+ * Test completely tested, corrected, commented and revised as of 14/12/19.
  */
 public class ExpandableNumUnionFinderTest
 {

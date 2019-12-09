@@ -1,7 +1,9 @@
 // @formatter:off
 
-package Graph;
+package graph.undirectedUnweighted;
 
+import graph.algorithms.search.BasicBFS;
+import graph.algorithms.search.BasicDFS;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -229,7 +231,7 @@ public class BasicUndirectedUnweightedCCGraphTest
         newGraph.addEdge(0, 1); newGraph.addEdge(0, 2); newGraph.addEdge(2, 3);
         newGraph.addEdge(2, 4); newGraph.addEdge(1, 4); newGraph.addEdge(5, 6);
         // A DFS from the origin is created.
-        BasicUndirectedUnweightedCCGraph.BasicDFS dfs = new BasicUndirectedUnweightedCCGraph.BasicDFS(newGraph, 0);
+        BasicDFS dfs = new BasicDFS(newGraph, 0);
         // There should be a path from all vertexes except 5 and 6.
         for(int i = 0; i < 5; ++i)
             assertTrue("There should be a path to the vertex " + i + ".", dfs.hasPathTo(i));
@@ -306,7 +308,7 @@ public class BasicUndirectedUnweightedCCGraphTest
         newGraph.addEdge(0, 1); newGraph.addEdge(0, 2); newGraph.addEdge(2, 3);
         newGraph.addEdge(2, 4); newGraph.addEdge(1, 4); newGraph.addEdge(5, 6);
         // A DFS from the origin is created.
-        BasicUndirectedUnweightedCCGraph.BasicBFS bfs = new BasicUndirectedUnweightedCCGraph.BasicBFS(newGraph, 0);
+        BasicBFS bfs = new BasicBFS(newGraph, 0);
         // There should be a path from all vertexes except 5 and 6.
         for(int i = 0; i < 5; ++i)
             assertTrue("There should be a path to the vertex " + i + ".", bfs.hasPathTo(i));
