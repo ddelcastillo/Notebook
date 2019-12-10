@@ -74,6 +74,36 @@ public class BasicUndirectedUnweightedCCGraphTest
     }
 
     /**
+     * Tests that a graph copy stores information properly.
+     */
+    @Test
+    public void initializationTest3()
+    {
+        graph.addEdge(0, 4); graph.addEdge(1, 2);
+        BasicUndirectedUnweightedCCGraph newGraph = new BasicUndirectedUnweightedCCGraph(graph);
+        assertNotNull("The graph shouldn't be null.", newGraph);
+        assertEquals("The number of edges should be 2.", 2, newGraph.E());
+        assertEquals("The number of vertexes should be 5.", 5, newGraph.V());
+        assertEquals("The number of lists should be 5.", 5, newGraph.adjacent().length);
+        assertEquals("The number of connected components should be 3.", 3, newGraph.numberOfComponents());
+        // We check that the adjacent list of each vertex isn't null. List should have 1 or 0 vertexes.
+        for(int i = 0; i < 5; ++i)
+        {
+            assertNotNull("The list shouldn't be null.", newGraph.adjacent(i));
+            if(i == 3)
+            {
+                assertEquals("The list should be empty.", 0, newGraph.adjacent(i).size());
+                assertEquals("The size of the component should be 1.", 1, newGraph.sizeOfComponent(i));
+            }
+            else
+            {
+                assertEquals("The size of the component should be 2.", 2, newGraph.sizeOfComponent(i));
+                assertEquals("The list should contain one vertex.", 1, newGraph.adjacent(i).size());
+            }
+        }
+    }
+
+    /**
      * Tests that the graph adds edges properly.
      */
     @Test
