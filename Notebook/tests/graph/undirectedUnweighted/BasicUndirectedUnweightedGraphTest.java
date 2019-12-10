@@ -39,8 +39,9 @@ public class BasicUndirectedUnweightedGraphTest
     public void initializationTest1()
     {
         assertNotNull("The graph shouldn't be null.", graph);
-        assertEquals("The number of edges should be 0.", graph.E(), 0);
-        assertEquals("The number of vertexes should be 5.", graph.V(), 5);
+        assertEquals("The number of edges should be 0.", 0, graph.E());
+        assertEquals("The number of vertexes should be 5.", 5, graph.V());
+        assertEquals("The number of lists should be 5.", 5, graph.adjacent().length);
         // We check that the adjacent list of each vertex isn't null and is empty.
         for(int i = 0; i < 5; ++i)
         {
@@ -57,8 +58,9 @@ public class BasicUndirectedUnweightedGraphTest
     {
         BasicUndirectedUnweightedGraph newGraph = new BasicUndirectedUnweightedGraph(graph);
         assertNotNull("The graph shouldn't be null.", newGraph);
-        assertEquals("The number of edges should be 0.", newGraph.E(), 0);
-        assertEquals("The number of vertexes should be 5.", newGraph.V(), 5);
+        assertEquals("The number of edges should be 0.", 0, newGraph.E());
+        assertEquals("The number of vertexes should be 5.", 5, newGraph.V());
+        assertEquals("The number of lists should be 5.", 5, graph.adjacent().length);
         // We check that the adjacent list of each vertex isn't null and is empty.
         for(int i = 0; i < 5; ++i)
         {
@@ -66,6 +68,8 @@ public class BasicUndirectedUnweightedGraphTest
             assertTrue("The list should be empty.", newGraph.adjacent(i).isEmpty());
         }
     }
+
+    // TODO initialization copy checking stored info.
 
     /**
      * Tests that the graph adds edges properly.
@@ -75,37 +79,37 @@ public class BasicUndirectedUnweightedGraphTest
     {
         // We will add the edge 0-4.
         graph.addEdge(0, 4);
-        assertEquals("The number of edges should be 1.", graph.E(), 1);
-        assertEquals("The number of vertexes should be 5.", graph.V(), 5);
-        assertEquals("The size of the list should be 1.", graph.adjacent(0).size(), 1);
-        assertEquals("The size of the list should be 0.", graph.adjacent(1).size(), 0);
-        assertEquals("The size of the list should be 0.", graph.adjacent(2).size(), 0);
-        assertEquals("The size of the list should be 0.", graph.adjacent(3).size(), 0);
-        assertEquals("The size of the list should be 1.", graph.adjacent(4).size(), 1);
+        assertEquals("The number of edges should be 1.", 1, graph.E());
+        assertEquals("The number of vertexes should be 5.", 5, graph.V());
+        assertEquals("The size of the list should be 1.", 1, graph.adjacent(0).size());
+        assertEquals("The size of the list should be 0.", 0, graph.adjacent(1).size());
+        assertEquals("The size of the list should be 0.", 0, graph.adjacent(2).size());
+        assertEquals("The size of the list should be 0.", 0, graph.adjacent(3).size());
+        assertEquals("The size of the list should be 1.", 1, graph.adjacent(4).size());
         // We check that the items on the list are correct.
         for(Integer integer: graph.adjacent(0))
-            assertEquals("The only item on the list should be 4.", (int) integer, 4);
+            assertEquals("The only item on the list should be 4.", 4, (int) integer);
         for(Integer integer: graph.adjacent(4))
-            assertEquals("The only item on the list should be 0.", (int) integer, 0);
+            assertEquals("The only item on the list should be 0.", 0, (int) integer);
         // Now, the method should allow to add a self-cycle.
         graph.addEdge(0, 0);
-        assertEquals("The number of edges should be 2.", graph.E(), 2);
-        assertEquals("The size of the list should be 2.", graph.adjacent(0).size(), 2);
+        assertEquals("The number of edges should be 2.", 2, graph.E());
+        assertEquals("The size of the list should be 2.", 2, graph.adjacent(0).size());
         // Nothing else should have changed.
-        assertEquals("The size of the list should be 0.", graph.adjacent(1).size(), 0);
-        assertEquals("The size of the list should be 0.", graph.adjacent(2).size(), 0);
-        assertEquals("The size of the list should be 0.", graph.adjacent(3).size(), 0);
-        assertEquals("The size of the list should be 1.", graph.adjacent(4).size(), 1);
+        assertEquals("The size of the list should be 0.", 0, graph.adjacent(1).size());
+        assertEquals("The size of the list should be 0.", 0, graph.adjacent(2).size());
+        assertEquals("The size of the list should be 0.", 0, graph.adjacent(3).size());
+        assertEquals("The size of the list should be 1.", 1, graph.adjacent(4).size());
         // Now, the method should allow to add the same edge twice.
         graph.addEdge(4, 0);
-        assertEquals("The number of edges should be 3.", graph.E(), 3);
-        assertEquals("The size of the list should be 3.", graph.adjacent(0).size(), 3);
-        assertEquals("The size of the list should be 2.", graph.adjacent(4).size(), 2);
+        assertEquals("The number of edges should be 3.", 3, graph.E());
+        assertEquals("The size of the list should be 3.", 3, graph.adjacent(0).size());
+        assertEquals("The size of the list should be 2.", 2, graph.adjacent(4).size());
         // Nothing else should have changed.
         assertEquals("The number of vertexes should be 5.", graph.V(), 5);
-        assertEquals("The size of the list should be 0.", graph.adjacent(1).size(), 0);
-        assertEquals("The size of the list should be 0.", graph.adjacent(2).size(), 0);
-        assertEquals("The size of the list should be 0.", graph.adjacent(3).size(), 0);
+        assertEquals("The size of the list should be 0.", 0, graph.adjacent(1).size());
+        assertEquals("The size of the list should be 0.", 0, graph.adjacent(2).size());
+        assertEquals("The size of the list should be 0.", 0, graph.adjacent(3).size());
     }
 
     /**
@@ -127,33 +131,37 @@ public class BasicUndirectedUnweightedGraphTest
         graph.addEdgeChecked(0, 4);
         assertEquals("The number of edges should be 1.", graph.E(), 1);
         assertEquals("The number of vertexes should be 5.", graph.V(), 5);
-        assertEquals("The size of the list should be 1.", graph.adjacent(0).size(), 1);
-        assertEquals("The size of the list should be 0.", graph.adjacent(1).size(), 0);
-        assertEquals("The size of the list should be 0.", graph.adjacent(2).size(), 0);
-        assertEquals("The size of the list should be 0.", graph.adjacent(3).size(), 0);
-        assertEquals("The size of the list should be 1.", graph.adjacent(4).size(), 1);
+        assertEquals("The size of the list should be 1.", 1, graph.adjacent(0).size());
+        assertEquals("The size of the list should be 0.", 0, graph.adjacent(1).size());
+        assertEquals("The size of the list should be 0.", 0, graph.adjacent(2).size());
+        assertEquals("The size of the list should be 0.", 0, graph.adjacent(3).size());
+        assertEquals("The size of the list should be 1.", 1, graph.adjacent(4).size());
         // We check that the items on the list are correct.
         for(Integer integer: graph.adjacent(0))
-            assertEquals("The only item on the list should be 4.", (int) integer, 4);
+            assertEquals("The only item on the list should be 4.", 4, (int) integer);
         for(Integer integer: graph.adjacent(4))
-            assertEquals("The only item on the list should be 0.", (int) integer, 0);
+            assertEquals("The only item on the list should be 0.", 0, (int) integer);
         // Now, the method shouldn't allow to add a self-cycle.
         graph.addEdgeChecked(0, 0);
         assertEquals("The number of edges should be 1.", graph.E(), 1);
-        assertEquals("The size of the list should be 1.", graph.adjacent(0).size(), 1);
-        assertEquals("The size of the list should be 0.", graph.adjacent(1).size(), 0);
-        assertEquals("The size of the list should be 0.", graph.adjacent(2).size(), 0);
-        assertEquals("The size of the list should be 0.", graph.adjacent(3).size(), 0);
-        assertEquals("The size of the list should be 1.", graph.adjacent(4).size(), 1);
+        assertEquals("The size of the list should be 1.", 1, graph.adjacent(0).size());
+        assertEquals("The size of the list should be 0.", 0, graph.adjacent(1).size());
+        assertEquals("The size of the list should be 0.", 0, graph.adjacent(2).size());
+        assertEquals("The size of the list should be 0.", 0, graph.adjacent(3).size());
+        assertEquals("The size of the list should be 1.", 1, graph.adjacent(4).size());
         // Now, the method shouldn't allow to add the same edge twice.
         graph.addEdgeChecked(4, 0);
-        assertEquals("The number of edges should be 1.", graph.E(), 1);
-        assertEquals("The number of vertexes should be 5.", graph.V(), 5);
-        assertEquals("The size of the list should be 1.", graph.adjacent(0).size(), 1);
-        assertEquals("The size of the list should be 0.", graph.adjacent(1).size(), 0);
-        assertEquals("The size of the list should be 0.", graph.adjacent(2).size(), 0);
-        assertEquals("The size of the list should be 0.", graph.adjacent(3).size(), 0);
-        assertEquals("The size of the list should be 1.", graph.adjacent(4).size(), 1);
+        assertEquals("The number of edges should be 1.", 1, graph.E());
+        assertEquals("The number of vertexes should be 5.", 5, graph.V());
+        assertEquals("The size of the list should be 1.", 1, graph.adjacent(0).size());
+        assertEquals("The size of the list should be 0.", 0, graph.adjacent(1).size());
+        assertEquals("The size of the list should be 0.", 0, graph.adjacent(2).size());
+        assertEquals("The size of the list should be 0.", 0, graph.adjacent(3).size());
+        assertEquals("The size of the list should be 1.", 1, graph.adjacent(4).size());
+        // Adding an edge between non-existing vertexes shouldn't throw any errors.
+        graph.addEdgeChecked(200, 201);
+        graph.addEdgeChecked(-1, -2);
+        graph.addEdgeChecked(2, 700);
     }
 
     /**
@@ -189,46 +197,45 @@ public class BasicUndirectedUnweightedGraphTest
                     // Path from 0 to 1 should be 0, 1 in that order.
                     for(int vertex : path)
                         vertexes.add(vertex);
-                    assertEquals("The size should be 2.", vertexes.size(), 2);
-                    assertEquals("The first item should be 1.", (int) vertexes.get(0), 1);
-                    assertEquals("The second item should be 0.", (int) vertexes.get(1), 0);
+                    assertEquals("The size should be 2.", 2, vertexes.size());
+                    assertEquals("The first item should be 1.", 1, (int) vertexes.get(0));
+                    assertEquals("The second item should be 0.", 0, (int) vertexes.get(1));
                     break;
                 case 2:
                     // Path from 0 to 2 should be 0, 1, 4, 2 in that order.
                     for(int vertex : path)
                         vertexes.add(vertex);
-                    assertEquals("The size should be 4.", vertexes.size(), 4);
-                    assertEquals("The first item should be 2.", (int) vertexes.get(0), 2);
-                    assertEquals("The second item should be 4.", (int) vertexes.get(1), 4);
-                    assertEquals("The third item should be 1.", (int) vertexes.get(2), 1);
-                    assertEquals("The fourth item should be 0.", (int) vertexes.get(3), 0);
+                    assertEquals("The size should be 4.", 4, vertexes.size());
+                    assertEquals("The first item should be 2.", 2, (int) vertexes.get(0));
+                    assertEquals("The second item should be 4.", 4, (int) vertexes.get(1));
+                    assertEquals("The third item should be 1.", 1, (int) vertexes.get(2));
+                    assertEquals("The fourth item should be 0.", 0, (int) vertexes.get(3));
                     break;
                 case 3:
                     // Path from 0 to 3 should be 0, 1, 4, 2, 3 in that order.
                     for(int vertex : path)
                         vertexes.add(vertex);
-                    assertEquals("The size should be 5.", vertexes.size(), 5);
-                    assertEquals("The first item should be 3.", (int) vertexes.get(0), 3);
-                    assertEquals("The second item should be 2.", (int) vertexes.get(1), 2);
-                    assertEquals("The third item should be 4.", (int) vertexes.get(2), 4);
-                    assertEquals("The fourth item should be 1.", (int) vertexes.get(3), 1);
-                    assertEquals("The fifth item should be 0.", (int) vertexes.get(4), 0);
+                    assertEquals("The size should be 5.", 5, vertexes.size());
+                    assertEquals("The first item should be 3.", 3, (int) vertexes.get(0));
+                    assertEquals("The second item should be 2.", 2, (int) vertexes.get(1));
+                    assertEquals("The third item should be 4.", 4, (int) vertexes.get(2));
+                    assertEquals("The fourth item should be 1.", 1, (int) vertexes.get(3));
+                    assertEquals("The fifth item should be 0.", 0, (int) vertexes.get(4));
                     break;
                 case 4:
                     // Path from 0 to 4 should be 0, 1, 4 in that order.
                     for(int vertex : path)
                         vertexes.add(vertex);
-                    assertEquals("The size should be 3.", vertexes.size(), 3);
-                    assertEquals("The first item should be 4.", (int) vertexes.get(0), 4);
-                    assertEquals("The second item should be 1.", (int) vertexes.get(1), 1);
-                    assertEquals("The third item should be 0.", (int) vertexes.get(2), 0);
+                    assertEquals("The size should be 3.", 3, vertexes.size());
+                    assertEquals("The first item should be 4.", 4, (int) vertexes.get(0));
+                    assertEquals("The second item should be 1.", 1, (int) vertexes.get(1));
+                    assertEquals("The third item should be 0.", 0, (int) vertexes.get(2));
                     break;
                 case 5:
                 case 6:
                     // There should be no path from 0 to 5 or 6, therefore, the path should be null.
                     assertNull(path);
                     break;
-
             }
         }
     }
@@ -265,42 +272,41 @@ public class BasicUndirectedUnweightedGraphTest
                     // Path from 0 to 1 should be 0, 1 in that order.
                     for(int vertex : path)
                         vertexes.add(vertex);
-                    assertEquals("The size should be 2.", vertexes.size(), 2);
-                    assertEquals("The first item should be 1.", (int) vertexes.get(0), 1);
-                    assertEquals("The second item should be 0.", (int) vertexes.get(1), 0);
+                    assertEquals("The size should be 2.", 2, vertexes.size());
+                    assertEquals("The first item should be 1.", 1, (int) vertexes.get(0));
+                    assertEquals("The second item should be 0.", 0, (int) vertexes.get(1));
                     break;
                 case 2:
                     // Path from 0 to 2 should be 0, 2 in that order.
                     for(int vertex : path)
                         vertexes.add(vertex);
-                    assertEquals("The size should be 2.", vertexes.size(), 2);
-                    assertEquals("The first item should be 2.", (int) vertexes.get(0), 2);
-                    assertEquals("The second item should be 0.", (int) vertexes.get(1), 0);
+                    assertEquals("The size should be 2.", 2, vertexes.size());
+                    assertEquals("The first item should be 2.", 2, (int) vertexes.get(0));
+                    assertEquals("The second item should be 0.", 0, (int) vertexes.get(1));
                     break;
                 case 3:
                     // Path from 0 to 3 should be 0, 2, 3 in that order.
                     for(int vertex : path)
                         vertexes.add(vertex);
                     assertEquals("The size should be 3.", vertexes.size(), 3);
-                    assertEquals("The first item should be 3.", (int) vertexes.get(0), 3);
-                    assertEquals("The second item should be 2.", (int) vertexes.get(1), 2);
-                    assertEquals("The third item should be 0.", (int) vertexes.get(2), 0);
+                    assertEquals("The first item should be 3.", 3, (int) vertexes.get(0));
+                    assertEquals("The second item should be 2.", 2, (int) vertexes.get(1));
+                    assertEquals("The third item should be 0.", 0, (int) vertexes.get(2));
                     break;
                 case 4:
                     // Path from 0 to 4 should be 0, 1, 4 in that order.
                     for(int vertex : path)
                         vertexes.add(vertex);
-                    assertEquals("The size should be 3.", vertexes.size(), 3);
-                    assertEquals("The first item should be 4.", (int) vertexes.get(0), 4);
-                    assertEquals("The second item should be 1.", (int) vertexes.get(1), 1);
-                    assertEquals("The third item should be 0.", (int) vertexes.get(2), 0);
+                    assertEquals("The size should be 3.", 3, vertexes.size());
+                    assertEquals("The first item should be 4.", 4, (int) vertexes.get(0));
+                    assertEquals("The second item should be 1.", 1, (int) vertexes.get(1));
+                    assertEquals("The third item should be 0.", 0, (int) vertexes.get(2));
                     break;
                 case 5:
                 case 6:
                     // There should be no path from 0 to 5 or 6, therefore, the path should be null.
                     assertNull(path);
                     break;
-
             }
         }
     }
