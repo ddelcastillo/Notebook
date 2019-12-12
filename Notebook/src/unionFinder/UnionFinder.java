@@ -27,7 +27,7 @@ public class UnionFinder<T> implements IUnionFinder<T>
     /**
      * The numerical union finder that manages the boxes with their assigned numbers.
      */
-    private ExpandableNumUnionFinder numUnionFinder;
+    private ExpandableBasicUnionFinder numUnionFinder;
 
     /**
      * The table that accesses the given number to a certain box.
@@ -46,7 +46,7 @@ public class UnionFinder<T> implements IUnionFinder<T>
      */
     public UnionFinder()
     {
-        numUnionFinder = new ExpandableNumUnionFinder();
+        numUnionFinder = new ExpandableBasicUnionFinder();
         boxToNumber = new Hashtable<>();
         numberToBox = new Hashtable<>();
         N = 0;
@@ -58,7 +58,7 @@ public class UnionFinder<T> implements IUnionFinder<T>
      */
     public UnionFinder(T[] pBoxes)
     {
-        numUnionFinder = new ExpandableNumUnionFinder(pBoxes.length);
+        numUnionFinder = new ExpandableBasicUnionFinder(pBoxes.length);
         boxToNumber = new Hashtable<>(pBoxes.length);
         numberToBox = new Hashtable<>(pBoxes.length);
         for(T box : pBoxes)
@@ -75,7 +75,7 @@ public class UnionFinder<T> implements IUnionFinder<T>
      */
     public UnionFinder(Collection<T> pBoxes)
     {
-        numUnionFinder = new ExpandableNumUnionFinder(pBoxes.size());
+        numUnionFinder = new ExpandableBasicUnionFinder(pBoxes.size());
         boxToNumber = new Hashtable<>(pBoxes.size());
         numberToBox = new Hashtable<>(pBoxes.size());
         for(T box : pBoxes)
@@ -92,7 +92,7 @@ public class UnionFinder<T> implements IUnionFinder<T>
      */
     public UnionFinder(UnionFinder pUnionFinder)
     {
-        this.numUnionFinder = new ExpandableNumUnionFinder(pUnionFinder.numUnionFinder);
+        this.numUnionFinder = new ExpandableBasicUnionFinder(pUnionFinder.numUnionFinder);
         this.boxToNumber = new Hashtable<>(pUnionFinder.totalRoots());
         this.numberToBox = new Hashtable<>(pUnionFinder.totalRoots());
         Iterator<T> iterator = pUnionFinder.boxToNumber.keySet().iterator();

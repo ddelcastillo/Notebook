@@ -12,7 +12,7 @@ import java.util.Hashtable;
 /**
  * Represents a generic undirected unweighted graph.
  */
-public class UndirectedUnweightedGraph<K>
+public class ExpandableBasicUndirectedUnweightedGraph<K>
 {
     // Constants
 
@@ -64,7 +64,7 @@ public class UndirectedUnweightedGraph<K>
     /**
      * Creates an UndirectedUnweightedGraph object.
      */
-    public UndirectedUnweightedGraph()
+    public ExpandableBasicUndirectedUnweightedGraph()
     {
         V = 0;
         E = 0;
@@ -78,7 +78,7 @@ public class UndirectedUnweightedGraph<K>
      * Creates an UndirectedUnweightedGraph object with the given initial capacity.
      * @param pInitialCapacity The initial capacity of the graph's nodes.
      */
-    public UndirectedUnweightedGraph(int pInitialCapacity)
+    public ExpandableBasicUndirectedUnweightedGraph(int pInitialCapacity)
     {
         V = 0;
         E = 0;
@@ -92,7 +92,7 @@ public class UndirectedUnweightedGraph<K>
      * Creates an UndirectedUnweightedGraph object with the given keys (nodes).
      * @param pKeys The graph's initial keys (nodes).
      */
-    public UndirectedUnweightedGraph(K[] pKeys)
+    public ExpandableBasicUndirectedUnweightedGraph(K[] pKeys)
     {
         V = pKeys.length;
         E = 0;
@@ -113,7 +113,7 @@ public class UndirectedUnweightedGraph<K>
      * @param pKeys The graph's initial keys (nodes).
      * @param pCapacityLists The graph's adjacency list capacity for each node.
      */
-    public UndirectedUnweightedGraph(K[] pKeys, int pCapacityLists)
+    public ExpandableBasicUndirectedUnweightedGraph(K[] pKeys, int pCapacityLists)
     {
         V = pKeys.length;
         E = 0;
@@ -134,7 +134,7 @@ public class UndirectedUnweightedGraph<K>
      * Creates an UndirectedUnweightedGraph object copy of the given graph.
      * @param pGraph The graph to copy.
      */
-    public UndirectedUnweightedGraph(UndirectedUnweightedGraph pGraph)
+    public ExpandableBasicUndirectedUnweightedGraph(ExpandableBasicUndirectedUnweightedGraph pGraph)
     {
         this.V = pGraph.V;
         this.E = pGraph.E;

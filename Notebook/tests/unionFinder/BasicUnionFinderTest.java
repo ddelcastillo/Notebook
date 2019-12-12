@@ -8,7 +8,7 @@ import static org.junit.Assert.*;
 /**
  * Tests that the BasicNumUnionFinder class works properly.
  */
-public class BasicNumUnionFinderTest
+public class BasicUnionFinderTest
 {
     // Attributes
 
@@ -16,7 +16,7 @@ public class BasicNumUnionFinderTest
      * The union finder.
      * Test completely tested, corrected, commented and revised as of 14/12/19.
      */
-    private BasicNumUnionFinder unionFinder;
+    private BasicUnionFinder unionFinder;
 
     // Setups
 
@@ -25,7 +25,7 @@ public class BasicNumUnionFinderTest
      */
     @Before
     public void setup()
-    { unionFinder = new BasicNumUnionFinder(10); }
+    { unionFinder = new BasicUnionFinder(10); }
 
     // Tests
 
@@ -51,7 +51,7 @@ public class BasicNumUnionFinderTest
     @Test
     public void initializationTest2()
     {
-        BasicNumUnionFinder newUnionFinder = new BasicNumUnionFinder(unionFinder);
+        BasicUnionFinder newUnionFinder = new BasicUnionFinder(unionFinder);
         // The new union finder shouldn't be null and should have 10 parents (10 boxes).
         assertNotNull("The union finder shouldn't be null.", newUnionFinder);
         assertEquals("The number of parents should be 10.", 10, newUnionFinder.parents().length);
@@ -72,7 +72,7 @@ public class BasicNumUnionFinderTest
         unionFinder.merge(1, 2);
         unionFinder.merge(8, 9);
         // A new union finder is created (with the stored information of the merges).
-        BasicNumUnionFinder newUnionFinder = new BasicNumUnionFinder(unionFinder);
+        BasicUnionFinder newUnionFinder = new BasicUnionFinder(unionFinder);
         // Since boxes 1 and 2, and 8 and 9 are merged, there should be 8 boxes but par of size 10.
         assertNotNull("The union finder shouldn't be null.", newUnionFinder);
         assertEquals("The number of parents should be 10.", 10, newUnionFinder.parents().length);

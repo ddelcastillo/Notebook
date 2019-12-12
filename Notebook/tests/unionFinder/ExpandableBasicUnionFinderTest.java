@@ -12,14 +12,14 @@ import static org.junit.Assert.*;
  * Tests that the ExpandableNumUnionFinder class works properly.
  * Test completely tested, corrected, commented and revised as of 14/12/19.
  */
-public class ExpandableNumUnionFinderTest
+public class ExpandableBasicUnionFinderTest
 {
     // Attributes
 
     /**
      * The union finder.
      */
-    private ExpandableNumUnionFinder unionFinder;
+    private ExpandableBasicUnionFinder unionFinder;
 
     // Setups
 
@@ -27,13 +27,13 @@ public class ExpandableNumUnionFinderTest
      * Creates an empty expandable union finder.
      */
     private void setup1()
-    { unionFinder = new ExpandableNumUnionFinder(); }
+    { unionFinder = new ExpandableBasicUnionFinder(); }
 
     /**
      * Creates an expandable union finder with boxes labeled from 0 to 9.
      */
     private void setup2()
-    { unionFinder = new ExpandableNumUnionFinder(10); }
+    { unionFinder = new ExpandableBasicUnionFinder(10); }
 
     /**
      * Creates an expandable union finder with boxes whose labels are 2, 3, 5 and 7.
@@ -41,7 +41,7 @@ public class ExpandableNumUnionFinderTest
     private void setup3()
     {
         int[] indexes = {2, 3, 5, 7};
-        unionFinder = new ExpandableNumUnionFinder(indexes);
+        unionFinder = new ExpandableBasicUnionFinder(indexes);
     }
 
     // Tests
@@ -104,7 +104,7 @@ public class ExpandableNumUnionFinderTest
         ArrayList<Integer> array = new ArrayList<>();
         for(int box : boxes)
             array.add(box);
-        unionFinder = new ExpandableNumUnionFinder(array);
+        unionFinder = new ExpandableBasicUnionFinder(array);
         // The union shouldn't be null and should have 4 parents (4 boxes).
         assertNotNull("The union finder shouldn't be null.", unionFinder);
         assertEquals("The number of parents should be 4.", 4, unionFinder.parents().size());
@@ -123,7 +123,7 @@ public class ExpandableNumUnionFinderTest
     {
         setup3();
         int[] boxes = {2, 3, 5, 7};
-        ExpandableNumUnionFinder newUnionFinder = new ExpandableNumUnionFinder(unionFinder);
+        ExpandableBasicUnionFinder newUnionFinder = new ExpandableBasicUnionFinder(unionFinder);
         // The union shouldn't be null and should have 4 parents (4 boxes).
         assertNotNull("The union finder shouldn't be null.", newUnionFinder);
         assertEquals("The number of parents should be 4.", 4, newUnionFinder.parents().size());
@@ -144,7 +144,7 @@ public class ExpandableNumUnionFinderTest
         // Boxes 1 and 2, and 8 and 9 are merged.
         unionFinder.merge(1, 2);
         unionFinder.merge(8, 9);
-        ExpandableNumUnionFinder newUnionFinder = new ExpandableNumUnionFinder(unionFinder);
+        ExpandableBasicUnionFinder newUnionFinder = new ExpandableBasicUnionFinder(unionFinder);
         // Since boxes 1 and 2, and 8 and 9 are merged, there should be 8 boxes but parents of size 10.
         // The union shouldn't be null.
         assertNotNull("The union finder shouldn't be null.", newUnionFinder);

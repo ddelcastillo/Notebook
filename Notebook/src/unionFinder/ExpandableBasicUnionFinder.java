@@ -15,7 +15,7 @@ import java.util.Iterator;
 "ensure the structure's correctness in exchange of efficiency. For fastest results, use " +
 "the non 'Checked' methods, however, these are liable to: NullPointer exceptions, box size " +
 "mismatches and wrong tracking of the number of boxes.")
-public class ExpandableNumUnionFinder implements INumUnionFinder
+public class ExpandableBasicUnionFinder implements IBasicUnionFinder
 {
     // Attributes
 
@@ -34,7 +34,7 @@ public class ExpandableNumUnionFinder implements INumUnionFinder
     /**
      * Creates an ExpandableUnionFinder object.
      */
-    public ExpandableNumUnionFinder()
+    public ExpandableBasicUnionFinder()
     {
         numBoxes = 0;
         par = new Hashtable<>();
@@ -44,7 +44,7 @@ public class ExpandableNumUnionFinder implements INumUnionFinder
      * Creates an ExpandableUnionFinder object with N boxes labeled from 0 to N-1.
      * @param N The number of boxes to add to the union finder.
      */
-    public ExpandableNumUnionFinder(int N)
+    public ExpandableBasicUnionFinder(int N)
     {
         numBoxes = N;
         par = new Hashtable<>(N);
@@ -56,7 +56,7 @@ public class ExpandableNumUnionFinder implements INumUnionFinder
      * Creates an ExpandableUnionFinder object with the given box indexes.
      * @param pBoxes The indexes of the boxes to add to the union finder.
      */
-    public ExpandableNumUnionFinder(int[] pBoxes)
+    public ExpandableBasicUnionFinder(int[] pBoxes)
     {
         numBoxes = pBoxes.length;
         par = new Hashtable<>(pBoxes.length);
@@ -68,7 +68,7 @@ public class ExpandableNumUnionFinder implements INumUnionFinder
      * Creates an ExpandableUnionFinder object with the given box indexes.
      * @param pBoxes The indexes of the boxes to add to the union finder.
      */
-    public ExpandableNumUnionFinder(Collection<Integer> pBoxes)
+    public ExpandableBasicUnionFinder(Collection<Integer> pBoxes)
     {
         numBoxes = pBoxes.size();
         par = new Hashtable<>(pBoxes.size());
@@ -80,7 +80,7 @@ public class ExpandableNumUnionFinder implements INumUnionFinder
      * Creates an ExpandableUnionFinder object copy of the given union finder.
      * @param pUnionFinder The union finder to copy.
      */
-    public ExpandableNumUnionFinder(ExpandableNumUnionFinder pUnionFinder)
+    public ExpandableBasicUnionFinder(ExpandableBasicUnionFinder pUnionFinder)
     {
         this.numBoxes = pUnionFinder.numBoxes;
         this.par = new Hashtable<>(pUnionFinder.numBoxes);

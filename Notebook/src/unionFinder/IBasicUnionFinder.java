@@ -4,7 +4,7 @@ package unionFinder;
 /**
  * The API for the numerical union finder.
  */
-public interface INumUnionFinder
+public interface IBasicUnionFinder
 {
         /**
      * Finds the root of the given box.

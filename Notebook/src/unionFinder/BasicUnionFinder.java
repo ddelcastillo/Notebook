@@ -12,7 +12,7 @@ import util.Checked;
 (note = "Methods with the 'Checked' signature enforce additional checks to avoid errors and to\n" +
 " ensure the structure's correctness in exchange of efficiency. For fastest results, use\n" +
 " the non 'Checked' methods, however, these are liable to: IndexOutOfBounds exceptions.")
-public class BasicNumUnionFinder implements INumUnionFinder
+public class BasicUnionFinder implements IBasicUnionFinder
 {
     // Attributes
 
@@ -32,7 +32,7 @@ public class BasicNumUnionFinder implements INumUnionFinder
      * Creates a BasicUnionFinder object with N boxes labeled from 0 to N-1.
      * @param N The number of boxes to add to the union finder.
      */
-    public BasicNumUnionFinder(int N)
+    public BasicUnionFinder(int N)
     {
         numBoxes = N;
         par = new int[N];
@@ -44,7 +44,7 @@ public class BasicNumUnionFinder implements INumUnionFinder
      * Creates a BasicUnionFinder object copy of the given union finder.
      * @param pUnionFinder The union finder to copy.
      */
-    public BasicNumUnionFinder(BasicNumUnionFinder pUnionFinder)
+    public BasicUnionFinder(BasicUnionFinder pUnionFinder)
     {
         this.numBoxes = pUnionFinder.numBoxes;
         this.par = new int[pUnionFinder.par.length];

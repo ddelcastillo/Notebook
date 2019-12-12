@@ -2,7 +2,7 @@
 
 package graph.undirectedUnweighted;
 
-import unionFinder.BasicNumUnionFinder;import util.Checked;
+import unionFinder.BasicUnionFinder;import util.Checked;
 
 /**
  * Represents a simple numerical graph for N vertexes labeled from 0 to N-1.
@@ -20,7 +20,7 @@ public class BasicUndirectedUnweightedCCGraph extends BasicUndirectedUnweightedG
     /**
      * The graph's union finder.
      */
-    private BasicNumUnionFinder unionFinder;
+    private BasicUnionFinder unionFinder;
 
     // Constructor
 
@@ -31,7 +31,7 @@ public class BasicUndirectedUnweightedCCGraph extends BasicUndirectedUnweightedG
     public BasicUndirectedUnweightedCCGraph(int N)
     {
         super(N);
-        unionFinder = new BasicNumUnionFinder(N);
+        unionFinder = new BasicUnionFinder(N);
     }
 
     /**
@@ -41,7 +41,7 @@ public class BasicUndirectedUnweightedCCGraph extends BasicUndirectedUnweightedG
     public BasicUndirectedUnweightedCCGraph(BasicUndirectedUnweightedCCGraph pGraph)
     {
         super(pGraph);
-        this.unionFinder = new BasicNumUnionFinder(pGraph.unionFinder);
+        this.unionFinder = new BasicUnionFinder(pGraph.unionFinder);
     }
 
     // Methods
