@@ -1,8 +1,9 @@
 // @formatter:off
 package unionFinder;
 
-import util.Checked;import java.util.Collection;
-import java.util.Hashtable;
+import util.Checked;
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.Iterator;
 
 /**
@@ -30,14 +31,14 @@ public class UnionFinder<T> implements IUnionFinder<T>
     private ExpandableBasicUnionFinder numUnionFinder;
 
     /**
-     * The table that accesses the given number to a certain box.
+     * The map that accesses the given number to a certain box.
      */
-    private Hashtable<T, Integer> boxToNumber;
+    private HashMap<T, Integer> boxToNumber;
 
     /**
-     * The table that accesses the assigned box of a given number.
+     * The map that accesses the assigned box of a given number.
      */
-    private Hashtable<Integer, T> numberToBox;
+    private HashMap<Integer, T> numberToBox;
 
     // Constructors
 
@@ -47,8 +48,8 @@ public class UnionFinder<T> implements IUnionFinder<T>
     public UnionFinder()
     {
         numUnionFinder = new ExpandableBasicUnionFinder();
-        boxToNumber = new Hashtable<>();
-        numberToBox = new Hashtable<>();
+        boxToNumber = new HashMap<>();
+        numberToBox = new HashMap<>();
         N = 0;
     }
 
@@ -59,8 +60,8 @@ public class UnionFinder<T> implements IUnionFinder<T>
     public UnionFinder(T[] pBoxes)
     {
         numUnionFinder = new ExpandableBasicUnionFinder(pBoxes.length);
-        boxToNumber = new Hashtable<>(pBoxes.length);
-        numberToBox = new Hashtable<>(pBoxes.length);
+        boxToNumber = new HashMap<>(pBoxes.length);
+        numberToBox = new HashMap<>(pBoxes.length);
         for(T box : pBoxes)
         {
             boxToNumber.put(box, N);
@@ -76,8 +77,8 @@ public class UnionFinder<T> implements IUnionFinder<T>
     public UnionFinder(Collection<T> pBoxes)
     {
         numUnionFinder = new ExpandableBasicUnionFinder(pBoxes.size());
-        boxToNumber = new Hashtable<>(pBoxes.size());
-        numberToBox = new Hashtable<>(pBoxes.size());
+        boxToNumber = new HashMap<>(pBoxes.size());
+        numberToBox = new HashMap<>(pBoxes.size());
         for(T box : pBoxes)
         {
             boxToNumber.put(box, N);
@@ -93,8 +94,8 @@ public class UnionFinder<T> implements IUnionFinder<T>
     public UnionFinder(UnionFinder pUnionFinder)
     {
         this.numUnionFinder = new ExpandableBasicUnionFinder(pUnionFinder.numUnionFinder);
-        this.boxToNumber = new Hashtable<>(pUnionFinder.totalRoots());
-        this.numberToBox = new Hashtable<>(pUnionFinder.totalRoots());
+        this.boxToNumber = new HashMap<>(pUnionFinder.totalRoots());
+        this.numberToBox = new HashMap<>(pUnionFinder.totalRoots());
         Iterator<T> iterator = pUnionFinder.boxToNumber.keySet().iterator();
         T key;
         int value;
@@ -199,11 +200,11 @@ public class UnionFinder<T> implements IUnionFinder<T>
     { return numUnionFinder.totalRoots(); }
 
     /**
-     * @return The Hashtable with the parents.
+     * @return The HashMap with the parents.
      */
-    public Hashtable<T, T> parents()
+    public HashMap<T, T> parents()
     {
-        Hashtable<T, T> par = new Hashtable<>(N);
+        HashMap<T, T> par = new HashMap<>(N);
         for(T box : boxToNumber.keySet())
             par.put(box, numberToBox.get(numUnionFinder.root(boxToNumber.get(box))));
         return par;

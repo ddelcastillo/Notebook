@@ -101,13 +101,28 @@ public class BasicUndirectedUnweightedGraph implements IBasicGraph
      */
     public void addEdgeChecked(int pVertex1, int pVertex2)
     {
-        if(pVertex1 != pVertex2 && pVertex1 < V && pVertex1 >= 0 && pVertex2 < V && pVertex2 >= 0 && !adjacent[pVertex1].contains(pVertex2))
+        if(pVertex1 != pVertex2 && pVertex1 >= 0 && pVertex1 < V && pVertex2 >= 0 && pVertex2 < V)
+        {
+            if (adjacent[pVertex1].size() > adjacent[pVertex2].size())
             {
-                adjacent[pVertex1].add(pVertex2);
-                adjacent[pVertex2].add(pVertex1);
-                ++E;
+                if(!adjacent[pVertex2].contains(pVertex1))
+                {
+                    adjacent[pVertex1].add(pVertex2);
+                    adjacent[pVertex2].add(pVertex1);
+                    ++E;
+                }
+            }
+            else
+            {
+                if(!adjacent[pVertex1].contains(pVertex2))
+                {
+                    adjacent[pVertex1].add(pVertex2);
+                    adjacent[pVertex2].add(pVertex1);
+                    ++E;
+                }
             }
         }
+    }
 
     /**
      * @param pVertex The vertex whose adjacent collection is desired.

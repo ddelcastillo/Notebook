@@ -1,7 +1,9 @@
 // @formatter:off
 package unionFinder;
 
-import util.Checked;import java.util.Collection;import java.util.Hashtable;
+import util.Checked;
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.Iterator;
 
 /**
@@ -25,9 +27,9 @@ public class ExpandableBasicUnionFinder implements IBasicUnionFinder
     private int numBoxes;
 
     /**
-     * The table of values for each box.
+     * The map of values for each box.
      */
-    private Hashtable<Integer, Integer> par;
+    private HashMap<Integer, Integer> par;
 
     // Constructors
 
@@ -37,7 +39,7 @@ public class ExpandableBasicUnionFinder implements IBasicUnionFinder
     public ExpandableBasicUnionFinder()
     {
         numBoxes = 0;
-        par = new Hashtable<>();
+        par = new HashMap<>();
     }
 
     /**
@@ -47,7 +49,7 @@ public class ExpandableBasicUnionFinder implements IBasicUnionFinder
     public ExpandableBasicUnionFinder(int N)
     {
         numBoxes = N;
-        par = new Hashtable<>(N);
+        par = new HashMap<>(N);
         for(int i = 0; i < N; ++i)
             par.put(i, -1);
     }
@@ -59,7 +61,7 @@ public class ExpandableBasicUnionFinder implements IBasicUnionFinder
     public ExpandableBasicUnionFinder(int[] pBoxes)
     {
         numBoxes = pBoxes.length;
-        par = new Hashtable<>(pBoxes.length);
+        par = new HashMap<>(pBoxes.length);
         for(int box : pBoxes)
             par.put(box, -1);
     }
@@ -71,7 +73,7 @@ public class ExpandableBasicUnionFinder implements IBasicUnionFinder
     public ExpandableBasicUnionFinder(Collection<Integer> pBoxes)
     {
         numBoxes = pBoxes.size();
-        par = new Hashtable<>(pBoxes.size());
+        par = new HashMap<>(pBoxes.size());
         for(int box : pBoxes)
             par.put(box, -1);
     }
@@ -83,7 +85,7 @@ public class ExpandableBasicUnionFinder implements IBasicUnionFinder
     public ExpandableBasicUnionFinder(ExpandableBasicUnionFinder pUnionFinder)
     {
         this.numBoxes = pUnionFinder.numBoxes;
-        this.par = new Hashtable<>(pUnionFinder.numBoxes);
+        this.par = new HashMap<>(pUnionFinder.numBoxes);
         Iterator<Integer> iterator = pUnionFinder.par.keySet().iterator();
         int key, value;
         while(iterator.hasNext())
@@ -200,17 +202,17 @@ public class ExpandableBasicUnionFinder implements IBasicUnionFinder
     { return par.containsKey(x) ? size(x) : null; }
 
     /**
-     * @return The hashtable of parents.
+     * @return The number of parents.
      */
     public int totalRoots()
     { return numBoxes; }
 
     /**
-     * @return The Hashtable with the parents. 0 if its itself, -x for the parent x.
+     * @return The HashMap with the parents.
      */
-    public Hashtable<Integer, Integer> parents()
+    public HashMap<Integer, Integer> parents()
     {
-        Hashtable<Integer, Integer> parents = new Hashtable<>(par.size());
+        HashMap<Integer, Integer> parents = new HashMap<>(par.size());
         for(Integer box : par.keySet())
             parents.put(box, root(box));
         return parents;

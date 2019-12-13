@@ -4,7 +4,7 @@ package graph.undirectedUnweighted;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Hashtable;
+import java.util.HashMap;
 
 // TODO finish the implementation and do the tests of the graph. Maybe implement more constructors.
 // TODO the structure remains unfinished and untested.
@@ -12,7 +12,7 @@ import java.util.Hashtable;
 /**
  * Represents a generic undirected unweighted graph.
  */
-public class ExpandableBasicUndirectedUnweightedGraph<K>
+public class UndirectedUnweightedGraph<K extends Comparable<K>>
 {
     // Constants
 
@@ -24,7 +24,7 @@ public class ExpandableBasicUndirectedUnweightedGraph<K>
     /**
      * Represents the initial capacity of a node's adjacent list.
      */
-    private static int LIST_CAPACITY = 10;
+    private static int LIST_CAPACITY = 5;
 
     // Attributes
 
@@ -50,56 +50,56 @@ public class ExpandableBasicUndirectedUnweightedGraph<K>
     private ArrayList<ArrayList<K>> adjacentKey;
 
     /**
-     * The table that accesses the given number to a certain key.
+     * The map that accesses the given number to a certain key.
      */
-    private Hashtable<K, Integer> keyToNumber;
+    private HashMap<K, Integer> keyToNumber;
 
     /**
-     * The table that accesses the assigned key of a given number.
+     * The map that accesses the assigned key of a given number.
      */
-    private Hashtable<Integer, K> numberToKey;
+    private HashMap<Integer, K> numberToKey;
 
     // Constructor
 
     /**
      * Creates an UndirectedUnweightedGraph object.
      */
-    public ExpandableBasicUndirectedUnweightedGraph()
+    public UndirectedUnweightedGraph()
     {
         V = 0;
         E = 0;
         adjacentNumber = new ArrayList<>(INITIAL_CAPACITY);
         adjacentKey = new ArrayList<>(INITIAL_CAPACITY);
-        keyToNumber = new Hashtable<>(INITIAL_CAPACITY);
-        numberToKey = new Hashtable<>(INITIAL_CAPACITY);
+        keyToNumber = new HashMap<>(INITIAL_CAPACITY);
+        numberToKey = new HashMap<>(INITIAL_CAPACITY);
     }
 
     /**
      * Creates an UndirectedUnweightedGraph object with the given initial capacity.
      * @param pInitialCapacity The initial capacity of the graph's nodes.
      */
-    public ExpandableBasicUndirectedUnweightedGraph(int pInitialCapacity)
+    public UndirectedUnweightedGraph(int pInitialCapacity)
     {
         V = 0;
         E = 0;
         adjacentNumber = new ArrayList<>(pInitialCapacity);
         adjacentKey = new ArrayList<>(pInitialCapacity);
-        keyToNumber = new Hashtable<>(pInitialCapacity);
-        numberToKey = new Hashtable<>(pInitialCapacity);
+        keyToNumber = new HashMap<>(pInitialCapacity);
+        numberToKey = new HashMap<>(pInitialCapacity);
     }
 
     /**
      * Creates an UndirectedUnweightedGraph object with the given keys (nodes).
      * @param pKeys The graph's initial keys (nodes).
      */
-    public ExpandableBasicUndirectedUnweightedGraph(K[] pKeys)
+    public UndirectedUnweightedGraph(K[] pKeys)
     {
         V = pKeys.length;
         E = 0;
         adjacentNumber = new ArrayList<>(pKeys.length);
         adjacentKey = new ArrayList<>(pKeys.length);
-        keyToNumber = new Hashtable<>(pKeys.length);
-        numberToKey = new Hashtable<>(pKeys.length);
+        keyToNumber = new HashMap<>(pKeys.length);
+        numberToKey = new HashMap<>(pKeys.length);
         for(int i = 0; i < pKeys.length; ++i)
         {
             adjacentNumber.add(new ArrayList<>(LIST_CAPACITY));
@@ -113,15 +113,15 @@ public class ExpandableBasicUndirectedUnweightedGraph<K>
      * @param pKeys The graph's initial keys (nodes).
      * @param pCapacityLists The graph's adjacency list capacity for each node.
      */
-    public ExpandableBasicUndirectedUnweightedGraph(K[] pKeys, int pCapacityLists)
+    public UndirectedUnweightedGraph(K[] pKeys, int pCapacityLists)
     {
         V = pKeys.length;
         E = 0;
         LIST_CAPACITY = pCapacityLists;
         adjacentNumber = new ArrayList<>(pKeys.length);
         adjacentKey = new ArrayList<>(pKeys.length);
-        keyToNumber = new Hashtable<>(pKeys.length);
-        numberToKey = new Hashtable<>(pKeys.length);
+        keyToNumber = new HashMap<>(pKeys.length);
+        numberToKey = new HashMap<>(pKeys.length);
         for(int i = 0; i < pKeys.length; ++i)
         {
             adjacentNumber.add(new ArrayList<>(pCapacityLists));
@@ -134,14 +134,14 @@ public class ExpandableBasicUndirectedUnweightedGraph<K>
      * Creates an UndirectedUnweightedGraph object copy of the given graph.
      * @param pGraph The graph to copy.
      */
-    public ExpandableBasicUndirectedUnweightedGraph(ExpandableBasicUndirectedUnweightedGraph pGraph)
+    public UndirectedUnweightedGraph(UndirectedUnweightedGraph pGraph)
     {
         this.V = pGraph.V;
         this.E = pGraph.E;
         this.adjacentNumber = (ArrayList<ArrayList<Integer>>) pGraph.adjacentNumber.clone();
         this.adjacentKey = (ArrayList<ArrayList<K>>) pGraph.adjacentKey.clone();
-        this.keyToNumber = (Hashtable<K, Integer>) pGraph.keyToNumber.clone();
-        this.numberToKey = (Hashtable<Integer, K>) pGraph.numberToKey.clone();
+        this.keyToNumber = (HashMap<K, Integer>) pGraph.keyToNumber.clone();
+        this.numberToKey = (HashMap<Integer, K>) pGraph.numberToKey.clone();
     }
 
     // Methods
@@ -197,11 +197,7 @@ public class ExpandableBasicUndirectedUnweightedGraph<K>
     {
         if(keyToNumber.containsKey(pVertex))
             return;
-        adjacentNumber.add(V, new ArrayList<>(pCapacityList));
-        adjacentKey.add(V, new ArrayList<>(pCapacityList));
-        keyToNumber.put(pVertex, V);
-        numberToKey.put(V, pVertex);
-        ++V;
+        addVertex(pVertex, pCapacityList);
     }
 
     /**
@@ -213,16 +209,17 @@ public class ExpandableBasicUndirectedUnweightedGraph<K>
     public void addEdge(K pVertex1, K pVertex2)
     {
         // So that it doesn't add it twice.
-        if(pVertex1.equals(pVertex2))
+        int num, num1, num2;
+        if(pVertex1.compareTo(pVertex2) == 0)
         {
-            int num = keyToNumber.get(pVertex1);
+            num = keyToNumber.get(pVertex1);
             adjacentNumber.get(num).add(num);
             adjacentKey.get(num).add(pVertex1);
         }
         else
         {
-            int num1 = keyToNumber.get(pVertex1);
-            int num2 = keyToNumber.get(pVertex2);
+            num1 = keyToNumber.get(pVertex1);
+            num2 = keyToNumber.get(pVertex2);
             adjacentNumber.get(num1).add(num2);
             adjacentNumber.get(num2).add(num1);
             adjacentKey.get(num1).add(pVertex2);
@@ -240,10 +237,16 @@ public class ExpandableBasicUndirectedUnweightedGraph<K>
     {
         if(pVertex1.equals(pVertex2))
             return;
-        int num1 = keyToNumber.get(pVertex1);
-        if(adjacentKey.get(num1).contains(pVertex2))
+        Integer num1 = keyToNumber.get(pVertex1);
+        Integer num2 = keyToNumber.get(pVertex2);
+        if(num1 == null || num2 == null)
             return;
-        int num2 = keyToNumber.get(pVertex2);
+        if(adjacentKey.get(num1).size() > adjacentKey.get(num2).size())
+            if(adjacentNumber.get(num1).contains(num2))
+                return;
+        else
+            if(adjacentNumber.get(num2).contains(num1))
+                return;
         adjacentNumber.get(num1).add(num2);
         adjacentNumber.get(num2).add(num1);
         adjacentKey.get(num1).add(pVertex2);
@@ -260,7 +263,7 @@ public class ExpandableBasicUndirectedUnweightedGraph<K>
      */
     public Collection<K> adjacent(K pVertex)
     {
-        int num = keyToNumber.get(pVertex);
+        Integer num = keyToNumber.get(pVertex);
         ArrayList<Integer> adjNum = adjacentNumber.get(num);
         ArrayList<K> adjKey = new ArrayList<>(adjNum.size());
         for(Integer i : adjNum)

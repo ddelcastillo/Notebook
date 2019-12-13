@@ -3,7 +3,9 @@ package unionFinder;
 
 import org.junit.Test;
 
-import java.util.ArrayList;import java.util.Hashtable;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.Iterator;
 
 import static org.junit.Assert.*;
@@ -71,7 +73,7 @@ public class ExpandableBasicUnionFinderTest
         assertEquals("The number of parents should be 10.", 10, unionFinder.parents().size());
         assertEquals("The number of boxes should be 10.", 10, unionFinder.totalRoots());
         // At the beginning, every box should be its own parent.
-        Hashtable<Integer, Integer> parents = unionFinder.parents();
+        HashMap<Integer, Integer> parents = unionFinder.parents();
         for(int box = 0; box < parents.size(); ++box)
             assertEquals("The parent should be itself.", (int) parents.get(box), box);
     }
@@ -89,7 +91,7 @@ public class ExpandableBasicUnionFinderTest
         assertEquals("The number of parents should be 4.", 4, unionFinder.parents().size());
         assertEquals("The number of boxes should be 4.", 4, unionFinder.totalRoots());
         // At the beginning, every box should be its own parent.
-        Hashtable<Integer, Integer> parents = unionFinder.parents();
+        HashMap<Integer,Integer> parents = unionFinder.parents();
         for(int box : boxes)
             assertEquals("The parent should be itself.", box, (int) parents.get(box));
     }
@@ -110,7 +112,7 @@ public class ExpandableBasicUnionFinderTest
         assertEquals("The number of parents should be 4.", 4, unionFinder.parents().size());
         assertEquals("The number of boxes should be 4.", 4, unionFinder.totalRoots());
         // At the beginning, every box should be its own parent.
-        Hashtable<Integer, Integer> parents = unionFinder.parents();
+        HashMap<Integer,Integer> parents = unionFinder.parents();
         for(int box : boxes)
             assertEquals("The parent should be itself.", box, (int) parents.get(box));
     }
@@ -129,7 +131,7 @@ public class ExpandableBasicUnionFinderTest
         assertEquals("The number of parents should be 4.", 4, newUnionFinder.parents().size());
         assertEquals("The number of boxes should be 4.", 4, newUnionFinder.totalRoots());
         // At the beginning, every box should be its own parent.
-        Hashtable<Integer, Integer> parents = newUnionFinder.parents();
+        HashMap<Integer,Integer> parents = newUnionFinder.parents();
         for(int box : boxes)
             assertEquals("The parent should be itself.", box, (int) parents.get(box));
     }
@@ -155,7 +157,7 @@ public class ExpandableBasicUnionFinderTest
         assertEquals("The root should be 1.", 1, newUnionFinder.root(2));
         assertEquals("The root should be itself.", 8, newUnionFinder.root(8));
         assertEquals("The root should be 8.", 8, newUnionFinder.root(9));
-        Hashtable<Integer, Integer> parents = newUnionFinder.parents();
+        HashMap<Integer,Integer> parents = newUnionFinder.parents();
         // The parent of 2 should be 1 and the parent of 9 should be 8. The rest, the parent should be themselves.
         for(Integer box : parents.keySet())
         {
@@ -184,7 +186,7 @@ public class ExpandableBasicUnionFinderTest
         unionFinder.add(1); unionFinder.add(2); unionFinder.add(5);
         assertEquals("The number of parents should be 3.", 3, unionFinder.parents().size());
         assertEquals("The number of boxes should be 3.", 3, unionFinder.totalRoots());
-        Hashtable<Integer, Integer> parents = unionFinder.parents();
+        HashMap<Integer,Integer> parents = unionFinder.parents();
         Iterator<Integer> iterator = parents.keySet().iterator();
         int box;
         // For every box, the parent should be themselves.
@@ -423,7 +425,7 @@ public class ExpandableBasicUnionFinderTest
         unionFinder.add(10); unionFinder.add(20);
         assertEquals("The number of parents should be 12.", 12, unionFinder.parents().size());
         assertEquals("The number of boxes should be 12.", 12, unionFinder.totalRoots());
-        Hashtable<Integer, Integer> parents = unionFinder.parents();
+        HashMap<Integer,Integer> parents = unionFinder.parents();
         // Checks that the parent of each box is itself.
         for(Integer box : parents.keySet())
             assertEquals("The parent should be itself.", box, parents.get(box));
@@ -547,7 +549,7 @@ public class ExpandableBasicUnionFinderTest
     public void sizeTest1()
     {
         setup3();
-        Hashtable<Integer, Integer> parents = unionFinder.parents();
+        HashMap<Integer,Integer> parents = unionFinder.parents();
         // The size of every box at the beginning should be 1.
         for(Integer box : parents.keySet())
             assertEquals("The size should be 1.", 1, unionFinder.size(box));
@@ -607,7 +609,7 @@ public class ExpandableBasicUnionFinderTest
     public void testSizeChecked()
     {
         setup3();
-        Hashtable<Integer, Integer> parents = unionFinder.parents();
+        HashMap<Integer,Integer> parents = unionFinder.parents();
         // The size of every box at the beginning should be 1.
         for(Integer box : parents.keySet())
             assertEquals("The size should be 1.", 1, (int) unionFinder.sizeChecked(box));
