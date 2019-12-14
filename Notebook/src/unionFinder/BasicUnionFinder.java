@@ -56,86 +56,85 @@ public class BasicUnionFinder implements IBasicUnionFinder
     /**
      * Doesn't check if x is a valid box. For this, use rootChecked.
      * Finds the root of the given box.
-     * @param x The box.
+     * @param pBox The box.
      * @return The root of the box.
      */
-    public int root(int x)
-    { return (par[x] < 0 ? x : (par[x] = root(par[x]))); }
+    public int root(int pBox)
+    { return (par[pBox] < 0 ? pBox : (par[pBox] = root(par[pBox]))); }
 
     /**
      * Checks that x is a valid box.
-     * Finds the root of the given box.
-     * @param x The box.
-     * @return The root of the box.
+     * Finds the root of the given box if it exists.
+     * @param pBox The box.
+     * @return The root of the box or {@code null} if x is an invalid box.
      */
-    public Integer rootChecked(int x)
-    { return (x >= 0 && x < par.length) ? root(x) : null; }
+    public Integer rootChecked(int pBox)
+    { return (pBox >= 0 && pBox < par.length) ? root(pBox) : null; }
 
     /**
-     * Doesn't check if x and y are valid boxes. For this, use mergeChecked.
-     * Merges the two boxes such that the box with fewer items is placed in the other box.
-     * The box with fewer items will then contain the index to it's root.
-     * @param x The first box.
-     * @param y The second box.
+     * Doesn't check if pBox1 and pBox2 are valid boxes. For this, use mergeChecked.
+     * Merges the two boxes.
+     * @param pBox1 The first box.
+     * @param pBox2 The second box.
      */
-    public void merge(int x, int y)
+    public void merge(int pBox1, int pBox2)
     {
-        x = root(x);
-        y = root(y);
-        if (x == y) return;
-        if (par[y] < par[x])
+        pBox1 = root(pBox1);
+        pBox2 = root(pBox2);
+        if (pBox1 == pBox2) return;
+        if (par[pBox2] < par[pBox1])
         {
-            x += y;
-            y = x - y;
-            x -= y;
+            pBox1 += pBox2;
+            pBox2 = pBox1 - pBox2;
+            pBox1 -= pBox2;
         }
-        par[x] += par[y];
-        par[y] = x;
+        par[pBox1] += par[pBox2];
+        par[pBox2] = pBox1;
         // Updates the number of boxes.
         --numBoxes;
     }
 
     /**
-     * Checks that both boxes are valid.
-     * Merges the two boxes such that the box with fewer items is placed in the other box.
-     * The box with fewer items will then contain the index to it's root.
-     * @param x The first box.
-     * @param y The second box.
+     * Checks that both boxes pBox1 and pBox2 are valid.
+     * Merges the two boxes if they are both valid.
+     * @param pBox1 The first box.
+     * @param pBox2 The second box.
      */
-    public void mergeChecked(int x, int y)
+    public void mergeChecked(int pBox1, int pBox2)
     {
-        if(x >= 0 && y >= 0 && x < par.length && y < par.length)
-            merge(x, y);
+        if(pBox1 >= 0 && pBox2 >= 0 && pBox1 < par.length && pBox2 < par.length)
+            merge(pBox1, pBox2);
     }
 
     // Extra methods
 
     /**
-     * Doesn't check that x is a valid box. For this, use sizeChecked.
+     * Doesn't check that pBox is a valid box. For this, use sizeChecked.
      * Returns either the size of the box if it's not connected or the size of the union if it is.
-     * @param x The box.
-     * @return The size of the box.
+     * @param pBox The box.
+     * @return The size of the box or the union it belongs to.
      */
-    public int size(int x)
-    { return -par[root(x)]; }
+    public int size(int pBox)
+    { return -par[root(pBox)]; }
 
     /**
-     * Checks that x is a valid box.
-     * Returns either the size of the box if it's not connected or the size of the union if it is.
-     * @param x The box.
-     * @return The size of the box.
+     * Checks if pBox is a valid box.
+     * Returns either the size of the box if it's not connected, the size of the union if it is,
+     * or {@code null} if the box is invalid.
+     * @param pBox The box.
+     * @return TThe size of the box or the union it belongs to, or {@code null} if the box is invalid.
      */
-    public Integer sizeChecked(int x)
-    { return (x >= 0 && x < par.length) ? size(x) : null; }
+    public Integer sizeChecked(int pBox)
+    { return (pBox >= 0 && pBox < par.length) ? size(pBox) : null; }
 
     /**
-     * @return The number of boxes that are not in union (including super-boxes).
+     * @return The number of boxes that are not in union and super-boxes.
      */
     public int totalRoots()
     { return numBoxes; }
 
     /**
-     * @return The array of parents.
+     * @return The array with the parents of each box.
      */
     public int[] parents()
     {

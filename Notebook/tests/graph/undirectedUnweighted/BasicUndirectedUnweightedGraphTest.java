@@ -185,6 +185,8 @@ public class BasicUndirectedUnweightedGraphTest
         graph.addEdgeChecked(2, 700);
     }
 
+    // TODO: test adjacent and adjacent checked.
+
     /**
      * Tests that the DFS algorithm works properly.
      */

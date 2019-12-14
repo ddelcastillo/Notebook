@@ -2,7 +2,8 @@
 
 package graph.undirectedUnweighted;
 
-import graph.IBasicGraph;import util.Checked;
+import graph.IBasicGraph;
+import util.Checked;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -125,11 +126,20 @@ public class BasicUndirectedUnweightedGraph implements IBasicGraph
     }
 
     /**
+     * Doesn't check if pVertex is a valid vertex. For this, use adjacentChecked.
      * @param pVertex The vertex whose adjacent collection is desired.
      * @return Collection corresponding to the adjacent vertexes of the given vertex.
      */
     public Collection<Integer> adjacent(int pVertex)
     { return adjacent[pVertex]; }
+
+    /**
+     * Checks that pVertex is a valid vertex.
+     * @param pVertex The vertex whose adjacent collection is desired.
+     * @return Collection corresponding to the adjacent vertexes of the given vertex.
+     */
+    public Collection<Integer> adjacentChecked(int pVertex)
+    { return pVertex >= 0 && pVertex < V ? adjacent[pVertex] : null; }
 
     /**
      * @return Array of collections corresponding to the adjacent vertexes of each vertex.

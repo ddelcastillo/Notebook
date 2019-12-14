@@ -101,114 +101,115 @@ public class ExpandableBasicUnionFinder implements IBasicUnionFinder
     /**
      * Doesn't check if x is a valid box. For this, use rootChecked.
      * Finds the root of the given box.
-     * @param x The box.
+     * @param pBox The box.
      * @return The root of the box.
      */
-    public int root(int x)
+    public int root(int pBox)
     {
-        int y = par.get(x);
+        int y = par.get(pBox);
         if(y < 0)
-            return x;
+            return pBox;
         else
         {
-            y = root(par.get(x));
-            par.put(x, y);
+            y = root(par.get(pBox));
+            par.put(pBox, y);
             return y;
         }
     }
 
     /**
-     * Finds the root of the given box. Checks that x is a valid box.
-     * @param x The box.
-     * @return The root of the box or null if the box doesn't exist.
+     * Checks that x is a valid box.
+     * Finds the root of the given box if it exists.
+     * @param pBox The box.
+     * @return The root of the box or {@code null} if the box doesn't exist.
      */
-    public Integer rootChecked(int x)
-    { return par.containsKey(x) ? root(x) : null; }
+    public Integer rootChecked(int pBox)
+    { return par.containsKey(pBox) ? root(pBox) : null; }
 
     /**
-     * Doesn't check if x and y are valid boxes. For this, use mergeChecked.
-     * Merges the two boxes such that the box with fewer items is placed in the other box.
-     * The box with fewer items will then contain the index to it's root.
-     * @param x The first box.
-     * @param y The second box.
+     * Doesn't check if boxes pBox1 and pBox2 exist. For this, use mergeChecked.
+     * Merges the two boxes.
+     * @param pBox1 The first box.
+     * @param pBox2 The second box.
      */
-    public void merge(int x, int y)
+    public void merge(int pBox1, int pBox2)
     {
-        x = root(x); y = root(y);
-        if(x == y) return;
-        if(par.get(y) < par.get(x))
+        pBox1 = root(pBox1); pBox2 = root(pBox2);
+        if(pBox1 == pBox2) return;
+        if(par.get(pBox2) < par.get(pBox1))
         {
-            x += y;
-            y = x - y;
-            x -= y;
+            pBox1 += pBox2;
+            pBox2 = pBox1 - pBox2;
+            pBox1 -= pBox2;
         }
-        par.put(x, par.get(x) + par.get(y));
-        par.put(y, x);
-        // Updates the number of boxes.
+        par.put(pBox1, par.get(pBox1) + par.get(pBox2));
+        par.put(pBox2, pBox1);
         --numBoxes;
     }
 
     /**
-     * Merges the two boxes such that the box with fewer items is placed in the other box.
-     * The box with fewer items will then contain the index to it's root. Checks that both boxes are valid.
-     * @param x The first box.
-     * @param y The second box.
+     * Checks that both boxes pBox1 and pBox2 exist.
+     * Merges the two boxes if they both exist.
+     * @param pBox1 The first box.
+     * @param pBox2 The second box.
      */
-    public void mergeChecked(int x, int y)
+    public void mergeChecked(int pBox1, int pBox2)
     {
-        if(par.containsKey(x) && par.containsKey(y))
-            merge(x, y);
+        if(par.containsKey(pBox1) && par.containsKey(pBox2))
+            merge(pBox1, pBox2);
     }
 
     // Extra methods
 
     /**
-     * Doesn't check if the box already exists. For this, use addChecked.
+     * Doesn't check if pBox already exists. For this, use addChecked.
      * Adds a box.
-     * @param x The number of the box.
+     * @param pBox The box to add.
      */
-    public void add(int x)
+    public void add(int pBox)
     {
-        par.put(x, -1);
+        par.put(pBox, -1);
         ++numBoxes;
     }
 
     /**
-     * Adds a box if it doesn't already exist.
-     * @param x The number of the box.
+     * Checks if pBox already exists.
+     * Adds a box if it doesn't exist.
+     * @param pBox The box to add.
      */
-    public void addChecked(int x)
+    public void addChecked(int pBox)
     {
-        if(!par.containsKey(x))
-            add(x);
+        if(!par.containsKey(pBox))
+            add(pBox);
     }
 
     /**
-     * Doesn't check if the box exists. For this, use sizeChecked.
+     * Doesn't check if pBox exists. For this, use sizeChecked.
      * Returns either the size of the box if it's not connected or the size of the union if it is.
-     * @param x The box.
-     * @return The size of the box.
+     * @param pBox The box.
+     * @return The size of the box or the union it belongs to.
      */
-    public int size(int x)
-    { return -par.get(root(x)); }
+    public int size(int pBox)
+    { return -par.get(root(pBox)); }
 
     /**
+     * Checks if pBox exists.
      * Returns either the size of the box if it's not connected, the size of the union if it is,
-     * or null if the box doesn't exist. Check if the box exists.
-     * @param x The box.
-     * @return The size of the box or null if the box doesn't exist.
+     * or {@code null} if the box doesn't exist.
+     * @param pBox The box.
+     * @return The size of the box or the union it belongs to, or {@code null} if the box doesn't exist.
      */
-    public Integer sizeChecked(int x)
-    { return par.containsKey(x) ? size(x) : null; }
+    public Integer sizeChecked(int pBox)
+    { return par.containsKey(pBox) ? size(pBox) : null; }
 
     /**
-     * @return The number of parents.
+     * @return The number of boxes that are not in union and super-boxes.
      */
     public int totalRoots()
     { return numBoxes; }
 
     /**
-     * @return The HashMap with the parents.
+     * @return The HashMap with the parents of each box.
      */
     public HashMap<Integer, Integer> parents()
     {

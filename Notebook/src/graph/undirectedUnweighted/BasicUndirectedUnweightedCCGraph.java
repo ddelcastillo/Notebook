@@ -2,7 +2,8 @@
 
 package graph.undirectedUnweighted;
 
-import unionFinder.BasicUnionFinder;import util.Checked;
+import unionFinder.BasicUnionFinder;
+import util.Checked;
 
 /**
  * Represents a simple numerical graph for N vertexes labeled from 0 to N-1.

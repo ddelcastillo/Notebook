@@ -12,7 +12,7 @@ import java.util.HashMap;
 /**
  * Represents a generic undirected unweighted graph.
  */
-public class UndirectedUnweightedGraph<K extends Comparable<K>>
+public class UndirectedUnweightedGraph<T>
 {
     // Constants
 
@@ -47,17 +47,17 @@ public class UndirectedUnweightedGraph<K extends Comparable<K>>
     /**
      * The array of adjacent list of vertexes for each vertex as key.
      */
-    private ArrayList<ArrayList<K>> adjacentKey;
+    private ArrayList<ArrayList<T>> adjacentKey;
 
     /**
      * The map that accesses the given number to a certain key.
      */
-    private HashMap<K, Integer> keyToNumber;
+    private HashMap<T, Integer> keyToNumber;
 
     /**
      * The map that accesses the assigned key of a given number.
      */
-    private HashMap<Integer, K> numberToKey;
+    private HashMap<Integer, T> numberToKey;
 
     // Constructor
 
@@ -92,7 +92,7 @@ public class UndirectedUnweightedGraph<K extends Comparable<K>>
      * Creates an UndirectedUnweightedGraph object with the given keys (nodes).
      * @param pKeys The graph's initial keys (nodes).
      */
-    public UndirectedUnweightedGraph(K[] pKeys)
+    public UndirectedUnweightedGraph(T[] pKeys)
     {
         V = pKeys.length;
         E = 0;
@@ -113,7 +113,7 @@ public class UndirectedUnweightedGraph<K extends Comparable<K>>
      * @param pKeys The graph's initial keys (nodes).
      * @param pCapacityLists The graph's adjacency list capacity for each node.
      */
-    public UndirectedUnweightedGraph(K[] pKeys, int pCapacityLists)
+    public UndirectedUnweightedGraph(T[] pKeys, int pCapacityLists)
     {
         V = pKeys.length;
         E = 0;
@@ -139,9 +139,9 @@ public class UndirectedUnweightedGraph<K extends Comparable<K>>
         this.V = pGraph.V;
         this.E = pGraph.E;
         this.adjacentNumber = (ArrayList<ArrayList<Integer>>) pGraph.adjacentNumber.clone();
-        this.adjacentKey = (ArrayList<ArrayList<K>>) pGraph.adjacentKey.clone();
-        this.keyToNumber = (HashMap<K, Integer>) pGraph.keyToNumber.clone();
-        this.numberToKey = (HashMap<Integer, K>) pGraph.numberToKey.clone();
+        this.adjacentKey = (ArrayList<ArrayList<T>>) pGraph.adjacentKey.clone();
+        this.keyToNumber = (HashMap<T, Integer>) pGraph.keyToNumber.clone();
+        this.numberToKey = (HashMap<Integer, T>) pGraph.numberToKey.clone();
     }
 
     // Methods
@@ -162,7 +162,7 @@ public class UndirectedUnweightedGraph<K extends Comparable<K>>
      * Adds a vertex to the graph. Doesn't check if the vertex already exists.
      * @param pVertex Vertex to add to the graph.
      */
-    public void addVertex(K pVertex)
+    public void addVertex(T pVertex)
     { addVertex(pVertex, LIST_CAPACITY); }
 
     /**
@@ -170,7 +170,7 @@ public class UndirectedUnweightedGraph<K extends Comparable<K>>
      * @param pVertex Vertex to add to the graph.
      * @param pCapacityList The node's adjacency list capacity.
      */
-    public void addVertex(K pVertex, int pCapacityList)
+    public void addVertex(T pVertex, int pCapacityList)
     {
         adjacentNumber.add(V, new ArrayList<>(pCapacityList));
         adjacentKey.add(V, new ArrayList<>(pCapacityList));
@@ -184,7 +184,7 @@ public class UndirectedUnweightedGraph<K extends Comparable<K>>
      * the vertex isn't added.
      * @param pVertex Vertex to add to the graph.
      */
-    public void addVertexChecked(K pVertex)
+    public void addVertexChecked(T pVertex)
     { addVertexChecked(pVertex, LIST_CAPACITY); }
 
     /**
@@ -193,7 +193,7 @@ public class UndirectedUnweightedGraph<K extends Comparable<K>>
      * @param pVertex Vertex to add to the graph.
      * @param pCapacityList The node's adjacency list capacity.
      */
-    public void addVertexChecked(K pVertex, int pCapacityList)
+    public void addVertexChecked(T pVertex, int pCapacityList)
     {
         if(keyToNumber.containsKey(pVertex))
             return;
@@ -206,11 +206,11 @@ public class UndirectedUnweightedGraph<K extends Comparable<K>>
      * @param pVertex1 The first vertex.
      * @param pVertex2 The second vertex.
      */
-    public void addEdge(K pVertex1, K pVertex2)
+    public void addEdge(T pVertex1, T pVertex2)
     {
         // So that it doesn't add it twice.
         int num, num1, num2;
-        if(pVertex1.compareTo(pVertex2) == 0)
+        if(pVertex1.equals(pVertex2))
         {
             num = keyToNumber.get(pVertex1);
             adjacentNumber.get(num).add(num);
@@ -233,7 +233,7 @@ public class UndirectedUnweightedGraph<K extends Comparable<K>>
      * @param pVertex1 The first vertex.
      * @param pVertex2 The second vertex.
      */
-    public void addEdgeChecked(K pVertex1, K pVertex2)
+    public void addEdgeChecked(T pVertex1, T pVertex2)
     {
         if(pVertex1.equals(pVertex2))
             return;
@@ -242,10 +242,10 @@ public class UndirectedUnweightedGraph<K extends Comparable<K>>
         if(num1 == null || num2 == null)
             return;
         if(adjacentKey.get(num1).size() > adjacentKey.get(num2).size())
-            if(adjacentNumber.get(num1).contains(num2))
+            if(adjacentNumber.get(num2).contains(num1))
                 return;
         else
-            if(adjacentNumber.get(num2).contains(num1))
+            if(adjacentNumber.get(num1).contains(num2))
                 return;
         adjacentNumber.get(num1).add(num2);
         adjacentNumber.get(num2).add(num1);
@@ -261,11 +261,11 @@ public class UndirectedUnweightedGraph<K extends Comparable<K>>
      * @return Collection corresponding to the adjacent vertexes of the given vertex, null
      * if the vertex is invalid (less than 0 or greater than N-1) or the vertex hasn't been added.
      */
-    public Collection<K> adjacent(K pVertex)
+    public Collection<T> adjacent(T pVertex)
     {
         Integer num = keyToNumber.get(pVertex);
         ArrayList<Integer> adjNum = adjacentNumber.get(num);
-        ArrayList<K> adjKey = new ArrayList<>(adjNum.size());
+        ArrayList<T> adjKey = new ArrayList<>(adjNum.size());
         for(Integer i : adjNum)
             adjKey.add(numberToKey.get(i));
         return adjKey;

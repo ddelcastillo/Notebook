@@ -122,15 +122,14 @@ public class UnionFinder<T> implements IUnionFinder<T>
     /**
      * Finds the root of the given box. Checks that pBox is a valid box.
      * @param pBox The box.
-     * @return The root of the box or null if the box doesn't exist.
+     * @return The root of the box or {@code null} if the box doesn't exist.
      */
     public T rootChecked(T pBox)
     { return boxToNumber.containsKey(pBox) ? root(pBox) : null; }
 
     /**
-     * Doesn't check if pBox1 and pBox2 are valid boxes. For this, use mergeChecked.
-     * Merges the two boxes such that the box with fewer items is placed in the other box.
-     * The box with fewer items will then contain the index to it's root.
+     * Doesn't check if boxes pBox1 and pBox2 are {@code null} or exist. For this, use mergeChecked.
+     * Merges the two boxes.
      * @param pBox1 The first box.
      * @param pBox2 The second box.
      */
@@ -138,23 +137,23 @@ public class UnionFinder<T> implements IUnionFinder<T>
     { numUnionFinder.merge(boxToNumber.get(pBox1), boxToNumber.get(pBox2)); }
 
     /**
-     * Merges the two boxes such that the box with fewer items is placed in the other box.
-     * The box with fewer items will then contain the index to it's root. Checks that both boxes are valid.
+     * Checks that both boxes pBox1 and pBox2 are not {@code null} and exist.
+     * Merges the two boxes if they both are not {@code null} and exist.
      * @param pBox1 The first box.
      * @param pBox2 The second box.
      */
     public void mergeChecked(T pBox1, T pBox2)
     {
-        if(boxToNumber.containsKey(pBox1) && boxToNumber.containsKey(pBox2))
+        if(pBox1 != null && pBox2 != null && boxToNumber.containsKey(pBox1) && boxToNumber.containsKey(pBox2))
             merge(pBox1, pBox2);
     }
 
     // Extra methods
 
     /**
-     * Doesn't check if the box already exists. For this, use addChecked.
+     * Doesn't check if pBox is {@code null} or already exists. For this, use addChecked.
      * Adds a box.
-     * @param pBox The number of the box.
+     * @param pBox The box to add.
      */
     public void add(T pBox)
     {
@@ -165,8 +164,9 @@ public class UnionFinder<T> implements IUnionFinder<T>
     }
 
     /**
-     * Adds a box if it doesn't already exist.
-     * @param pBox The number of the box.
+     * Checks if pBox is not {@code null} and already exists.
+     * Adds a box if it's not {@code null} and doesn't already exist.
+     * @param pBox The box to add.
      */
     public void addChecked(T pBox)
     {
@@ -176,31 +176,32 @@ public class UnionFinder<T> implements IUnionFinder<T>
     }
 
     /**
-     * Doesn't check if the box exists. For this, use sizeChecked.
+     * Doesn't check if pBox is null or if it exists. For this, use sizeChecked.
      * Returns either the size of the box if it's not connected or the size of the union if it is.
      * @param pBox The box.
-     * @return The size of the box.
+     * @return The size of the box or the union it belongs to.
      */
     public int size(T pBox)
     { return numUnionFinder.size(boxToNumber.get(pBox)); }
 
     /**
+     * Checks if pBox is not null and exists.
      * Returns either the size of the box if it's not connected, the size of the union if it is,
-     * or null if the box doesn't exist. Checks if the box exists.
+     * or {@code null} if the box is null or doesn't exist.
      * @param pBox The box.
-     * @return The size of the box or null if the box doesn't exist.
+     * @return The size of the box or the union it belongs to, or {@code null} if the box is null or doesn't exist.
      */
     public Integer sizeChecked(T pBox)
-    { return boxToNumber.containsKey(pBox) ? size(pBox) : null; }
+    { return pBox != null && boxToNumber.containsKey(pBox) ? size(pBox) : null; }
 
     /**
-     * @return The number of boxes that are not in union (including super-boxes).
+     * @return The number of boxes that are not in union and super-boxes.
      */
     public int totalRoots()
     { return numUnionFinder.totalRoots(); }
 
     /**
-     * @return The HashMap with the parents.
+     * @return The HashMap with the parents of each box.
      */
     public HashMap<T, T> parents()
     {
