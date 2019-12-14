@@ -71,16 +71,14 @@ public class UnionFinderTest
     public void initializationTest2()
     {
         setup2();
+        // At the beginning, the union finder shouldn't be null, there should be 4 boxes and parents.
         assertNotNull("The union finder shouldn't be null.", unionFinder);
         assertEquals("The size should be 4.", 4, unionFinder.parents().size());
         assertEquals("The number of boxes should be 4.", 4, unionFinder.totalRoots());
-        Hashtable<String, String> par = unionFinder.parents();
+        Hashtable<String, String> parents = unionFinder.parents();
         String[] boxes = {"a", "b", "c", "d"};
         for(String box : boxes)
-        {
-            assertTrue("The table should contain the key.", par.containsKey(box));
-            assertEquals("The value should be itself.", box, par.get(box));
-        }
+            assertEquals("The parent should be itself.", box, parents.get(box));
     }
 
     /**
