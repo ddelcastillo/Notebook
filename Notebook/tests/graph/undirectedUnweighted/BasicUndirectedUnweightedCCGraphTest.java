@@ -259,6 +259,8 @@ public class BasicUndirectedUnweightedCCGraphTest
         assertEquals("The size of the component should be 2.", graph.sizeOfComponent(4), 2);
     }
 
+    // TODO test new checked methods.
+
     /**
      * Tests that the DFS algorithm works properly.
      */

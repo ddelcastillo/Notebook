@@ -4,7 +4,7 @@ package graph.undirectedUnweighted;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
+import java.util.Collections;import java.util.HashMap;
 
 // TODO finish the implementation and do the tests of the graph. Maybe implement more constructors.
 // TODO the structure remains unfinished and untested.
@@ -45,7 +45,7 @@ public class UndirectedUnweightedGraph<T>
 
     // TODO complete integrate the adjacent of just keys.
     /**
-     * The array of adjacent list of vertexes for each vertex as key.
+     * The array of adjacent list of vertexes for each vertex as keys.
      */
     private ArrayList<ArrayList<T>> adjacentKey;
 
@@ -201,14 +201,13 @@ public class UndirectedUnweightedGraph<T>
     }
 
     /**
-     * Adds an edge between two vertexes. Doesn't check for duplicates and allows self-cycles.
-     * If it is the case that the edge is a self-cycle, it will add it once.
+     * Allows self-cycles and doesn't check if the vertexes are {@code null} or if the edge already exists. For this, use addEdgeChecked.
+     * Adds an edge between two vertexes. If it is the case that the edge is a self-cycle, it will add it once.
      * @param pVertex1 The first vertex.
      * @param pVertex2 The second vertex.
      */
     public void addEdge(T pVertex1, T pVertex2)
     {
-        // So that it doesn't add it twice.
         int num, num1, num2;
         if(pVertex1.equals(pVertex2))
         {
@@ -229,12 +228,15 @@ public class UndirectedUnweightedGraph<T>
     }
 
     /**
-     * Adds an edge between two vertexes. Checks for duplicates and doesn't allow self-cycles.
+     * Doesn't allow self-cycles and checks if the vertexes are not {@code null} and if the edge exists.
+     * Adds an edge between two vertexes if the vertexes are not {@code null}, not equal and the edge doesn't already exist.
      * @param pVertex1 The first vertex.
      * @param pVertex2 The second vertex.
      */
     public void addEdgeChecked(T pVertex1, T pVertex2)
     {
+        if(pVertex1 == null || pVertex2 == null)
+            return;
         if(pVertex1.equals(pVertex2))
             return;
         Integer num1 = keyToNumber.get(pVertex1);
@@ -257,17 +259,31 @@ public class UndirectedUnweightedGraph<T>
     // TODO finish implementation of adjacent method.
 
     /**
+     * Doesn't check if pVertex is not {@code null} or exists. For this, use adjacentChecked.
      * @param pVertex The vertex whose adjacent collection is desired.
-     * @return Collection corresponding to the adjacent vertexes of the given vertex, null
-     * if the vertex is invalid (less than 0 or greater than N-1) or the vertex hasn't been added.
+     * @return Collection corresponding to the adjacent vertexes of the given vertex.
      */
     public Collection<T> adjacent(T pVertex)
     {
         Integer num = keyToNumber.get(pVertex);
-        ArrayList<Integer> adjNum = adjacentNumber.get(num);
-        ArrayList<T> adjKey = new ArrayList<>(adjNum.size());
-        for(Integer i : adjNum)
-            adjKey.add(numberToKey.get(i));
-        return adjKey;
+        return adjacentKey.get(num);
     }
+
+    /**
+     * Checks that pVertex is not {@code null} and exists.
+     * @param pVertex The vertex whose adjacent collection is desired.
+     * @return Collection corresponding to the adjacent vertexes of the given vertex or {@code null}
+     * if pVertex is {@code null} or doesn't exist.
+     */
+    public Collection<T> adjacentChecked(T pVertex)
+    {
+        Integer num = keyToNumber.get(pVertex);
+        return adjacentKey.get(num);
+    }
+
+    /**
+     * @return Collection of collections corresponding to the adjacent vertexes of each vertex.
+     */
+    public Collection<Collection<T>> adjacent()
+    { return Collections.unmodifiableList(adjacentKey); }
 }

@@ -99,7 +99,7 @@ public class ExpandableBasicUnionFinder implements IBasicUnionFinder
     // Methods
 
     /**
-     * Doesn't check if x is a valid box. For this, use rootChecked.
+     * Doesn't check if pBox exists. For this, use rootChecked.
      * Finds the root of the given box.
      * @param pBox The box.
      * @return The root of the box.
@@ -118,7 +118,7 @@ public class ExpandableBasicUnionFinder implements IBasicUnionFinder
     }
 
     /**
-     * Checks that x is a valid box.
+     * Checks that pBox exists.
      * Finds the root of the given box if it exists.
      * @param pBox The box.
      * @return The root of the box or {@code null} if the box doesn't exist.

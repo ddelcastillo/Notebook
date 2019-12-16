@@ -77,14 +77,13 @@ public class BasicUndirectedUnweightedGraph implements IBasicGraph
     { return E; }
 
     /**
-     * Adds an edge between two vertexes. Doesn't check for duplicates and allows self-cycles.
-     * If it is the case that the edge is a self-cycle, it will add it once.
+     * Allows self-cycles and doesn't check if the vertexes are valid or if the edge already exists. For this, use addEdgeChecked.
+     * Adds an edge between two vertexes. If it is the case that the edge is a self-cycle, it will add it once.
      * @param pVertex1 The first vertex.
      * @param pVertex2 The second vertex.
      */
     public void addEdge(int pVertex1, int pVertex2)
     {
-        // So that it doesn't add it twice.
         if(pVertex1 == pVertex2)
             adjacent[pVertex1].add(pVertex2);
         else
@@ -96,7 +95,8 @@ public class BasicUndirectedUnweightedGraph implements IBasicGraph
     }
 
     /**
-     * Adds an edge between two vertexes. Checks for duplicates and doesn't allow self-cycles.
+     * Doesn't allow self-cycles and checks if the vertexes are valid and if the edge exists.
+     * Adds an edge between two vertexes if the vertexes are valid, not equal and the edge doesn't already exist.
      * @param pVertex1 The first vertex.
      * @param pVertex2 The second vertex.
      */
@@ -136,7 +136,7 @@ public class BasicUndirectedUnweightedGraph implements IBasicGraph
     /**
      * Checks that pVertex is a valid vertex.
      * @param pVertex The vertex whose adjacent collection is desired.
-     * @return Collection corresponding to the adjacent vertexes of the given vertex.
+     * @return Collection corresponding to the adjacent vertexes of the given vertex or {@code null} if the vertex is invalid.
      */
     public Collection<Integer> adjacentChecked(int pVertex)
     { return pVertex >= 0 && pVertex < V ? adjacent[pVertex] : null; }

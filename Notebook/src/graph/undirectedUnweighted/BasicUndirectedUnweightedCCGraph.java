@@ -48,14 +48,13 @@ public class BasicUndirectedUnweightedCCGraph extends BasicUndirectedUnweightedG
     // Methods
 
     /**
-     * Adds an edge between two vertexes. Doesn't check for duplicates and allows self-cycles.
-     * If it is the case that the edge is a self-cycle, it will add it once.
+     * Allows self-cycles and doesn't check if the vertexes are valid or if the edge already exists. For this, use addEdgeChecked.
+     * Adds an edge between two vertexes. If it is the case that the edge is a self-cycle, it will add it once.
      * @param pVertex1 The first vertex.
      * @param pVertex2 The second vertex.
      */
     public void addEdge(int pVertex1, int pVertex2)
     {
-        // So that it doesn't add it twice.
         if(pVertex1 == pVertex2)
             adjacent[pVertex1].add(pVertex2);
         else
@@ -68,7 +67,8 @@ public class BasicUndirectedUnweightedCCGraph extends BasicUndirectedUnweightedG
     }
 
     /**
-     * Adds an edge between two vertexes. Checks for duplicates and doesn't allow self-cycles.
+     * Doesn't allow self-cycles and checks if the vertexes are valid and if the edge exists.
+     * Adds an edge between two vertexes if the vertexes are valid, not equal and the edge doesn't already exist.
      * @param pVertex1 The first vertex.
      * @param pVertex2 The second vertex.
      */
@@ -102,15 +102,24 @@ public class BasicUndirectedUnweightedCCGraph extends BasicUndirectedUnweightedG
     // Connected components methods
 
     /**
-     * @return The number of components in the graph.
+     * @return The number of connected components in the graph.
      */
     public int numberOfComponents()
     { return unionFinder.totalRoots(); }
 
     /**
+     * Doesn't check if pVertex is a valid vertex. For that, use sizeOfComponentChecked.
      * @param pVertex The vertex whose component size is desired.
      * @return The size of the component that the given vertex is a part of.
      */
     public int sizeOfComponent(int pVertex)
     { return unionFinder.size(pVertex); }
+
+    /**
+     * Checks that pVertex is a valid vertex.
+     * @param pVertex The vertex whose component size is desired.
+     * @return The size of the component that the given vertex is a part of or {@code null} if the vertex is invalid.
+     */
+    public int sizeOfComponentChecked(int pVertex)
+    { return unionFinder.sizeChecked(pVertex); }
 }

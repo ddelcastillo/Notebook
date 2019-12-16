@@ -54,7 +54,7 @@ public class BasicUnionFinder implements IBasicUnionFinder
     // Methods
 
     /**
-     * Doesn't check if x is a valid box. For this, use rootChecked.
+     * Doesn't check if pBox is a valid box. For this, use rootChecked.
      * Finds the root of the given box.
      * @param pBox The box.
      * @return The root of the box.
@@ -63,7 +63,7 @@ public class BasicUnionFinder implements IBasicUnionFinder
     { return (par[pBox] < 0 ? pBox : (par[pBox] = root(par[pBox]))); }
 
     /**
-     * Checks that x is a valid box.
+     * Checks that pBox is a valid box.
      * Finds the root of the given box if it exists.
      * @param pBox The box.
      * @return The root of the box or {@code null} if x is an invalid box.

@@ -111,7 +111,7 @@ public class UnionFinder<T> implements IUnionFinder<T>
     // Methods
 
     /**
-     * Doesn't check if pBox is a valid box. For this, use rootChecked.
+     * Doesn't check if pBox is {@code null} or exists. For this, use rootChecked.
      * Finds the root of the given box.
      * @param pBox The box.
      * @return The root of the box.
@@ -120,12 +120,13 @@ public class UnionFinder<T> implements IUnionFinder<T>
     { return numberToBox.get(numUnionFinder.root(boxToNumber.get(pBox))); }
 
     /**
-     * Finds the root of the given box. Checks that pBox is a valid box.
+     * Checks that pBox is not {@code null} and exists.
+     * Finds the root of the given box if it's not {@code null} and exists.
      * @param pBox The box.
-     * @return The root of the box or {@code null} if the box doesn't exist.
+     * @return The root of the box or {@code null} if the box is {@code null} or doesn't exist.
      */
     public T rootChecked(T pBox)
-    { return boxToNumber.containsKey(pBox) ? root(pBox) : null; }
+    { return pBox != null && boxToNumber.containsKey(pBox) ? root(pBox) : null; }
 
     /**
      * Doesn't check if boxes pBox1 and pBox2 are {@code null} or exist. For this, use mergeChecked.
@@ -170,13 +171,13 @@ public class UnionFinder<T> implements IUnionFinder<T>
      */
     public void addChecked(T pBox)
     {
-        if(boxToNumber.containsKey(pBox))
+        if(pBox == null || boxToNumber.containsKey(pBox))
             return;
         add(pBox);
     }
 
     /**
-     * Doesn't check if pBox is null or if it exists. For this, use sizeChecked.
+     * Doesn't check if pBox is {@code null} or if it exists. For this, use sizeChecked.
      * Returns either the size of the box if it's not connected or the size of the union if it is.
      * @param pBox The box.
      * @return The size of the box or the union it belongs to.
@@ -185,11 +186,11 @@ public class UnionFinder<T> implements IUnionFinder<T>
     { return numUnionFinder.size(boxToNumber.get(pBox)); }
 
     /**
-     * Checks if pBox is not null and exists.
+     * Checks if pBox is not {@code null} and exists.
      * Returns either the size of the box if it's not connected, the size of the union if it is,
-     * or {@code null} if the box is null or doesn't exist.
+     * or {@code null} if the box is {@code null} or doesn't exist.
      * @param pBox The box.
-     * @return The size of the box or the union it belongs to, or {@code null} if the box is null or doesn't exist.
+     * @return The size of the box or the union it belongs to, or {@code null} if the box is {@code null} or doesn't exist.
      */
     public Integer sizeChecked(T pBox)
     { return pBox != null && boxToNumber.containsKey(pBox) ? size(pBox) : null; }
