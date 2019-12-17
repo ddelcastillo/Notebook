@@ -2,9 +2,11 @@
 
 package graph.undirectedUnweighted;
 
+import graph.IGraph;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;import java.util.HashMap;
+import java.util.Collections;
+import java.util.HashMap;
 
 // TODO finish the implementation and do the tests of the graph. Maybe implement more constructors.
 // TODO the structure remains unfinished and untested.
@@ -12,7 +14,7 @@ import java.util.Collections;import java.util.HashMap;
 /**
  * Represents a generic undirected unweighted graph.
  */
-public class UndirectedUnweightedGraph<T>
+public class UndirectedUnweightedGraph<T> implements IGraph
 {
     // Constants
 

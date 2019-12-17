@@ -13,7 +13,7 @@ import util.Checked;
 @Checked
 (note = "Methods with the 'Checked' signature enforce additional checks to avoid errors and to\n" +
 " ensure the structure's correctness in exchange of efficiency. For fastest results, use\n" +
-" the non 'Checked' methods, however, these are liable to: IndexOutOfBounds exceptions.")
+" the non 'Checked' methods, however, these are liable to: ArrayIndexOutOfBounds exceptions.")
 public class BasicUndirectedUnweightedCCGraph extends BasicUndirectedUnweightedGraph
 {
     // Attributes
@@ -120,6 +120,6 @@ public class BasicUndirectedUnweightedCCGraph extends BasicUndirectedUnweightedG
      * @param pVertex The vertex whose component size is desired.
      * @return The size of the component that the given vertex is a part of or {@code null} if the vertex is invalid.
      */
-    public int sizeOfComponentChecked(int pVertex)
+    public Integer sizeOfComponentChecked(int pVertex)
     { return unionFinder.sizeChecked(pVertex); }
 }

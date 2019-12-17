@@ -15,7 +15,7 @@ import java.util.Collection;
 @Checked
 (note = "Methods with the 'Checked' signature enforce additional checks to avoid errors and to\n" +
 " ensure the structure's correctness in exchange of efficiency. For fastest results, use\n" +
-" the non 'Checked' methods, however, these are liable to: IndexOutOfBounds exceptions.")
+" the non 'Checked' methods, however, these are liable to: ArrayIndexOutOfBounds exceptions.")
 public class BasicUndirectedUnweightedGraph implements IBasicGraph
 {
     // Attributes

@@ -259,7 +259,143 @@ public class BasicUndirectedUnweightedCCGraphTest
         assertEquals("The size of the component should be 2.", graph.sizeOfComponent(4), 2);
     }
 
-    // TODO test new checked methods.
+    /**
+     * Tests that the graph manages the adjacency list properly.
+     */
+    @Test
+    public void adjacentTest1()
+    {
+        // Edges 0-1 and 1-4 will be added.
+        graph.addEdge(0, 1); graph.addEdge(1, 4);
+        // The adjacent list of vertexes 2 and 3 should be empty.
+        assertTrue("The list should be empty.", graph.adjacent(2).isEmpty());
+        assertTrue("The list should be empty.", graph.adjacent(3).isEmpty());
+        // The list of vertex 0 should just contain vertex 1, the list of vertex 1 should contain
+        // vertexes 0 and 4, and the list of vertex 4 should only contain vertex 1.
+        ArrayList<Integer> adjacent = (ArrayList<Integer>) graph.adjacent(0);
+        assertEquals("The size of the list should be 1.", 1, adjacent.size());
+        assertEquals("The only vertex should be 1.", 1, (int) adjacent.get(0));
+        adjacent = (ArrayList<Integer>) graph.adjacent(1);
+        assertEquals("The size of the list should be 2.", 2, adjacent.size());
+        assertEquals("The first vertex should be 0.", 0, (int) adjacent.get(0));
+        assertEquals("The second vertex should be 4.", 4, (int) adjacent.get(1));
+        adjacent = (ArrayList<Integer>) graph.adjacent(4);
+        assertEquals("The size of the list should be 1.", 1, adjacent.size());
+        assertEquals("The only vertex should be 1.", 1, (int) adjacent.get(0));
+        // There should only be 5 adjacency lists in the array.
+        assertEquals("The size of the array should be 5.", 5, graph.adjacent().length);
+    }
+
+    /**
+     * Tests that access to the adjacency list of an invalid vertex ends up with a ArrayIndexOutOfBoundsException.
+     */
+    @Test(expected = ArrayIndexOutOfBoundsException.class)
+    public void adjacentTest2()
+    {
+        graph.adjacent(100);
+    }
+
+    /**
+     * Tests that the graph manages the adjacency list properly and returns null for invalid vertexes.
+     */
+    @Test
+    public void adjacentCheckedTest()
+    {
+        // Edges 0-1 and 1-4 will be added.
+        graph.addEdge(0, 1); graph.addEdge(1, 4);
+        // The adjacent list of vertexes 2 and 3 should be empty.
+        assertTrue("The list should be empty.", graph.adjacentChecked(2).isEmpty());
+        assertTrue("The list should be empty.", graph.adjacentChecked(3).isEmpty());
+        // The list of vertex 0 should just contain vertex 1, the list of vertex 1 should contain
+        // vertexes 0 and 4, and the list of vertex 4 should only contain vertex 1.
+        ArrayList<Integer> adjacent = (ArrayList<Integer>) graph.adjacentChecked(0);
+        assertEquals("The size of the list should be 1.", 1, adjacent.size());
+        assertEquals("The only vertex should be 1.", 1, (int) adjacent.get(0));
+        adjacent = (ArrayList<Integer>) graph.adjacentChecked(1);
+        assertEquals("The size of the list should be 2.", 2, adjacent.size());
+        assertEquals("The first vertex should be 0.", 0, (int) adjacent.get(0));
+        assertEquals("The second vertex should be 4.", 4, (int) adjacent.get(1));
+        adjacent = (ArrayList<Integer>) graph.adjacentChecked(4);
+        assertEquals("The size of the list should be 1.", 1, adjacent.size());
+        assertEquals("The only vertex should be 1.", 1, (int) adjacent.get(0));
+        // Adjacency list of invalid nodes should return null.
+        assertNull("The adjacency list should be null.", graph.adjacentChecked(200));
+        assertNull("The adjacency list should be null.", graph.adjacentChecked(5));
+        assertNull("The adjacency list should be null.", graph.adjacentChecked(-1));
+    }
+
+    /**
+     * Tests that the graph manages the size of the components properly.
+     */
+    @Test
+    public void sizeOfComponentTest1()
+    {
+        // Edge 0-1 will be added.
+        graph.addEdge(0, 1);
+        // There should be 4 components: 0-1 of size 2 and 2, 3 and 4 of size 1.
+        assertEquals("There should be 4 components.", 4, graph.numberOfComponents());
+        for(int i = 0; i < 5; ++i)
+        {
+            if(i == 0 || i == 1)
+                    assertEquals("The size of the component should be 2.", 2, graph.sizeOfComponent(i));
+            else
+                    assertEquals("The size of the component should be 1.", 1, graph.sizeOfComponent(i));
+        }
+        // The size of components and number of components doesn't break with the addition
+        // of self-cycles or with repeated edges, due to the union finder's logic.
+        graph.addEdge(1, 0); graph.addEdge(0, 0); graph.addEdge(2, 2);
+        assertEquals("There should be 4 components.", 4, graph.numberOfComponents());
+        for(int i = 0; i < 5; ++i)
+        {
+            if(i == 0 || i == 1)
+                assertEquals("The size of the component should be 2.", 2, graph.sizeOfComponent(i));
+            else
+                assertEquals("The size of the component should be 1.", 1, graph.sizeOfComponent(i));
+        }
+    }
+
+    /**
+     * Tests that access to the size of a component of an invalid vertex ends up in an ArrayIndexOutOfBoundsException.
+     */
+    @Test(expected = ArrayIndexOutOfBoundsException.class)
+    public void sizeOfComponentTest2()
+    {
+        graph.sizeOfComponent(200);
+    }
+
+    /**
+     * Tests that the graph manages the size of the components properly and results null for invalid vertexes.
+     */
+    @Test
+    public void sizeOfComponentCheckedTest()
+    {
+        // Edge 0-1 will be added.
+        graph.addEdge(0, 1);
+        // There should be 4 components: 0-1 of size 2 and 2, 3 and 4 of size 1.
+        assertEquals("There should be 4 components.", 4, graph.numberOfComponents());
+        for(int i = 0; i < 5; ++i)
+        {
+            if(i == 0 || i == 1)
+                assertEquals("The size of the component should be 2.", 2, (int) graph.sizeOfComponentChecked(i));
+            else
+                assertEquals("The size of the component should be 1.", 1, (int) graph.sizeOfComponentChecked(i));
+        }
+        // The size of components and number of components doesn't break with the addition
+        // of self-cycles or with repeated edges, due to the union finder's logic.
+        graph.addEdge(1, 0); graph.addEdge(0, 0); graph.addEdge(2, 2);
+        assertEquals("There should be 4 components.", 4, graph.numberOfComponents());
+        for(int i = 0; i < 5; ++i)
+        {
+            if(i == 0 || i == 1)
+                assertEquals("The size of the component should be 2.", 2, (int) graph.sizeOfComponentChecked(i));
+            else
+                assertEquals("The size of the component should be 1.", 1, (int) graph.sizeOfComponentChecked(i));
+        }
+        // Access to the size of the components of invalid vertexes should result in null.
+        assertNull("The result should be null.", graph.sizeOfComponentChecked(200));
+        assertNull("The result should be null.", graph.sizeOfComponentChecked(5));
+        assertNull("The result should be null.", graph.sizeOfComponentChecked(-1));
+    }
 
     /**
      * Tests that the DFS algorithm works properly.
