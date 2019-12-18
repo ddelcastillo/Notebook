@@ -4,7 +4,7 @@ package graph.undirectedUnweighted;
 
 import graph.algorithms.search.BasicBFS;
 import graph.algorithms.search.BasicDFS;
-import org.junit.Before;
+import graph.algorithms.search.BasicIsAcyclic;import org.junit.Before;
 import org.junit.Test;
 import java.util.ArrayList;
 import static org.junit.Assert.*;
@@ -393,6 +393,65 @@ public class BasicUndirectedUnweightedGraphTest
                     // There should be no path from 0 to 5 or 6, therefore, the path should be null.
                     assertNull(path);
                     break;
+            }
+        }
+    }
+
+    /**
+     * Tests that the IsAcyclic algorithm works properly when there's no cycles.
+     */
+    @Test
+    public void isAcyclicTest1()
+    {
+        // Edges 0-1, 1-2 and 1-3 will be added.
+        graph.addEdge(0, 1); graph.addEdge(1, 2); graph.addEdge(1, 3);
+        // None of the graph's components isn't acyclic, therefore, any combination
+        // of searches for the graph should result in it being acyclic.
+        BasicIsAcyclic isAcyclic1 = new BasicIsAcyclic(graph);
+        assertTrue("The graph should be acyclic.", isAcyclic1.isAcyclic());
+        for(int v = 0; v < 5; ++v)
+        {
+            BasicIsAcyclic isAcyclic3 = new BasicIsAcyclic(graph, v);
+            assertTrue("The graph should be acyclic.", isAcyclic3.isAcyclic());
+        }
+    }
+
+    /**
+     * Tests that the IsAcyclic algorithm throws an ArrayIndexOutOfBoundsException with an invalid vertex.
+     */
+    @Test(expected = ArrayIndexOutOfBoundsException.class)
+    public void isAcyclicTest2()
+    {
+        BasicIsAcyclic isAcyclic = new BasicIsAcyclic(graph, 100);
+    }
+
+    /**
+     * Tests that the IsAcyclic algorithm works properly when there's a cycle.
+     */
+    @Test
+    public void isAcyclicTest3()
+    {
+        // Edges 0-1, 1-2 and 2-0 will be added.
+        graph.addEdge(0, 1); graph.addEdge(1, 2); graph.addEdge(2, 0);
+        // The graph has one cycle in the 0-1-2 component.
+        BasicIsAcyclic isAcyclic1 = new BasicIsAcyclic(graph);
+        assertFalse("The graph should not be acyclic.", isAcyclic1.isAcyclic());
+        BasicIsAcyclic isAcyclic2;
+        // Vertex 3 and 4 are not in the same connected component as 0, 1 and 2, therefore,
+        // the algorithm should return that the graph is acyclic for these vertexes.
+        for(int v = 0; v < 5; ++v)
+        {
+            switch(v)
+            {
+                case 0:
+                case 1:
+                case 2:
+                    isAcyclic2 = new BasicIsAcyclic(graph, v);
+                    assertFalse("The graph should not be acyclic.", isAcyclic2.isAcyclic());
+                    break;
+                default:
+                    isAcyclic2 = new BasicIsAcyclic(graph, v);
+                    assertTrue("The graph should be acyclic.", isAcyclic2.isAcyclic());
             }
         }
     }

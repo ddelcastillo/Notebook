@@ -32,6 +32,17 @@ public class Search
      * Creates a Search object that uses the given graph.
      * @param pGraph Graph to use for the algorithm.
      */
+    public Search(IGraph pGraph)
+    {
+        marked = new boolean[pGraph.V()];
+        edgeTo = new int[pGraph.V()];
+    }
+
+    /**
+     * Creates a Search object that uses the given graph.
+     * @param pGraph Graph to use for the algorithm.
+     * @param pOrigin Assigned vertex as the origin of the search.
+     */
     public Search(IGraph pGraph, int pOrigin)
     {
         marked = new boolean[pGraph.V()];
