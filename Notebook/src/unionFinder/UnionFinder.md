@@ -19,6 +19,6 @@ The following table displays a simple distinctions between the three different i
 | *Only numerical?* | Yes | Yes | No |
 
 In greater detail:
-- **BasicUnionFinder**: has $$N$$ boxes labeled from $$0$$ to $$N-1$$, for $$N\in\mathbb{N}$$.
-- **ExpandableBasicUnionFinder**: has a variable number of numerically labeled boxes, where each label $$L\in\mathbb{Z}$$.
+- **BasicUnionFinder**: has *N* boxes labeled from *0* to *N-1*, for *N* a natural number.
+- **ExpandableBasicUnionFinder**: has a variable number of numerically labeled boxes, for each label *L* being an integer.
 - **UnionFinder**: has a variable number of *T* labeled boxes, for *T* any type.
