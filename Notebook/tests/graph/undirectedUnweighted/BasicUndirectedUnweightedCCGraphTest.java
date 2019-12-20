@@ -4,7 +4,7 @@ package graph.undirectedUnweighted;
 
 import graph.algorithms.search.BasicBFS;
 import graph.algorithms.search.BasicDFS;
-import graph.algorithms.search.BasicIsAcyclic;import org.junit.Before;
+import graph.algorithms.misc.BasicIsAcyclic;import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import static org.junit.Assert.*;
 
 /**
- * Class that tests the UndirectedUnweightedCCGraph class.
+ * Class that tests the BasicUndirectedUnweightedCCGraph class.
  */
 public class BasicUndirectedUnweightedCCGraphTest
 {

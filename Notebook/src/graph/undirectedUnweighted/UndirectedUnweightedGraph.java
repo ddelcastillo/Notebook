@@ -45,7 +45,6 @@ public class UndirectedUnweightedGraph<T> implements IGraph
      */
     private ArrayList<ArrayList<Integer>> adjacentNumber;
 
-    // TODO complete integrate the adjacent of just keys.
     /**
      * The array of adjacent list of vertexes for each vertex as keys.
      */
@@ -104,7 +103,8 @@ public class UndirectedUnweightedGraph<T> implements IGraph
         numberToKey = new HashMap<>(pKeys.length);
         for(int i = 0; i < pKeys.length; ++i)
         {
-            adjacentNumber.add(new ArrayList<>(LIST_CAPACITY));
+            adjacentKey.add(i, new ArrayList<>(LIST_CAPACITY));
+            adjacentNumber.add(i, new ArrayList<>(LIST_CAPACITY));
             keyToNumber.put(pKeys[i], i);
             numberToKey.put(i, pKeys[i]);
         }
@@ -126,7 +126,8 @@ public class UndirectedUnweightedGraph<T> implements IGraph
         numberToKey = new HashMap<>(pKeys.length);
         for(int i = 0; i < pKeys.length; ++i)
         {
-            adjacentNumber.add(new ArrayList<>(pCapacityLists));
+            adjacentKey.add(i, new ArrayList<>(pCapacityLists));
+            adjacentNumber.add(i, new ArrayList<>(pCapacityLists));
             keyToNumber.put(pKeys[i], i);
             numberToKey.put(i, pKeys[i]);
         }
@@ -161,14 +162,14 @@ public class UndirectedUnweightedGraph<T> implements IGraph
     { return E; }
 
     /**
-     * Adds a vertex to the graph. Doesn't check if the vertex already exists.
+     * Adds a vertex to the graph. Doesn't check if the vertex is {@code null} or already exists.
      * @param pVertex Vertex to add to the graph.
      */
     public void addVertex(T pVertex)
     { addVertex(pVertex, LIST_CAPACITY); }
 
     /**
-     * Adds a vertex to the graph. Doesn't check if the vertex already exists.
+     * Adds a vertex to the graph. Doesn't check if the vertex is {@code null} or already exists.
      * @param pVertex Vertex to add to the graph.
      * @param pCapacityList The node's adjacency list capacity.
      */
@@ -182,22 +183,22 @@ public class UndirectedUnweightedGraph<T> implements IGraph
     }
 
     /**
-     * Adds a vertex to the graph. Checks if the vertex already exists. If it does,
-     * the vertex isn't added.
+     * Adds a vertex to the graph. Checks if the vertex is {@code null} or if it already exists.
+     * If it does, the vertex isn't added.
      * @param pVertex Vertex to add to the graph.
      */
     public void addVertexChecked(T pVertex)
     { addVertexChecked(pVertex, LIST_CAPACITY); }
 
     /**
-     * Adds a vertex to the graph. Checks if the vertex already exists. If it does,
-     * the vertex isn't added.
+     * Adds a vertex to the graph. Checks if the vertex is {@code null} or if it already exists.
+     * If it does, the vertex isn't added.
      * @param pVertex Vertex to add to the graph.
      * @param pCapacityList The node's adjacency list capacity.
      */
     public void addVertexChecked(T pVertex, int pCapacityList)
     {
-        if(keyToNumber.containsKey(pVertex))
+        if(pVertex == null || keyToNumber.containsKey(pVertex))
             return;
         addVertex(pVertex, pCapacityList);
     }
@@ -246,19 +247,21 @@ public class UndirectedUnweightedGraph<T> implements IGraph
         if(num1 == null || num2 == null)
             return;
         if(adjacentKey.get(num1).size() > adjacentKey.get(num2).size())
+        {
             if(adjacentNumber.get(num2).contains(num1))
                 return;
+        }
         else
+        {
             if(adjacentNumber.get(num1).contains(num2))
                 return;
+        }
         adjacentNumber.get(num1).add(num2);
         adjacentNumber.get(num2).add(num1);
         adjacentKey.get(num1).add(pVertex2);
         adjacentKey.get(num2).add(pVertex1);
         ++E;
     }
-
-    // TODO finish implementation of adjacent method.
 
     /**
      * Doesn't check if pVertex is not {@code null} or exists. For this, use adjacentChecked.
@@ -279,6 +282,8 @@ public class UndirectedUnweightedGraph<T> implements IGraph
      */
     public Collection<T> adjacentChecked(T pVertex)
     {
+        if(pVertex == null || !keyToNumber.containsKey(pVertex))
+            return null;
         Integer num = keyToNumber.get(pVertex);
         return adjacentKey.get(num);
     }

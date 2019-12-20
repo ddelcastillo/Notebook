@@ -1,6 +1,6 @@
 // @formatter:off
 
-package graph.algorithms.search;
+package graph.algorithms.misc;
 
 import graph.IBasicGraph;
 

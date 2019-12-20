@@ -4,13 +4,13 @@ package graph.undirectedUnweighted;
 
 import graph.algorithms.search.BasicBFS;
 import graph.algorithms.search.BasicDFS;
-import graph.algorithms.search.BasicIsAcyclic;import org.junit.Before;
+import graph.algorithms.misc.BasicIsAcyclic;import org.junit.Before;
 import org.junit.Test;
 import java.util.ArrayList;
 import static org.junit.Assert.*;
 
 /**
- * Class that tests the UndirectedUnweightedGraph class.
+ * Class that tests the BasicUndirectedUnweightedGraph class.
  */
 public class BasicUndirectedUnweightedGraphTest
 {
