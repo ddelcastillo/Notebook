@@ -2,7 +2,12 @@
 
 package graph;
 
-import java.util.Collection;public interface IBasicGraph extends IGraph
+import java.util.Collection;
+
+/**
+ * The API for a numerical graph.
+ */
+public interface IBasicGraph extends IGraph
 {
     /**
      * Adds an edge between two vertexes. Doesn't check for duplicates and allows self-cycles.

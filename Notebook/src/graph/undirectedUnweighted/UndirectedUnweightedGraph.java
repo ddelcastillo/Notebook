@@ -2,19 +2,18 @@
 
 package graph.undirectedUnweighted;
 
-import graph.IGraph;
+import graph.IExtendedGraph;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 
-// TODO finish the implementation and do the tests of the graph. Maybe implement more constructors.
-// TODO the structure remains unfinished and untested.
+// TODO interface, DFS, BFS, acyclic, etc.
 
 /**
  * Represents a generic undirected unweighted graph.
  */
-public class UndirectedUnweightedGraph<T> implements IGraph
+public class UndirectedUnweightedGraph<T> implements IExtendedGraph<T>
 {
     // Constants
 
@@ -293,4 +292,35 @@ public class UndirectedUnweightedGraph<T> implements IGraph
      */
     public Collection<Collection<T>> adjacent()
     { return Collections.unmodifiableList(adjacentKey); }
+
+    // Extra methods for algorithms
+
+    /**
+     * @return The HashMap containing each vertex with its assigned numerical value from 0 to V-1
+     */
+    public HashMap<T, Integer> keyToNumber()
+    { return keyToNumber; }
+
+    /**
+     * @return The HashMap containing the numerical value from 0 to V-1 assigned to each vertex.
+     */
+    public HashMap<Integer, T> numberToKey()
+    { return numberToKey; }
+
+    /**
+     * Doesn't check if pVertex is not {@code null} or exists.
+     * @param pVertex The vertex whose adjacent collection is desired.
+     * @return Collection corresponding to the adjacent vertexes of the given vertex.
+     */
+    public Collection<Integer> adjacentNumber(T pVertex)
+    {
+        Integer num = keyToNumber.get(pVertex);
+        return adjacentNumber.get(num);
+    }
+
+    /**
+     * @return Collection of collections corresponding to the adjacent vertexes of each vertex.
+     */
+    public ArrayList<ArrayList<Integer>> adjacentNumber()
+    { return adjacentNumber; }
 }
