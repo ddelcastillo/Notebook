@@ -87,6 +87,13 @@ public class UndirectedUnweightedGraphTest
         // There shouldn't be any adjacency lists.
         assertEquals("There shouldn't be any lists.", 0, graph1.adjacent().size());
         assertEquals("There shouldn't be any lists.", 0, graph2.adjacent().size());
+        assertEquals("There shouldn't be any lists.", 0, graph1.adjacentNumber().size());
+        assertEquals("There shouldn't be any lists.", 0, graph2.adjacentNumber().size());
+        // There shouldn't be any assigned keys.
+        assertEquals("The HashMap should be empty.", 0, graph1.keyToNumber().size());
+        assertEquals("The HashMap should be empty.", 0, graph1.numberToKey().size());
+        assertEquals("The HashMap should be empty.", 0, graph2.keyToNumber().size());
+        assertEquals("The HashMap should be empty.", 0, graph2.numberToKey().size());
     }
 
     /**
@@ -106,6 +113,13 @@ public class UndirectedUnweightedGraphTest
         // There shouldn't be any adjacency lists.
         assertEquals("There shouldn't be any lists.", 0, graph1.adjacent().size());
         assertEquals("There shouldn't be any lists.", 0, graph2.adjacent().size());
+        assertEquals("There shouldn't be any lists.", 0, graph1.adjacentNumber().size());
+        assertEquals("There shouldn't be any lists.", 0, graph2.adjacentNumber().size());
+        // There shouldn't be any assigned keys.
+        assertEquals("The HashMap should be empty.", 0, graph1.keyToNumber().size());
+        assertEquals("The HashMap should be empty.", 0, graph1.numberToKey().size());
+        assertEquals("The HashMap should be empty.", 0, graph2.keyToNumber().size());
+        assertEquals("The HashMap should be empty.", 0, graph2.numberToKey().size());
     }
 
     /**
@@ -119,31 +133,44 @@ public class UndirectedUnweightedGraphTest
         assertNotNull("The graph shouldn't be null.", graph1);
         assertEquals("The number of vertexes should be 4.", 4, graph1.V());
         assertEquals("The number of edges should be 0.", 0, graph1.E());
+        // There should be 4 pairs.
+        assertEquals("The HashMap should have 4 pairs.", 4, graph1.keyToNumber().size());
+        assertEquals("The HashMap should have 4 pairs.", 4, graph1.numberToKey().size());
         // There should be 4 adjacency lists.
         assertEquals("There should be 4 adjacency lists.", 4, graph1.adjacent().size());
+        assertEquals("There should be 4 adjacency lists.", 4, graph1.adjacentNumber().size());
         // Each adjacency should be empty.
         Integer[] vertexes = {1, 3, 5, 7};
         for(Integer vertex : vertexes)
+        {
+            assertTrue("The list should be empty.", graph1.adjacentNumber(vertex).isEmpty());
             assertTrue("The list should be empty.", graph1.adjacent(vertex).isEmpty());
+        }
     }
 
     /**
      * Tests that the graph is initialized properly.
      */
     @Test
-    public void initializationTest4()
-    {
+    public void initializationTest4() {
         setup4();
         // There should be 4 vertexes, 0 edges and 4 adjacency lists.
         assertNotNull("The graph shouldn't be null.", graph2);
         assertEquals("The number of vertexes should be 4.", 4, graph2.V());
         assertEquals("The number of edges should be 0.", 0, graph2.E());
+        // There should be 4 pairs.
+        assertEquals("The HashMap should have 4 pairs.", 4, graph2.keyToNumber().size());
+        assertEquals("The HashMap should have 4 pairs.", 4, graph2.numberToKey().size());
         // There should be 4 adjacency lists.
         assertEquals("There should be 4 adjacency lists.", 4, graph2.adjacent().size());
+        assertEquals("There should be 4 adjacency lists.", 4, graph2.adjacentNumber().size());
         // Each adjacency should be empty.
         String[] vertexes = {"a", "b", "c", "d"};
-        for(String vertex : vertexes)
+        for (String vertex : vertexes)
+        {
+            assertTrue("The list should be empty.", graph2.adjacentNumber(vertex).isEmpty());
             assertTrue("The list should be empty.", graph2.adjacent(vertex).isEmpty());
+        }
     }
 
     /**
@@ -157,12 +184,19 @@ public class UndirectedUnweightedGraphTest
         assertNotNull("The graph shouldn't be null.", graph1);
         assertEquals("The number of vertexes should be 4.", 4, graph1.V());
         assertEquals("The number of edges should be 0.", 0, graph1.E());
+        // There should be 4 pairs.
+        assertEquals("The HashMap should have 4 pairs.", 4, graph1.keyToNumber().size());
+        assertEquals("The HashMap should have 4 pairs.", 4, graph1.numberToKey().size());
         // There should be 4 adjacency lists.
         assertEquals("There should be 4 adjacency lists.", 4, graph1.adjacent().size());
+        assertEquals("There should be 4 adjacency lists.", 4, graph1.adjacentNumber().size());
         // Each adjacency should be empty.
         Integer[] vertexes = {1, 3, 5, 7};
         for(Integer vertex : vertexes)
+        {
+            assertTrue("The list should be empty.", graph1.adjacentNumber(vertex).isEmpty());
             assertTrue("The list should be empty.", graph1.adjacent(vertex).isEmpty());
+        }
     }
 
     /**
@@ -177,12 +211,19 @@ public class UndirectedUnweightedGraphTest
         assertNotNull("The graph shouldn't be null.", newGraph);
         assertEquals("The number of vertexes should be 4.", 4, newGraph.V());
         assertEquals("The number of edges should be 0.", 0, newGraph.E());
+        // There should be 4 pairs.
+        assertEquals("The HashMap should have 4 pairs.", 4, graph1.keyToNumber().size());
+        assertEquals("The HashMap should have 4 pairs.", 4, graph1.numberToKey().size());
         // There should be 4 adjacency lists.
         assertEquals("There should be 4 adjacency lists.", 4, newGraph.adjacent().size());
+        assertEquals("There should be 4 adjacency lists.", 4, graph1.adjacentNumber().size());
         // Each adjacency should be empty.
         Integer[] vertexes = {1, 3, 5, 7};
         for(Integer vertex : vertexes)
+        {
+            assertTrue("The list should be empty.", graph1.adjacentNumber(vertex).isEmpty());
             assertTrue("The list should be empty.", newGraph.adjacent(vertex).isEmpty());
+        }
     }
 
     /**
@@ -199,12 +240,19 @@ public class UndirectedUnweightedGraphTest
         assertNotNull("The graph shouldn't be null.", newGraph);
         assertEquals("The number of vertexes should be 4.", 4, newGraph.V());
         assertEquals("The number of edges should be 2.", 2, newGraph.E());
+        // There should be 4 pairs.
+        assertEquals("The HashMap should have 4 pairs.", 4, graph1.keyToNumber().size());
+        assertEquals("The HashMap should have 4 pairs.", 4, graph1.numberToKey().size());
         // There should be 4 adjacency lists.
         assertEquals("There should be 4 adjacency lists.", 4, newGraph.adjacent().size());
+        assertEquals("There should be 4 adjacency lists.", 4, graph1.adjacentNumber().size());
         // Each adjacency should be empty.
         Integer[] vertexes = {1, 3, 5, 7};
         for(Integer vertex : vertexes)
+        {
             assertEquals("The list should have 1 vertex.", 1, newGraph.adjacent(vertex).size());
+            assertEquals("The list should have 1 vertex.", 1, newGraph.adjacentNumber(vertex).size());
+        }
     }
 
     /**
@@ -220,20 +268,28 @@ public class UndirectedUnweightedGraphTest
         assertEquals("The number of edges should be 0.", 0, graph1.E());
         // There should be 3 adjacency lists.
         assertEquals("There should be 3 adjacency lists.", 3, graph1.adjacent().size());
+        assertEquals("There should be 3 adjacency lists.", 3, graph1.adjacentNumber().size());
         // Each adjacency should be empty.
         Integer[] vertexes = {10, 20, 30};
         for(Integer vertex : vertexes)
+        {
             assertTrue("The list should be empty.", graph1.adjacent(vertex).isEmpty());
+            assertTrue("The list should be empty.", graph1.adjacentNumber(vertex).isEmpty());
+        }
         // Vertexes 100 and 200 will be added.
         graph1.addVertex(100); graph1.addVertex(200);
         assertEquals("The number of vertexes should be 5.", 5, graph1.V());
         assertEquals("The number of edges should be 0.", 0, graph1.E());
         // There should be 5 adjacency lists.
         assertEquals("There should be 5 adjacency lists.", 5, graph1.adjacent().size());
+        assertEquals("There should be 5 adjacency lists.", 5, graph1.adjacentNumber().size());
         // Each adjacency should be empty.
         vertexes = new Integer[]{10, 20, 30, 100, 200};
         for(Integer vertex : vertexes)
+        {
             assertTrue("The list should be empty.", graph1.adjacent(vertex).isEmpty());
+            assertTrue("The list should be empty.", graph1.adjacentNumber(vertex).isEmpty());
+        }
     }
 
     /**
@@ -249,14 +305,19 @@ public class UndirectedUnweightedGraphTest
         assertEquals("The number of vertexes should be 2.", 2, graph1.V());
         // There should be 2 adjacency lists.
         assertEquals("There should be 2 adjacency lists.", 2, graph1.adjacent().size());
+        assertEquals("There should be 2 adjacency lists.", 2, graph1.adjacentNumber().size());
         assertTrue("The list should be empty.", graph1.adjacent(10).isEmpty());
+        assertTrue("The list should be empty.", graph1.adjacentNumber(10).isEmpty());
         // A null edge can be added.
         graph1.addVertex(null);
         assertEquals("The number of vertexes should be 3.", 3, graph1.V());
         // There should be 2 adjacency lists.
         assertEquals("There should be 3 adjacency lists.", 3, graph1.adjacent().size());
+        assertEquals("There should be 3 adjacency lists.", 3, graph1.adjacentNumber().size());
         assertTrue("The list should be empty.", graph1.adjacent(10).isEmpty());
+        assertTrue("The list should be empty.", graph1.adjacentNumber(10).isEmpty());
         assertTrue("The list should be empty.", graph1.adjacent(null).isEmpty());
+        assertTrue("The list should be empty.", graph1.adjacentNumber(null).isEmpty());
     }
 
     /**
@@ -272,20 +333,28 @@ public class UndirectedUnweightedGraphTest
         assertEquals("The number of edges should be 0.", 0, graph1.E());
         // There should be 3 adjacency lists.
         assertEquals("There should be 3 adjacency lists.", 3, graph1.adjacent().size());
+        assertEquals("There should be 3 adjacency lists.", 3, graph1.adjacentNumber().size());
         // Each adjacency should be empty.
         Integer[] vertexes = {10, 20, 30};
         for(Integer vertex : vertexes)
+        {
             assertTrue("The list should be empty.", graph1.adjacent(vertex).isEmpty());
+            assertTrue("The list should be empty.", graph1.adjacentNumber(vertex).isEmpty());
+        }
         // Vertexes 100 and 200 will be added.
         graph1.addVertex(100); graph1.addVertex(200);
         assertEquals("The number of vertexes should be 5.", 5, graph1.V());
         assertEquals("The number of edges should be 0.", 0, graph1.E());
         // There should be 5 adjacency lists.
         assertEquals("There should be 5 adjacency lists.", 5, graph1.adjacent().size());
+        assertEquals("There should be 5 adjacency lists.", 5, graph1.adjacentNumber().size());
         // Each adjacency should be empty.
         vertexes = new Integer[]{10, 20, 30, 100, 200};
         for(Integer vertex : vertexes)
+        {
             assertTrue("The list should be empty.", graph1.adjacent(vertex).isEmpty());
+            assertTrue("The list should be empty.", graph1.adjacentNumber(vertex).isEmpty());
+        }
         // Adding the same vertexes again shouldn't change anything.
         graph1.addVertexChecked(10); graph1.addVertexChecked(20); graph1.addVertexChecked(30);
         // Also, a null edge cannot be added.
@@ -294,10 +363,14 @@ public class UndirectedUnweightedGraphTest
         assertEquals("The number of edges should be 0.", 0, graph1.E());
         // There should be 5 adjacency lists.
         assertEquals("There should be 5 adjacency lists.", 5, graph1.adjacent().size());
+        assertEquals("There should be 5 adjacency lists.", 5, graph1.adjacentNumber().size());
         // Each adjacency should be empty.
         vertexes = new Integer[]{10, 20, 30, 100, 200};
         for(Integer vertex : vertexes)
+        {
             assertTrue("The list should be empty.", graph1.adjacent(vertex).isEmpty());
+            assertTrue("The list should be empty.", graph1.adjacentNumber(vertex).isEmpty());
+        }
     }
 
     /**
@@ -313,25 +386,34 @@ public class UndirectedUnweightedGraphTest
         assertEquals("The number of edges should be 2.", 2, graph2.E());
         String[] vertexes = {"a", "b", "c", "d"};
         ArrayList<String> adjacent;
+        ArrayList<Integer> adjacentNumber;
         String adjacentVertex;
+        int adjacentVertexNumber;
         for(String vertex : vertexes)
         {
             assertEquals("The size of the list should be 1.", 1, graph2.adjacent(vertex).size());
+            assertEquals("The size of the list should be 1.", 1, graph2.adjacentNumber(vertex).size());
             adjacent = (ArrayList<String>) graph2.adjacent(vertex);
             adjacentVertex = adjacent.get(0);
+            adjacentNumber = (ArrayList<Integer>) graph2.adjacentNumber(vertex);
+            adjacentVertexNumber = adjacentNumber.get(0);
             switch(vertex)
             {
                 case "a":
                     assertEquals("The only item should be b.", "b", adjacentVertex);
+                    assertEquals("The only item should be 1.", 1, adjacentVertexNumber);
                     break;
                 case "b":
                     assertEquals("The only item should be a.", "a", adjacentVertex);
+                    assertEquals("The only item should be 0.", 0, adjacentVertexNumber);
                     break;
                 case "c":
                     assertEquals("The only item should be d.", "d", adjacentVertex);
+                    assertEquals("The only item should be 3.", 3, adjacentVertexNumber);
                     break;
                 case "d":
                     assertEquals("The only item should be c.", "c", adjacentVertex);
+                    assertEquals("The only item should be 2.", 2, adjacentVertexNumber);
                     break;
             }
         }
@@ -343,23 +425,30 @@ public class UndirectedUnweightedGraphTest
         {
             adjacent = (ArrayList<String>) graph2.adjacent(vertex);
             adjacentVertex = adjacent.get(0);
+            adjacentNumber = (ArrayList<Integer>) graph2.adjacentNumber(vertex);
+            adjacentVertexNumber = adjacentNumber.get(0);
             switch(vertex)
             {
                 case "a":
                     assertEquals("The only item should be b.", "b", adjacentVertex);
+                    assertEquals("The only item should be 1.", 1, adjacentVertexNumber);
                     assertEquals("The size of the list should be 1.", 1, graph2.adjacent(vertex).size());
                     break;
                 case "b":
                     assertEquals("The only item should be a.", "a", adjacentVertex);
+                    assertEquals("The only item should be 0.", 0, adjacentVertexNumber);
                     assertEquals("The size of the list should be 1.", 1, graph2.adjacent(vertex).size());
                     break;
                 case "c":
                     assertEquals("The first item should be d.", "d", adjacentVertex);
+                    assertEquals("The first item should be 3.", 3, adjacentVertexNumber);
                     assertEquals("The second item should be c.", "c", adjacent.get(1));
+                    assertEquals("The second item should be 2.", 2, (int) adjacentNumber.get(1));
                     assertEquals("The size of the list should be 2.", 2, graph2.adjacent(vertex).size());
                     break;
                 case "d":
                     assertEquals("The only item should be c.", "c", adjacentVertex);
+                    assertEquals("The only item should be 2.", 2, adjacentVertexNumber);
                     assertEquals("The size of the list should be 1.", 1, graph2.adjacent(vertex).size());
                     break;
             }
@@ -372,25 +461,34 @@ public class UndirectedUnweightedGraphTest
         {
             adjacent = (ArrayList<String>) graph2.adjacent(vertex);
             adjacentVertex = adjacent.get(0);
+            adjacentNumber = (ArrayList<Integer>) graph2.adjacentNumber(vertex);
+            adjacentVertexNumber = adjacentNumber.get(0);
             switch(vertex)
             {
                 case "a":
                     assertEquals("The first item should be b.", "b", adjacentVertex);
+                    assertEquals("The first item should be 1.", 1, adjacentVertexNumber);
                     assertEquals("The second item should be b.", "b", adjacent.get(1));
+                    assertEquals("The second item should be 1.", 1, (int) adjacentNumber.get(1));
                     assertEquals("The size of the list should be 2.", 2, graph2.adjacent(vertex).size());
                     break;
                 case "b":
                     assertEquals("The first item should be a.", "a", adjacentVertex);
+                    assertEquals("The first item should be 0.", 0, adjacentVertexNumber);
                     assertEquals("The second item should be a.", "a", adjacent.get(1));
+                    assertEquals("The second item should be 0.", 0, (int) adjacentNumber.get(1));
                     assertEquals("The size of the list should be 2.", 2, graph2.adjacent(vertex).size());
                     break;
                 case "c":
                     assertEquals("The first item should be d.", "d", adjacentVertex);
+                    assertEquals("The first item should be 3.", 3, adjacentVertexNumber);
                     assertEquals("The second item should be c.", "c", adjacent.get(1));
+                    assertEquals("The second item should be 2.", 2, (int) adjacentNumber.get(1));
                     assertEquals("The size of the list should be 2.", 2, graph2.adjacent(vertex).size());
                     break;
                 case "d":
-                    assertEquals("The item should be c.", "c", adjacentVertex);
+                    assertEquals("The only item should be c.", "c", adjacentVertex);
+                    assertEquals("The only item should be 2.", 2, adjacentVertexNumber);
                     assertEquals("The size of the list should be 1.", 1, graph2.adjacent(vertex).size());
                     break;
             }
@@ -430,25 +528,33 @@ public class UndirectedUnweightedGraphTest
         assertEquals("The number of edges should be 2.", 2, graph2.E());
         String[] vertexes = {"a", "b", "c", "d"};
         ArrayList<String> adjacent;
+        ArrayList<Integer> adjacentNumber;
         String adjacentVertex;
+        int adjacentVertexNumber;
         for(String vertex : vertexes)
         {
             assertEquals("The size of the list should be 1.", 1, graph2.adjacent(vertex).size());
             adjacent = (ArrayList<String>) graph2.adjacent(vertex);
             adjacentVertex = adjacent.get(0);
+            adjacentNumber = (ArrayList<Integer>) graph2.adjacentNumber(vertex);
+            adjacentVertexNumber = adjacentNumber.get(0);
             switch(vertex)
             {
                 case "a":
                     assertEquals("The only item should be b.", "b", adjacentVertex);
+                    assertEquals("The only item should be 1.", 1, adjacentVertexNumber);
                     break;
                 case "b":
                     assertEquals("The only item should be a.", "a", adjacentVertex);
+                    assertEquals("The only item should be 0.", 0, adjacentVertexNumber);
                     break;
                 case "c":
                     assertEquals("The only item should be d.", "d", adjacentVertex);
+                    assertEquals("The only item should be 3.", 3, adjacentVertexNumber);
                     break;
                 case "d":
                     assertEquals("The only item should be c.", "c", adjacentVertex);
+                    assertEquals("The only item should be 2.", 2, adjacentVertexNumber);
                     break;
             }
         }
@@ -461,19 +567,25 @@ public class UndirectedUnweightedGraphTest
             assertEquals("The size of the list should be 1.", 1, graph2.adjacent(vertex).size());
             adjacent = (ArrayList<String>) graph2.adjacent(vertex);
             adjacentVertex = adjacent.get(0);
+            adjacentNumber = (ArrayList<Integer>) graph2.adjacentNumber(vertex);
+            adjacentVertexNumber = adjacentNumber.get(0);
             switch(vertex)
             {
                 case "a":
                     assertEquals("The only item should be b.", "b", adjacentVertex);
+                    assertEquals("The only item should be 1.", 1, adjacentVertexNumber);
                     break;
                 case "b":
                     assertEquals("The only item should be a.", "a", adjacentVertex);
+                    assertEquals("The only item should be 0.", 0, adjacentVertexNumber);
                     break;
                 case "c":
                     assertEquals("The only item should be d.", "d", adjacentVertex);
+                    assertEquals("The only item should be 3.", 3, adjacentVertexNumber);
                     break;
                 case "d":
                     assertEquals("The only item should be c.", "c", adjacentVertex);
+                    assertEquals("The only item should be 2.", 2, adjacentVertexNumber);
                     break;
             }
         }
@@ -486,19 +598,25 @@ public class UndirectedUnweightedGraphTest
             assertEquals("The size of the list should be 1.", 1, graph2.adjacent(vertex).size());
             adjacent = (ArrayList<String>) graph2.adjacent(vertex);
             adjacentVertex = adjacent.get(0);
+            adjacentNumber = (ArrayList<Integer>) graph2.adjacentNumber(vertex);
+            adjacentVertexNumber = adjacentNumber.get(0);
             switch(vertex)
             {
                 case "a":
                     assertEquals("The only item should be b.", "b", adjacentVertex);
+                    assertEquals("The only item should be 1.", 1, adjacentVertexNumber);
                     break;
                 case "b":
                     assertEquals("The only item should be a.", "a", adjacentVertex);
+                    assertEquals("The only item should be 0.", 0, adjacentVertexNumber);
                     break;
                 case "c":
                     assertEquals("The only item should be d.", "d", adjacentVertex);
+                    assertEquals("The only item should be 3.", 3, adjacentVertexNumber);
                     break;
                 case "d":
                     assertEquals("The only item should be c.", "c", adjacentVertex);
+                    assertEquals("The only item should be 2.", 2, adjacentVertexNumber);
                     break;
             }
         }
@@ -513,19 +631,25 @@ public class UndirectedUnweightedGraphTest
             assertEquals("The size of the list should be 1.", 1, graph2.adjacent(vertex).size());
             adjacent = (ArrayList<String>) graph2.adjacent(vertex);
             adjacentVertex = adjacent.get(0);
+            adjacentNumber = (ArrayList<Integer>) graph2.adjacentNumber(vertex);
+            adjacentVertexNumber = adjacentNumber.get(0);
             switch(vertex)
             {
                 case "a":
                     assertEquals("The only item should be b.", "b", adjacentVertex);
+                    assertEquals("The only item should be 1.", 1, adjacentVertexNumber);
                     break;
                 case "b":
                     assertEquals("The only item should be a.", "a", adjacentVertex);
+                    assertEquals("The only item should be 0.", 0, adjacentVertexNumber);
                     break;
                 case "c":
                     assertEquals("The only item should be d.", "d", adjacentVertex);
+                    assertEquals("The only item should be 3.", 3, adjacentVertexNumber);
                     break;
                 case "d":
                     assertEquals("The only item should be c.", "c", adjacentVertex);
+                    assertEquals("The only item should be 2.", 2, adjacentVertexNumber);
                     break;
             }
         }
@@ -541,30 +665,39 @@ public class UndirectedUnweightedGraphTest
         // the list of 3 should contain: 1 and 5, the list of 5 should contain 3 and the list
         // of 7 should contain 1.
         assertEquals("There should be 4 adjacency lists.", 4, graph1.adjacent().size());
+        assertEquals("There should be 4 adjacency lists.", 4, graph1.adjacentNumber().size());
         Integer[] vertexes = {1, 3, 5, 7};
         ArrayList<Integer> adjacent;
+        ArrayList<Integer> adjacentNumber;
         for(Integer vertex : vertexes)
         {
             adjacent = (ArrayList<Integer>) graph1.adjacent(vertex);
+            adjacentNumber = (ArrayList<Integer>) graph1.adjacentNumber(vertex);
             switch(vertex)
             {
                 case 1:
                     assertEquals("The size of the list should be 2.", 2, adjacent.size());
                     assertEquals("The first element should be 3.", 3, (int) adjacent.get(0));
+                    assertEquals("The first element should be 1.", 1, (int) adjacentNumber.get(0));
                     assertEquals("The second element should be 7.", 7, (int) adjacent.get(1));
+                    assertEquals("The second element should be 3.", 3, (int) adjacentNumber.get(1));
                     break;
                 case 3:
                     assertEquals("The size of the list should be 2.", 2, adjacent.size());
                     assertEquals("The first element should be 1.", 1, (int) adjacent.get(0));
+                    assertEquals("The first element should be 0.", 0, (int) adjacentNumber.get(0));
                     assertEquals("The second element should be 5.", 5, (int) adjacent.get(1));
+                    assertEquals("The second element should be 2.", 2, (int) adjacentNumber.get(1));
                     break;
                 case 5:
                     assertEquals("The size of the list should be 1.", 1, adjacent.size());
                     assertEquals("The only element should be 3.", 3, (int) adjacent.get(0));
+                    assertEquals("The only element should be 1.", 1, (int) adjacentNumber.get(0));
                     break;
                 case 7:
                     assertEquals("The size of the list should be 1.", 1, adjacent.size());
                     assertEquals("The only element should be 1.", 1, (int) adjacent.get(0));
+                    assertEquals("The only element should be 0.", 0, (int) adjacentNumber.get(0));
             }
         }
     }
@@ -592,30 +725,39 @@ public class UndirectedUnweightedGraphTest
         // the list of 3 should contain: 1 and 5, the list of 5 should contain 3 and the list
         // of 7 should contain 1.
         assertEquals("There should be 4 adjacency lists.", 4, graph1.adjacent().size());
+        assertEquals("There should be 4 adjacency lists.", 4, graph1.adjacentNumber().size());
         Integer[] vertexes = {1, 3, 5, 7};
         ArrayList<Integer> adjacent;
+        ArrayList<Integer> adjacentNumber;
         for(Integer vertex : vertexes)
         {
             adjacent = (ArrayList<Integer>) graph1.adjacentChecked(vertex);
+            adjacentNumber = (ArrayList<Integer>) graph1.adjacentNumber(vertex);
             switch(vertex)
             {
                 case 1:
                     assertEquals("The size of the list should be 2.", 2, adjacent.size());
                     assertEquals("The first element should be 3.", 3, (int) adjacent.get(0));
+                    assertEquals("The first element should be 1.", 1, (int) adjacentNumber.get(0));
                     assertEquals("The second element should be 7.", 7, (int) adjacent.get(1));
+                    assertEquals("The second element should be 3.", 3, (int) adjacentNumber.get(1));
                     break;
                 case 3:
                     assertEquals("The size of the list should be 2.", 2, adjacent.size());
                     assertEquals("The first element should be 1.", 1, (int) adjacent.get(0));
+                    assertEquals("The first element should be 0.", 0, (int) adjacentNumber.get(0));
                     assertEquals("The second element should be 5.", 5, (int) adjacent.get(1));
+                    assertEquals("The second element should be 2.", 2, (int) adjacentNumber.get(1));
                     break;
                 case 5:
                     assertEquals("The size of the list should be 1.", 1, adjacent.size());
                     assertEquals("The only element should be 3.", 3, (int) adjacent.get(0));
+                    assertEquals("The only element should be 1.", 1, (int) adjacentNumber.get(0));
                     break;
                 case 7:
                     assertEquals("The size of the list should be 1.", 1, adjacent.size());
                     assertEquals("The only element should be 1.", 1, (int) adjacent.get(0));
+                    assertEquals("The only element should be 0.", 0, (int) adjacentNumber.get(0));
             }
         }
         // Access to the adjacency list of non-existing vertexes should result in null.
