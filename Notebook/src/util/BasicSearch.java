@@ -2,13 +2,13 @@
 
 package util;
 
-import graph.IExtendedGraph;
+import graph.IGraph;
 import java.util.Stack;
 
 /**
  * Class that represents a search over a fixed number of vertices labeled from 0 to N-1.
  */
-public class Search<T>
+public class BasicSearch
 {
     // Attributes
 
@@ -25,17 +25,7 @@ public class Search<T>
     /**
      * The origin vertex from which the search starts.
      */
-    protected T originVertex;
-
-    /**
-     * The numerical value of the origin vertex from which the search starts.
-     */
-    protected int originNumber;
-
-    /**
-     * The corresponding graph used for the algorithm.
-     */
-    protected IExtendedGraph<T> graph;
+    protected int origin;
 
     // Constructor
 
@@ -44,13 +34,11 @@ public class Search<T>
      * @param pGraph Graph to use for the algorithm.
      * @param pOrigin Assigned vertex as the origin of the search.
      */
-    public Search(IExtendedGraph<T> pGraph, T pOrigin)
+    public BasicSearch(IGraph pGraph, int pOrigin)
     {
         marked = new boolean[pGraph.V()];
         edgeTo = new int[pGraph.V()];
-        originVertex = pOrigin;
-        graph = pGraph;
-        originNumber = pGraph.keyToNumber().get(pOrigin);
+        origin = pOrigin;
     }
 
     // Methods
@@ -59,21 +47,21 @@ public class Search<T>
      * @param pVertex Vertex to check if it has a path from the origin vertex.
      * @return True if there's a path to the vertex from the origin, false if contrary.
      */
-    public boolean hasPathTo(T pVertex)
-    { return marked[graph.keyToNumber().get(pVertex)]; }
+    public boolean hasPathTo(int pVertex)
+    { return marked[pVertex]; }
 
     /**
      * @param pVertex Vertex whose path from the origin is desired.
      * @return The path from the origin to the given vertex, null if there's no path.
      */
-    public Iterable<T> pathTo(T pVertex)
+    public Iterable<Integer> pathTo(int pVertex)
     {
         if(!hasPathTo(pVertex))
             return null;
-        Stack<T> path = new Stack<>();
-        for(int v = graph.keyToNumber().get(pVertex); v != originNumber; v = edgeTo[v])
-            path.push(graph.numberToKey().get(v));
-        path.push(originVertex);
+        Stack<Integer> path = new Stack<>();
+        for(int v = pVertex; v != origin; v = edgeTo[v])
+            path.push(v);
+        path.push(origin);
         return path;
     }
 }

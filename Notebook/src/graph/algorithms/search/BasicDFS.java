@@ -3,12 +3,12 @@
 package graph.algorithms.search;
 
 import graph.IBasicGraph;
-import util.Search;
+import util.BasicSearch;
 
 /**
  * Represents a depth first search for a simple numerical undirected graph.
  */
-public class BasicDFS extends Search
+public class BasicDFS extends BasicSearch
 {
     // Constructor
 

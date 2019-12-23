@@ -2,14 +2,15 @@
 
 package graph.algorithms.search;
 
-import graph.IBasicGraph;
-import util.BasicSearch;
+import graph.IExtendedGraph;
+import util.Search;
 import java.util.ArrayDeque;
+import java.util.ArrayList;
 
 /**
  * Represents a breath first search for a simple numerical undirected unweighted graph.
  */
-public class BasicBFS extends BasicSearch
+public class BFS<T> extends Search<T>
 {
     // Constructor
 
@@ -18,10 +19,10 @@ public class BasicBFS extends BasicSearch
      * @param pGraph Graph to use for the algorithm.
      * @param pOrigin Vertex from which the search starts.
      */
-    public BasicBFS(IBasicGraph pGraph, int pOrigin)
+    public BFS(IExtendedGraph<T> pGraph, T pOrigin)
     {
         super(pGraph, pOrigin);
-        basicBFS(pGraph, pOrigin);
+        basicBFS(pGraph, originNumber);
     }
 
     // Methods
@@ -31,16 +32,18 @@ public class BasicBFS extends BasicSearch
      * @param pGraph Graph to use for the algorithm.
      * @param pVertex Vertex from which the search starts.
      */
-    private void basicBFS(IBasicGraph pGraph, int pVertex)
+    private void basicBFS(IExtendedGraph<T> pGraph, int pVertex)
     {
         ArrayDeque<Integer> queue = new ArrayDeque<>();
         marked[pVertex] = true;
         queue.add(pVertex);
         int vertex;
+        ArrayList<Integer> adjacentNumber;
         while(!queue.isEmpty())
         {
             vertex = queue.remove();
-            for(int adjacent : pGraph.adjacent(vertex))
+            adjacentNumber = pGraph.adjacentNumber().get(pVertex);
+            for(Integer adjacent : adjacentNumber)
             {
                 if(!marked[adjacent])
                 {
