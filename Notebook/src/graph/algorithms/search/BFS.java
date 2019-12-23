@@ -42,7 +42,7 @@ public class BFS<T> extends Search<T>
         while(!queue.isEmpty())
         {
             vertex = queue.remove();
-            adjacentNumber = pGraph.adjacentNumber().get(pVertex);
+            adjacentNumber = pGraph.adjacentNumber().get(vertex);
             for(Integer adjacent : adjacentNumber)
             {
                 if(!marked[adjacent])
