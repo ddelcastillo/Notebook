@@ -1,5 +1,7 @@
 package graph.undirectedUnweighted;
 
+import graph.algorithms.search.BasicDFS;
+import graph.algorithms.search.DFS;
 import org.junit.Test;
 import java.util.ArrayList;
 import static org.junit.Assert.*;
@@ -764,5 +766,82 @@ public class UndirectedUnweightedGraphTest
         assertNull("The list should be null.", graph1.adjacentChecked(100));
         assertNull("The list should be null.", graph1.adjacentChecked(null));
         assertNull("The list should be null.", graph1.adjacentChecked(4));
+    }
+
+    /**
+     * Tests that the DFS algorithm works properly.
+     */
+    @Test
+    public void DFSTest()
+    {
+        Integer[] newVertexes = {0, 1, 2, 3, 4, 5, 6};
+        UndirectedUnweightedGraph<Integer> newGraph = new UndirectedUnweightedGraph<>(newVertexes);
+        // The following edges are added: 0-1, 0-2, 2-3, 2-4, 1-4 and 5-6.
+        newGraph.addEdge(0, 1); newGraph.addEdge(0, 2); newGraph.addEdge(2, 3);
+        newGraph.addEdge(2, 4); newGraph.addEdge(1, 4); newGraph.addEdge(5, 6);
+        // A DFS from the origin is created.
+        DFS<Integer> dfs = new DFS<>(newGraph, 0);
+        // There should be a path from all vertexes except 5 and 6.
+        for(int i = 0; i < 5; ++i)
+            assertTrue("There should be a path to the vertex " + i + ".", dfs.hasPathTo(i));
+        for(int i = 5; i < 7; ++i)
+            assertFalse("There shouldn't be a path to the vertex " + i + ".", dfs.hasPathTo(i));
+        // The DFS checks the vertexes in the list in added order instead of numerical order, therefore,
+        // since the 0-1 edge was first added for the vertex 0, the first edge checked from 0 will be 0-1,
+        // then the same for the vertex 1 and so on.
+        // Now we check the paths.
+        ArrayList<Integer> vertexes;
+        Iterable<Integer> path;
+        for(int i = 1; i < 7; ++i)
+        {
+            vertexes = new ArrayList<>();
+            path = dfs.pathTo(i);
+            switch(i)
+            {
+                case 1:
+                    // Path from 0 to 1 should be 0, 1 in that order.
+                    for(int vertex : path)
+                        vertexes.add(vertex);
+                    assertEquals("The size should be 2.", 2, vertexes.size());
+                    assertEquals("The first item should be 1.", 1, (int) vertexes.get(0));
+                    assertEquals("The second item should be 0.", 0, (int) vertexes.get(1));
+                    break;
+                case 2:
+                    // Path from 0 to 2 should be 0, 1, 4, 2 in that order.
+                    for(int vertex : path)
+                        vertexes.add(vertex);
+                    assertEquals("The size should be 4.", 4, vertexes.size());
+                    assertEquals("The first item should be 2.", 2, (int) vertexes.get(0));
+                    assertEquals("The second item should be 4.", 4, (int) vertexes.get(1));
+                    assertEquals("The third item should be 1.", 1, (int) vertexes.get(2));
+                    assertEquals("The fourth item should be 0.", 0, (int) vertexes.get(3));
+                    break;
+                case 3:
+                    // Path from 0 to 3 should be 0, 1, 4, 2, 3 in that order.
+                    for(int vertex : path)
+                        vertexes.add(vertex);
+                    assertEquals("The size should be 5.", 5, vertexes.size());
+                    assertEquals("The first item should be 3.", 3, (int) vertexes.get(0));
+                    assertEquals("The second item should be 2.", 2, (int) vertexes.get(1));
+                    assertEquals("The third item should be 4.", 4, (int) vertexes.get(2));
+                    assertEquals("The fourth item should be 1.", 1, (int) vertexes.get(3));
+                    assertEquals("The fifth item should be 0.", 0, (int) vertexes.get(4));
+                    break;
+                case 4:
+                    // Path from 0 to 4 should be 0, 1, 4 in that order.
+                    for(int vertex : path)
+                        vertexes.add(vertex);
+                    assertEquals("The size should be 3.", 3, vertexes.size());
+                    assertEquals("The first item should be 4.", 4, (int) vertexes.get(0));
+                    assertEquals("The second item should be 1.", 1, (int) vertexes.get(1));
+                    assertEquals("The third item should be 0.", 0, (int) vertexes.get(2));
+                    break;
+                case 5:
+                case 6:
+                    // There should be no path from 0 to 5 or 6, therefore, the path should be null.
+                    assertNull(path);
+                    break;
+            }
+        }
     }
 }
