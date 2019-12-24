@@ -7,7 +7,7 @@ import util.BasicSearch;
 import java.util.ArrayDeque;
 
 /**
- * Represents a breath first search for a simple numerical undirected unweighted graph.
+ * Algorithm that represents a breath first search for a simple numerical graph.
  */
 public class BasicBFS extends BasicSearch
 {

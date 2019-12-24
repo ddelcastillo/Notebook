@@ -2,12 +2,13 @@
 
 package graph.algorithms.misc;
 
-import graph.IBasicGraph;
+import graph.IExtendedGraph;
+import java.util.ArrayList;
 
 /**
- * Algorithm that represents a check to see if a simple numerical graph is acyclic.
+ * Algorithm that represents a check to see if a graph is acyclic.
  */
-public class BasicIsAcyclic
+public class IsAcyclic<T>
 {
     // Attributes
 
@@ -24,11 +25,11 @@ public class BasicIsAcyclic
     // Constructors
 
     /**
-     * Creates a BasicIsAcyclic object that uses the given graph to check if its acyclic.
+     * Creates an IsAcyclic object that uses the given graph to check if its acyclic.
      * Doesn't require the graph to be connected, i.e., will check the entire graph.
      * @param pGraph Graph to use for the algorithm.
      */
-    public BasicIsAcyclic(IBasicGraph pGraph)
+    public IsAcyclic(IExtendedGraph<T> pGraph)
     {
         marked = new boolean[pGraph.V()];
         isAcyclic = true;
@@ -36,7 +37,7 @@ public class BasicIsAcyclic
         {
             if(!marked[v])
             {
-                basicIsAcyclic(pGraph, v, v);
+                isAcyclic(pGraph, v, v);
                 if(!isAcyclic)
                     return;
             }
@@ -44,17 +45,19 @@ public class BasicIsAcyclic
     }
 
     /**
-     * Creates a BasicIsAcyclic object that uses the given graph to check if its acyclic.
+     * Creates an IsAcyclic object that uses the given graph to check if its acyclic.
      * Will only check the component of which the given vertex is part of.
      * @param pGraph Graph to use for the algorithm.
      * @param pVertex Vertex in which the acyclic search starts.
      */
-    public BasicIsAcyclic(IBasicGraph pGraph, int pVertex)
+    public IsAcyclic(IExtendedGraph<T> pGraph, T pVertex)
     {
         marked = new boolean[pGraph.V()];
         isAcyclic = true;
-        basicIsAcyclic(pGraph, pVertex, pVertex);
+        int vertex = pGraph.keyToNumber().get(pVertex);
+        isAcyclic(pGraph, vertex, vertex);
     }
+
 
     // Methods
 
@@ -69,15 +72,16 @@ public class BasicIsAcyclic
      * @param pGraph Graph to use for the algorithm.
      * @param pVertex1 Vertex from which the search starts.
      */
-    private void basicIsAcyclic(IBasicGraph pGraph, int pVertex1, int pVertex2)
+    private void isAcyclic(IExtendedGraph<T> pGraph, int pVertex1, int pVertex2)
     {
         marked[pVertex1] = true;
-        for(int vertex : pGraph.adjacent(pVertex1))
+        ArrayList<Integer> adjacentNumber = pGraph.adjacentNumber().get(pVertex1);
+        for(int vertex : adjacentNumber)
         {
             if(!isAcyclic)
                 return;
             if(!marked[vertex])
-                basicIsAcyclic(pGraph, vertex, pVertex1);
+                isAcyclic(pGraph, vertex, pVertex1);
             else if(vertex != pVertex2)
             {
                 isAcyclic = false;

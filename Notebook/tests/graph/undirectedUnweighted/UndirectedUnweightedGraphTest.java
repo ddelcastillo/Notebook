@@ -1,8 +1,7 @@
 package graph.undirectedUnweighted;
 
+import graph.algorithms.misc.IsAcyclic;
 import graph.algorithms.search.BFS;
-import graph.algorithms.search.BasicBFS;
-import graph.algorithms.search.BasicDFS;
 import graph.algorithms.search.DFS;
 import org.junit.Test;
 import java.util.ArrayList;
@@ -917,5 +916,36 @@ public class UndirectedUnweightedGraphTest
                     break;
             }
         }
+    }
+
+    /**
+     * Tests that the IsAcyclic algorithm works properly when there's no cycles.
+     */
+    @Test
+    public void isAcyclicTest1()
+    {
+        Integer[] vertexes = {10, 20, 30, 100, 200};
+        graph1 = new UndirectedUnweightedGraph<>(vertexes);
+        // Edges 10-20, 10-30 and 100-30 will be added.
+        graph1.addEdge(10, 20); graph1.addEdge(10, 30); graph1.addEdge(100, 30);
+        // None of the graph's components isn't acyclic, therefore, any combination
+        // of searches for the graph should result in it being acyclic.
+        IsAcyclic<Integer> isAcyclic1 = new IsAcyclic<>(graph1);
+        assertTrue("The graph should be acyclic.", isAcyclic1.isAcyclic());
+        for(Integer v : vertexes)
+        {
+            IsAcyclic<Integer> isAcyclic3 = new IsAcyclic<>(graph1, v);
+            assertTrue("The graph should be acyclic.", isAcyclic3.isAcyclic());
+        }
+    }
+
+    /**
+     * Tests that the IsAcyclic algorithm throws a NullPointerException with an invalid vertex.
+     */
+    @Test(expected = NullPointerException.class)
+    public void isAcyclicTest2()
+    {
+        setup1();
+        IsAcyclic<String> isAcyclic = new IsAcyclic<>(graph2, "Hello");
     }
 }

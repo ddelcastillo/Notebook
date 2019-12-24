@@ -312,7 +312,7 @@ public class UndirectedUnweightedGraph<T> implements IExtendedGraph<T>
      * @param pVertex The vertex whose adjacent collection is desired.
      * @return Collection corresponding to the adjacent vertexes of the given vertex.
      */
-    public Collection<Integer> adjacentNumber(T pVertex)
+    public ArrayList<Integer> adjacentNumber(T pVertex)
     {
         Integer num = keyToNumber.get(pVertex);
         return adjacentNumber.get(num);

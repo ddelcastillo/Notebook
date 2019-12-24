@@ -7,7 +7,7 @@ import util.Search;
 import java.util.ArrayList;
 
 /**
- * Represents a depth first search for a simple numerical undirected graph.
+ * Algorithm that represents a depth first search for a graph.
  */
 public class DFS<T> extends Search<T>
 {

@@ -411,8 +411,8 @@ public class BasicUndirectedUnweightedGraphTest
         assertTrue("The graph should be acyclic.", isAcyclic1.isAcyclic());
         for(int v = 0; v < 5; ++v)
         {
-            BasicIsAcyclic isAcyclic3 = new BasicIsAcyclic(graph, v);
-            assertTrue("The graph should be acyclic.", isAcyclic3.isAcyclic());
+            BasicIsAcyclic isAcyclic2 = new BasicIsAcyclic(graph, v);
+            assertTrue("The graph should be acyclic.", isAcyclic2.isAcyclic());
         }
     }
 

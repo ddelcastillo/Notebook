@@ -8,7 +8,7 @@ import java.util.ArrayDeque;
 import java.util.ArrayList;
 
 /**
- * Represents a breath first search for a simple numerical undirected unweighted graph.
+ * Algorithm that represents a breath first search for a graph.
  */
 public class BFS<T> extends Search<T>
 {

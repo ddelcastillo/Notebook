@@ -6,7 +6,7 @@ import graph.IBasicGraph;
 import util.BasicSearch;
 
 /**
- * Represents a depth first search for a simple numerical undirected graph.
+ * Algorithm that represents a depth first search for a simple numerical graph.
  */
 public class BasicDFS extends BasicSearch
 {
