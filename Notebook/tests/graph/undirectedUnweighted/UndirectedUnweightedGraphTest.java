@@ -934,18 +934,50 @@ public class UndirectedUnweightedGraphTest
         assertTrue("The graph should be acyclic.", isAcyclic1.isAcyclic());
         for(Integer v : vertexes)
         {
-            IsAcyclic<Integer> isAcyclic3 = new IsAcyclic<>(graph1, v);
-            assertTrue("The graph should be acyclic.", isAcyclic3.isAcyclic());
+            IsAcyclic<Integer> isAcyclic2 = new IsAcyclic<>(graph1, v);
+            assertTrue("The graph should be acyclic.", isAcyclic2.isAcyclic());
         }
     }
 
     /**
-     * Tests that the IsAcyclic algorithm throws a NullPointerException with an invalid vertex.
+     * Tests that the IsAcyclic algorithm works properly when there's a cycle.
      */
     @Test(expected = NullPointerException.class)
     public void isAcyclicTest2()
     {
         setup1();
         IsAcyclic<String> isAcyclic = new IsAcyclic<>(graph2, "Hello");
+    }
+
+    /**
+     * Tests that the IsAcyclic algorithm works properly when there's a cycle.
+     */
+    @Test
+    public void isAcyclicTest3()
+    {
+        Integer[] vertexes = {10, 20, 30, 100, 200, 300};
+        graph1 = new UndirectedUnweightedGraph<>(vertexes);
+        // Edges 10-20, 10-30, 100-10, 100-30 and 200-300 will be added.
+        graph1.addEdge(10, 20); graph1.addEdge(10, 30); graph1.addEdge(100, 10);
+        graph1.addEdge(100, 30); graph1.addEdge(200, 300);
+        // None of the graph's components isn't acyclic, therefore, any combination
+        // of searches for the graph should result in it being acyclic.
+        IsAcyclic<Integer> isAcyclic1 = new IsAcyclic<>(graph1);
+        assertFalse("The graph should not be acyclic.", isAcyclic1.isAcyclic());
+        for(Integer v : vertexes)
+        {
+            IsAcyclic<Integer> isAcyclic2 = new IsAcyclic<>(graph1, v);
+            switch (v)
+            {
+                case 10:
+                case 20:
+                case 30:
+                case 100:
+                    assertFalse("The graph should not be acyclic.", isAcyclic2.isAcyclic());
+                    break;
+                default:
+                    assertTrue("The graph should be acyclic.", isAcyclic2.isAcyclic());
+            }
+        }
     }
 }

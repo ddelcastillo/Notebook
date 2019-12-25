@@ -2,17 +2,21 @@
 
 package graph.undirectedUnweighted;
 
-import graph.IExtendedGraph;
+import graph.IExtendedGraph;import util.Checked;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 
-// TODO interface, DFS, BFS, acyclic, etc.
-
 /**
  * Represents a generic undirected unweighted graph.
+ * @author Daniel del Castillo A. https://github.com/ddelcastillo
+ * Class finished and corrected as of 25/12/19.
  */
+@Checked
+(note = "Methods with the 'Checked' signature enforce additional checks to avoid errors and to\n" +
+" ensure the structure's correctness in exchange of efficiency. For fastest results, use\n" +
+" the non 'Checked' methods, however, these are liable to: NullPointer exceptions.")
 public class UndirectedUnweightedGraph<T> implements IExtendedGraph<T>
 {
     // Constants
