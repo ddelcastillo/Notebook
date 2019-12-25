@@ -78,7 +78,7 @@ public class BasicIsAcyclic
                 return;
             if(!marked[vertex])
                 basicIsAcyclic(pGraph, vertex, pVertex1);
-            else if(vertex != pVertex2)
+            else if(vertex != pVertex2 || vertex == pVertex1)
             {
                 isAcyclic = false;
                 return;

@@ -980,4 +980,22 @@ public class UndirectedUnweightedGraphTest
             }
         }
     }
+
+    /**
+     * Tests that the isAcyclic algorithm works properly when there's a self-cycle.
+     */
+    @Test
+    public void isAcyclicTest4()
+    {
+        setup2();
+        // Vertex 'Hi' will be added.
+        graph2.addVertex("Hi");
+        // Edge 'Hi'-'Hi' will be added.
+        graph2.addEdge("Hi", "Hi");
+        // Now the graph has a self-cycle.
+        IsAcyclic<String> isAcyclic1 = new IsAcyclic<>(graph2);
+        IsAcyclic<String> isAcyclic2 = new IsAcyclic<>(graph2, "Hi");
+        assertFalse("The graph should not be acyclic.", isAcyclic1.isAcyclic());
+        assertFalse("The graph should not be acyclic.", isAcyclic2.isAcyclic());
+    }
 }

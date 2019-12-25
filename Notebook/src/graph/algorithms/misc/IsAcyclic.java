@@ -82,7 +82,7 @@ public class IsAcyclic<T>
                 return;
             if(!marked[vertex])
                 isAcyclic(pGraph, vertex, pVertex1);
-            else if(vertex != pVertex2)
+            else if(vertex != pVertex2 || vertex == pVertex1)
             {
                 isAcyclic = false;
                 return;

@@ -455,4 +455,19 @@ public class BasicUndirectedUnweightedGraphTest
             }
         }
     }
+
+    /**
+     * Tests that the isAcyclic algorithm works properly when there's a self-cycle.
+     */
+    @Test
+    public void isAcyclicTest4()
+    {
+        // Edge 0-0 will be added.
+        graph.addEdge(0, 0);
+        // The graph now has a self-cycle.
+        BasicIsAcyclic isAcyclic1 = new BasicIsAcyclic(graph);
+        BasicIsAcyclic isAcyclic2 = new BasicIsAcyclic(graph, 0);
+        assertFalse("The graph should not be acyclic.", isAcyclic1.isAcyclic());
+        assertFalse("The graph should not be acyclic.", isAcyclic2.isAcyclic());
+    }
 }
