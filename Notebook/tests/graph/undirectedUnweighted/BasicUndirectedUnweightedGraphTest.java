@@ -484,11 +484,16 @@ public class BasicUndirectedUnweightedGraphTest
         assertTrue("The graph should be two-colorable.", b2c.isTwoColorable());
         // The array of colors (booleans) shouldn't be null.
         assertNotNull("The array shouldn't be null.", b2c.getColor());
+        assertNotNull("The array shouldn't be null.", b2c.getColorNum());
         boolean[] color = b2c.getColor();
+        int[] colorNum = b2c.getColorNum();
         for(int vertex = 0; vertex < 5; ++vertex)
         {
             for(int adjacent : graph.adjacent(vertex))
+            {
                 assertEquals("The color should be different.", color[vertex], !color[adjacent]);
+                assertNotEquals("The color should be different.", colorNum[vertex], colorNum[adjacent]);
+            }
         }
     }
 
@@ -504,6 +509,7 @@ public class BasicUndirectedUnweightedGraphTest
         // The graph shouldn't be two-colorable.
         assertFalse("The graph shouldn't be two-colorable.", b2c.isTwoColorable());
         // The array of colors should be null.
-        assertNull("The array shouldn't be null.", b2c.getColor());
+        assertNull("The array should be null.", b2c.getColor());
+        assertNull("The array should be null.", b2c.getColor());
     }
 }

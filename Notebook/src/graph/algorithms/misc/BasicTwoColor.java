@@ -71,10 +71,24 @@ public class BasicTwoColor
     { return isTwoColorable; }
 
     /**
-     * @return The color of each vertex if the graph is colorable, null if contrary.
+     * @return The color of each vertex if the graph is two-colorable, {@code null} if contrary.
      */
     public boolean[] getColor()
     { return isTwoColorable() ? color : null; }
+
+    /**
+     * @return The color of each vertex in numerical format (color = {0, 1}) if the
+     * graph is two-colorable, {@code null} if contrary.
+     */
+    public int[] getColorNum()
+    {
+        if(!isTwoColorable)
+            return null;
+        int[] colorNum = new int[color.length];
+        for(int i = 0; i < color.length; ++i)
+            colorNum[i] = color[i] ? 1 : 0;
+        return colorNum;
+    }
 
     /**
      * Recursive auxiliary method to color the graph.
