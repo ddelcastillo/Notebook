@@ -15,7 +15,7 @@ public class IsAcyclic<T>
     /**
      * Represents the marked vertexes.
      */
-    private boolean[] marked;
+    private static boolean[] marked;
 
     /**
      * Boolean that represents if the given graph is acyclic or not.
