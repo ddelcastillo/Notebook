@@ -2,7 +2,7 @@
 
 package graph.undirectedUnweighted;
 
-import graph.algorithms.search.BasicBFS;
+import graph.algorithms.misc.BasicTwoColor;import graph.algorithms.search.BasicBFS;
 import graph.algorithms.search.BasicDFS;
 import graph.algorithms.misc.BasicIsAcyclic;import org.junit.Before;
 import org.junit.Test;
@@ -628,5 +628,60 @@ public class BasicUndirectedUnweightedCCGraphTest
         assertEquals("The number of components should be 5.", 5, graph.numberOfComponents());
         assertFalse("The graph should not be acyclic.", isAcyclic1.isAcyclic());
         assertFalse("The graph should not be acyclic.", isAcyclic2.isAcyclic());
+    }
+
+    /**
+     * Tests that the TwoColor algorithm works properly when the graph is two-colorable.
+     */
+    @Test
+    public void twoColorableTest1()
+    {
+        // Edges 0-1, 1-3, 3-2 and 2-4 will be added.
+        graph.addEdge(0, 1); graph.addEdge(1, 3); graph.addEdge(3, 2); graph.addEdge(2, 4);
+        assertEquals("The number of components should be 1.", 1, graph.numberOfComponents());
+        for(int vertex = 0; vertex < 5; ++vertex)
+            assertEquals("The size of the component should be 5.", 5, graph.sizeOfComponent(vertex));
+        BasicTwoColor b2c = new BasicTwoColor(graph);
+        // The graph should be two-colorable.
+        assertTrue("The graph should be two-colorable.", b2c.isTwoColorable());
+        // The array of colors (booleans) shouldn't be null.
+        assertNotNull("The array shouldn't be null.", b2c.getColor());
+        boolean[] color = b2c.getColor();
+        for(int vertex = 0; vertex < 5; ++vertex)
+        {
+            for(int adjacent : graph.adjacent(vertex))
+                assertEquals("The color should be different.", color[vertex], !color[adjacent]);
+        }
+    }
+
+    /**
+     * Tests that the TwoColor algorithm works properly when the graph isn't two-colorable.
+     */
+    @Test
+    public void twoColorableTest2()
+    {
+        // Edges 0-1, 0-2, 1-2 and 2-4 will be added.
+        graph.addEdge(0, 1); graph.addEdge(0, 2); graph.addEdge(1, 2); graph.addEdge(2, 4);
+        assertEquals("The number of components should be 2.", 2, graph.numberOfComponents());
+        for(int vertex = 0; vertex < 5; ++vertex)
+        {
+            switch (vertex)
+            {
+                case 0:
+                case 1:
+                case 2:
+                case 4:
+                    assertEquals("The size of the component should be 4.", 4, graph.sizeOfComponent(vertex));
+                    break;
+                default:
+                    assertEquals("The size of the component should be 1.", 1, graph.sizeOfComponent(vertex));
+
+            }
+        }
+        BasicTwoColor b2c = new BasicTwoColor(graph);
+        // The graph shouldn't be two-colorable.
+        assertFalse("The graph shouldn't be two-colorable.", b2c.isTwoColorable());
+        // The array of colors should be null.
+        assertNull("The array shouldn't be null.", b2c.getColor());
     }
 }
