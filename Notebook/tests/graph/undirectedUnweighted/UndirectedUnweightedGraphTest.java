@@ -155,7 +155,8 @@ public class UndirectedUnweightedGraphTest
      * Tests that the graph is initialized properly.
      */
     @Test
-    public void initializationTest4() {
+    public void initializationTest4()
+    {
         setup4();
         // There should be 4 vertexes, 0 edges and 4 adjacency lists.
         assertNotNull("The graph shouldn't be null.", graph2);
