@@ -74,7 +74,7 @@ public class BasicTwoColor
      * @return The color of each vertex if the graph is two-colorable, {@code null} if contrary.
      */
     public boolean[] getColor()
-    { return isTwoColorable() ? color : null; }
+    { return isTwoColorable ? color : null; }
 
     /**
      * @return The color of each vertex in numerical format (color = {0, 1}) if the

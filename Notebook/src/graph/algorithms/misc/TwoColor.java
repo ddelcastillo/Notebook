@@ -3,7 +3,8 @@
 package graph.algorithms.misc;
 
 import graph.IExtendedGraph;
-import java.util.ArrayList;import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Algorithm that represents a coloring of a graph such that
@@ -87,17 +88,18 @@ public class TwoColor<T>
     { return isTwoColorable; }
 
     /**
-     * @return The color of each vertex if the graph is two-colorable, {@code null} if contrary.
+     * @return A HashMap with the color of each vertex in a boolean format
+     * if the graph is two-colorable, {@code null} if contrary.
      */
     public HashMap<T, Boolean> getColor()
-    { return colors; }
+    { return isTwoColorable ? colors : null; }
 
     /**
-     * @return The color of each vertex in numerical format (color = {0, 1}) if the
-     * graph is two-colorable, {@code null} if contrary.
+     * @return A HashMap with the color of each vertex in a numerical format (color = {0, 1})
+     * if the graph is two-colorable, {@code null} if contrary.
      */
     public HashMap<T, Integer> getColorNum()
-    { return colorsNum; }
+    { return isTwoColorable ? colorsNum : null; }
 
     /**
      * Recursive auxiliary method to color the graph.
@@ -116,7 +118,6 @@ public class TwoColor<T>
                 return;
             if(!marked[vertex])
             {
-
                 color[vertex] = !color[pVertex];
                 colors.put(pGraph.numberToKey().get(vertex), color[vertex]);
                 colorsNum.put(pGraph.numberToKey().get(vertex), color[vertex] ? 1 : 0);
