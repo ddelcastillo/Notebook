@@ -1,10 +1,13 @@
 package graph.undirectedUnweighted;
 
 import graph.algorithms.misc.IsAcyclic;
+import graph.algorithms.misc.TwoColor;
 import graph.algorithms.search.BFS;
 import graph.algorithms.search.DFS;
 import org.junit.Test;
 import java.util.ArrayList;
+import java.util.HashMap;
+
 import static org.junit.Assert.*;
 
 /**
@@ -998,5 +1001,53 @@ public class UndirectedUnweightedGraphTest
         IsAcyclic<String> isAcyclic2 = new IsAcyclic<>(graph2, "Hi");
         assertFalse("The graph should not be acyclic.", isAcyclic1.isAcyclic());
         assertFalse("The graph should not be acyclic.", isAcyclic2.isAcyclic());
+    }
+
+    /**
+     * Tests that the TwoColor algorithm works properly when the graph is two-colorable.
+     */
+    @Test
+    public void twoColorableTest1()
+    {
+        setup4();
+        // Vertex e will be added.
+        graph2.addVertex("e");
+        // Edges a-b, b-d, d-c, and b-e.
+        graph2.addEdge("a", "b"); graph2.addEdge("b", "d"); graph2.addEdge("d", "c"); graph2.addEdge("b", "e");
+        TwoColor<String> twoColor = new TwoColor<>(graph2);
+        // The graph should be two colorable.
+        assertTrue("The graph should be two colorable.", twoColor.isTwoColorable());
+        // The HashMaps shouldn't be null.
+        assertNotNull("The HashMap shouldn't be null.", twoColor.getColor());
+        assertNotNull("The HashMap shouldn't be null.", twoColor.getColorNum());
+        HashMap<String, Boolean> color = twoColor.getColor();
+        HashMap<String, Integer> colorNum = twoColor.getColorNum();
+        for(String vertex : graph2.keyToNumber().keySet())
+        {
+            for(String adjacent : graph2.adjacent(vertex))
+            {
+                assertEquals("The color should be different.", color.get(vertex), !color.get(adjacent));
+                assertNotEquals("The color should be different.", colorNum.get(vertex), colorNum.get(adjacent));
+            }
+        }
+    }
+
+    /**
+     * Tests that the TwoColor algorithm works properly when the graph isn't two-colorable.
+     */
+    @Test
+    public void twoColorableTest2()
+    {
+        setup4();
+        // Vertex e will be added.
+        graph2.addVertex("e");
+        // Edges a-b, a-c, b-c, and b-e will be added.
+        graph2.addEdge("a", "b"); graph2.addEdge("a", "c"); graph2.addEdge("b", "c"); graph2.addEdge("b", "e");
+        TwoColor<String> twoColor = new TwoColor<>(graph2);
+        // The graph shouldn't be two-colorable.
+        assertFalse("The graph shouldn't be two-colorable.", twoColor.isTwoColorable());
+        // The HashMaps should be null.
+        assertNull("The HashMap should be null.", twoColor.getColor());
+        assertNull("The HashMap should be null.", twoColor.getColorNum());
     }
 }
