@@ -24,44 +24,44 @@ public class UndirectedUnweightedGraph<T> implements IExtendedGraph<T>
     /**
      * Represents the initial capacity of the graph's tables (nodes and edges).
      */
-    private static final int INITIAL_CAPACITY = 7;
+    protected static final int INITIAL_CAPACITY = 7;
 
     /**
      * Represents the initial capacity of a node's adjacent list.
      */
-    private static int LIST_CAPACITY = 5;
+    protected static int LIST_CAPACITY = 5;
 
     // Attributes
 
     /**
      * The number of vertexes.
      */
-    private int V;
+    protected int V;
 
     /**
      * The number of edges.
      */
-    private int E;
+    protected int E;
 
     /**
      * The array of adjacent list of vertexes for each vertex as numbers.
      */
-    private ArrayList<ArrayList<Integer>> adjacentNumber;
+    protected ArrayList<ArrayList<Integer>> adjacentNumber;
 
     /**
      * The array of adjacent list of vertexes for each vertex as keys.
      */
-    private ArrayList<ArrayList<T>> adjacentKey;
+    protected ArrayList<ArrayList<T>> adjacentKey;
 
     /**
      * The map that accesses the given number to a certain key.
      */
-    private HashMap<T, Integer> keyToNumber;
+    protected HashMap<T, Integer> keyToNumber;
 
     /**
      * The map that accesses the assigned key of a given number.
      */
-    private HashMap<Integer, T> numberToKey;
+    protected HashMap<Integer, T> numberToKey;
 
     // Constructor
 
@@ -140,7 +140,7 @@ public class UndirectedUnweightedGraph<T> implements IExtendedGraph<T>
      * Creates an UndirectedUnweightedGraph object copy of the given graph.
      * @param pGraph The graph to copy.
      */
-    public UndirectedUnweightedGraph(UndirectedUnweightedGraph pGraph)
+    public UndirectedUnweightedGraph(UndirectedUnweightedGraph<T> pGraph)
     {
         this.V = pGraph.V;
         this.E = pGraph.E;
@@ -214,22 +214,35 @@ public class UndirectedUnweightedGraph<T> implements IExtendedGraph<T>
      */
     public void addEdge(T pVertex1, T pVertex2)
     {
-        int num, num1, num2;
+        Integer num1, num2;
         if(pVertex1.equals(pVertex2))
         {
-            num = keyToNumber.get(pVertex1);
-            adjacentNumber.get(num).add(num);
-            adjacentKey.get(num).add(pVertex1);
+            num1 = keyToNumber.get(pVertex1);
+            adjacentNumber.get(num1).add(num1);
+            adjacentKey.get(num1).add(pVertex1);
+            ++E;
         }
         else
         {
             num1 = keyToNumber.get(pVertex1);
             num2 = keyToNumber.get(pVertex2);
-            adjacentNumber.get(num1).add(num2);
-            adjacentNumber.get(num2).add(num1);
-            adjacentKey.get(num1).add(pVertex2);
-            adjacentKey.get(num2).add(pVertex1);
+            addEdge(pVertex1, pVertex2, num1, num2);
         }
+    }
+
+    /**
+     * Private procedure to add vertexes in their respective lists.
+     * @param pVertex1 The first vertex.
+     * @param pVertex2 The second vertex.
+     * @param pVertexNum1 The numerical key of the first vertex.
+     * @param pVertexNum2 The numerical key of the second vertex.
+     */
+    protected void addEdge(T pVertex1, T pVertex2, Integer pVertexNum1, Integer pVertexNum2)
+    {
+        adjacentNumber.get(pVertexNum1).add(pVertexNum2);
+        adjacentNumber.get(pVertexNum2).add(pVertexNum1);
+        adjacentKey.get(pVertexNum1).add(pVertex2);
+        adjacentKey.get(pVertexNum2).add(pVertex1);
         ++E;
     }
 
@@ -241,9 +254,7 @@ public class UndirectedUnweightedGraph<T> implements IExtendedGraph<T>
      */
     public void addEdgeChecked(T pVertex1, T pVertex2)
     {
-        if(pVertex1 == null || pVertex2 == null)
-            return;
-        if(pVertex1.equals(pVertex2))
+        if(pVertex1 == null || pVertex2 == null || pVertex1.equals(pVertex2))
             return;
         Integer num1 = keyToNumber.get(pVertex1);
         Integer num2 = keyToNumber.get(pVertex2);
@@ -259,11 +270,7 @@ public class UndirectedUnweightedGraph<T> implements IExtendedGraph<T>
             if(adjacentNumber.get(num1).contains(num2))
                 return;
         }
-        adjacentNumber.get(num1).add(num2);
-        adjacentNumber.get(num2).add(num1);
-        adjacentKey.get(num1).add(pVertex2);
-        adjacentKey.get(num2).add(pVertex1);
-        ++E;
+        addEdge(pVertex1, pVertex2, num1, num2);
     }
 
     /**
