@@ -2,7 +2,8 @@
 
 package graph.undirectedUnweighted;
 
-import unionFinder.ExpandableBasicUnionFinder;import java.util.ArrayList;
+import unionFinder.ExpandableBasicUnionFinder;
+import java.util.ArrayList;
 
 public class UndirectedUnweightedCCGraph<T> extends UndirectedUnweightedGraph<T>
 {
@@ -148,14 +149,19 @@ public class UndirectedUnweightedCCGraph<T> extends UndirectedUnweightedGraph<T>
      * @param pVertex The vertex whose component size is desired.
      * @return The size of the component that the given vertex is a part of.
      */
-    public int sizeOfComponent(int pVertex)
-    { return unionFinder.size(pVertex); }
+    public int sizeOfComponent(T pVertex)
+    { return unionFinder.size(keyToNumber.get(pVertex)); }
 
     /**
      * Checks that pVertex is a valid vertex.
      * @param pVertex The vertex whose component size is desired.
      * @return The size of the component that the given vertex is a part of or {@code null} if the vertex is invalid.
      */
-    public Integer sizeOfComponentChecked(int pVertex)
-    { return unionFinder.sizeChecked(pVertex); }
+    public Integer sizeOfComponentChecked(T pVertex)
+    {
+        if(pVertex == null || !keyToNumber.containsKey(pVertex))
+            return null;
+        else
+            return unionFinder.sizeChecked(keyToNumber.get(pVertex));
+    }
 }
