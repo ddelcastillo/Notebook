@@ -25,3 +25,4 @@ This project was started in the summer of 2019. As it is still quite young, not 
 
 ###### Language
 - **CC**: *Connected Component*. Meant for graphs, it means that the structure keeps track of connected components.
+- **AM**: *Adjacency Matrix*. Meant for graphs, it means that the structure uses an adjacency matrix representation.

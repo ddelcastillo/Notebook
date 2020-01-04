@@ -140,9 +140,22 @@ public class BasicUndirectedUnweightedAMGraph implements IBasicGraph
         return adj;
     }
 
+    /**
+     * Doesn't check if the vertexes are valid. For this, use hasEdgeChecked.
+     * @param pVertex1 The first vertex.
+     * @param pVertex2 The second vertex.
+     * @return True if there's an edge between the two vertexes, false if contrary.
+     */
     public boolean hasEdge(int pVertex1, int pVertex2)
     { return adjacent[pVertex1][pVertex2]; }
 
+    /**
+     * Checks if the vertexes are valid.
+     * @param pVertex1 The first vertex.
+     * @param pVertex2 The second vertex.
+     * @return True if there's an edge between the two vertexes, false if contrary or {@code null}
+     * if one or two of the vertexes are invalid.
+     */
     public Boolean hasEdgeChecked(int pVertex1, int pVertex2)
     {
         if(pVertex1 >= 0 && pVertex2 >= 0 && pVertex1 < V && pVertex2 < V)

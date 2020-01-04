@@ -26,7 +26,7 @@ public class BasicUndirectedUnweightedCCGraph extends BasicUndirectedUnweightedG
     // Constructor
 
     /**
-     * Creates a BasicUndirectedUnweightedGraph object with N vertexes labeled from 0 to N.
+     * Creates a BasicUndirectedUnweightedCCGraph object with N vertexes labeled from 0 to N.
      * @param N The number of vertexes to add to the graph.
      */
     public BasicUndirectedUnweightedCCGraph(int N)
@@ -36,7 +36,7 @@ public class BasicUndirectedUnweightedCCGraph extends BasicUndirectedUnweightedG
     }
 
     /**
-     * Creates a BasicUndirectedUnweightedGraph object copy of the given graph.
+     * Creates a BasicUndirectedUnweightedCCGraph object copy of the given graph.
      * @param pGraph The graph to copy.
      */
     public BasicUndirectedUnweightedCCGraph(BasicUndirectedUnweightedCCGraph pGraph)

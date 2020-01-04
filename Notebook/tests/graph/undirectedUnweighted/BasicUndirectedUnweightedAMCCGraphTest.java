@@ -14,16 +14,16 @@ import java.util.ArrayList;
 import static org.junit.Assert.*;
 
 /**
- * Class that tests the BasicUndirectedUnweightedAMGraph class.
+ * Class that tests the BasicUndirectedUnweightedAMCCGraph class.
  */
-public class BasicUndirectedUnweightedAMGraphTest
+public class BasicUndirectedUnweightedAMCCGraphTest
 {
     // Attributes
 
     /**
      * The graph.
      */
-    private BasicUndirectedUnweightedAMGraph graph;
+    private BasicUndirectedUnweightedAMCCGraph graph;
 
     // Setups
 
@@ -32,7 +32,7 @@ public class BasicUndirectedUnweightedAMGraphTest
      */
     @Before
     public void setup()
-    { graph = new BasicUndirectedUnweightedAMGraph(5); }
+    { graph = new BasicUndirectedUnweightedAMCCGraph(5); }
 
     // Tests
 
@@ -43,14 +43,15 @@ public class BasicUndirectedUnweightedAMGraphTest
     public void initializationTest1()
     {
         assertNotNull("The graph shouldn't be null.", graph);
-        assertEquals("The number of edges should be 0.", 0, graph.E());
-        assertEquals("The number of vertexes should be 5.", 5, graph.V());
-        assertEquals("The number of lists should be 5.", 5, graph.adjacent().length);
+        assertEquals("The number of edges should be 0.", graph.E(), 0);
+        assertEquals("The number of vertexes should be 5.", graph.V(), 5);
+        assertEquals("The number of components should be 5.", graph.numberOfComponents(), 5);
         // We check that the adjacent list of each vertex isn't null and is empty.
         for(int i = 0; i < 5; ++i)
         {
             assertNotNull("The list shouldn't be null.", graph.adjacent(i));
             assertTrue("The list should be empty.", graph.adjacent(i).isEmpty());
+            assertEquals("The size of the component should be 1.", graph.sizeOfComponent(i), 1);
         }
     }
 
@@ -60,16 +61,17 @@ public class BasicUndirectedUnweightedAMGraphTest
     @Test
     public void initializationTest2()
     {
-        BasicUndirectedUnweightedAMGraph newGraph = new BasicUndirectedUnweightedAMGraph(graph);
+        BasicUndirectedUnweightedAMCCGraph newGraph = new BasicUndirectedUnweightedAMCCGraph(graph);
         assertNotNull("The graph shouldn't be null.", newGraph);
-        assertEquals("The number of edges should be 0.", 0, newGraph.E());
-        assertEquals("The number of vertexes should be 5.", 5, newGraph.V());
-        assertEquals("The number of lists should be 5.", 5, graph.adjacent().length);
+        assertEquals("The number of edges should be 0.", newGraph.E(), 0);
+        assertEquals("The number of vertexes should be 5.", newGraph.V(), 5);
+        assertEquals("The number of components should be 5.", graph.numberOfComponents(), 5);
         // We check that the adjacent list of each vertex isn't null and is empty.
         for(int i = 0; i < 5; ++i)
         {
             assertNotNull("The list shouldn't be null.", newGraph.adjacent(i));
             assertTrue("The list should be empty.", newGraph.adjacent(i).isEmpty());
+            assertEquals("The size of the component should be 1.", graph.sizeOfComponent(i), 1);
         }
     }
 
@@ -80,19 +82,26 @@ public class BasicUndirectedUnweightedAMGraphTest
     public void initializationTest3()
     {
         graph.addEdge(0, 4); graph.addEdge(1, 2);
-        BasicUndirectedUnweightedAMGraph newGraph = new BasicUndirectedUnweightedAMGraph(graph);
+        BasicUndirectedUnweightedAMCCGraph newGraph = new BasicUndirectedUnweightedAMCCGraph(graph);
         assertNotNull("The graph shouldn't be null.", newGraph);
         assertEquals("The number of edges should be 2.", 2, newGraph.E());
         assertEquals("The number of vertexes should be 5.", 5, newGraph.V());
         assertEquals("The number of lists should be 5.", 5, newGraph.adjacent().length);
+        assertEquals("The number of connected components should be 3.", 3, newGraph.numberOfComponents());
         // We check that the adjacent list of each vertex isn't null. List should have 1 or 0 vertexes.
         for(int i = 0; i < 5; ++i)
         {
             assertNotNull("The list shouldn't be null.", newGraph.adjacent(i));
             if(i == 3)
+            {
                 assertEquals("The list should be empty.", 0, newGraph.adjacent(i).size());
+                assertEquals("The size of the component should be 1.", 1, newGraph.sizeOfComponent(i));
+            }
             else
+            {
+                assertEquals("The size of the component should be 2.", 2, newGraph.sizeOfComponent(i));
                 assertEquals("The list should contain one vertex.", 1, newGraph.adjacent(i).size());
+            }
         }
     }
 
@@ -104,37 +113,55 @@ public class BasicUndirectedUnweightedAMGraphTest
     {
         // We will add the edge 0-4.
         graph.addEdge(0, 4);
-        assertEquals("The number of edges should be 1.", 1, graph.E());
-        assertEquals("The number of vertexes should be 5.", 5, graph.V());
-        assertEquals("The size of the list should be 1.", 1, graph.adjacent(0).size());
-        assertEquals("The size of the list should be 0.", 0, graph.adjacent(1).size());
-        assertEquals("The size of the list should be 0.", 0, graph.adjacent(2).size());
-        assertEquals("The size of the list should be 0.", 0, graph.adjacent(3).size());
-        assertEquals("The size of the list should be 1.", 1, graph.adjacent(4).size());
+        assertEquals("The number of edges should be 1.", graph.E(), 1);
+        assertEquals("The number of vertexes should be 5.", graph.V(), 5);
+        assertEquals("There should be 4 components.", graph.numberOfComponents(), 4);
+        assertEquals("The size of the list should be 1.", graph.adjacent(0).size(), 1);
+        assertEquals("The size of the list should be 0.", graph.adjacent(1).size(), 0);
+        assertEquals("The size of the list should be 0.", graph.adjacent(2).size(), 0);
+        assertEquals("The size of the list should be 0.", graph.adjacent(3).size(), 0);
+        assertEquals("The size of the list should be 1.", graph.adjacent(4).size(), 1);
+        assertEquals("The size of the component should be 2.", graph.sizeOfComponent(0), 2);
+        assertEquals("The size of the component should be 1.", graph.sizeOfComponent(1), 1);
+        assertEquals("The size of the component should be 1.", graph.sizeOfComponent(2), 1);
+        assertEquals("The size of the component should be 1.", graph.sizeOfComponent(3), 1);
+        assertEquals("The size of the component should be 2.", graph.sizeOfComponent(4), 2);
         // We check that the items on the list are correct.
         for(Integer integer: graph.adjacent(0))
-            assertEquals("The only item on the list should be 4.", 4, (int) integer);
+            assertEquals("The only item on the list should be 4.", (int) integer, 4);
         for(Integer integer: graph.adjacent(4))
-            assertEquals("The only item on the list should be 0.", 0, (int) integer);
+            assertEquals("The only item on the list should be 0.", (int) integer, 0);
         // Now, the method should allow to add a self-cycle.
         graph.addEdge(0, 0);
-        assertEquals("The number of edges should be 2.", 2, graph.E());
-        assertEquals("The size of the list should be 2.", 2, graph.adjacent(0).size());
+        assertEquals("The number of edges should be 2.", graph.E(), 2);
+        assertEquals("There should be 4 components.", graph.numberOfComponents(), 4);
+        assertEquals("The size of the list should be 2.", graph.adjacent(0).size(), 2);
+        assertEquals("The size of the component should be 2.", graph.sizeOfComponent(0), 2);
         // Nothing else should have changed.
-        assertEquals("The size of the list should be 0.", 0, graph.adjacent(1).size());
-        assertEquals("The size of the list should be 0.", 0, graph.adjacent(2).size());
-        assertEquals("The size of the list should be 0.", 0, graph.adjacent(3).size());
-        assertEquals("The size of the list should be 1.", 1, graph.adjacent(4).size());
+        assertEquals("The size of the list should be 0.", graph.adjacent(1).size(), 0);
+        assertEquals("The size of the list should be 0.", graph.adjacent(2).size(), 0);
+        assertEquals("The size of the list should be 0.", graph.adjacent(3).size(), 0);
+        assertEquals("The size of the list should be 1.", graph.adjacent(4).size(), 1);
+        assertEquals("The size of the component should be 1.", graph.sizeOfComponent(1), 1);
+        assertEquals("The size of the component should be 1.", graph.sizeOfComponent(2), 1);
+        assertEquals("The size of the component should be 1.", graph.sizeOfComponent(3), 1);
+        assertEquals("The size of the component should be 2.", graph.sizeOfComponent(4), 2);
         // Adding the same edge twice shouldn't result in any change other than having a broken number of edges.
         graph.addEdge(4, 0);
         assertEquals("The number of edges should be 3.", 3, graph.E());
+        assertEquals("There should be 4 components.", graph.numberOfComponents(), 4);
         assertEquals("The size of the list should be 2.", 2, graph.adjacent(0).size());
         assertEquals("The size of the list should be 1.", 1, graph.adjacent(4).size());
         // Nothing else should have changed.
         assertEquals("The number of vertexes should be 5.", graph.V(), 5);
-        assertEquals("The size of the list should be 0.", 0, graph.adjacent(1).size());
-        assertEquals("The size of the list should be 0.", 0, graph.adjacent(2).size());
-        assertEquals("The size of the list should be 0.", 0, graph.adjacent(3).size());
+        assertEquals("The size of the list should be 0.", graph.adjacent(1).size(), 0);
+        assertEquals("The size of the list should be 0.", graph.adjacent(2).size(), 0);
+        assertEquals("The size of the list should be 0.", graph.adjacent(3).size(), 0);
+        assertEquals("The size of the component should be 2.", graph.sizeOfComponent(0), 2);
+        assertEquals("The size of the component should be 1.", graph.sizeOfComponent(1), 1);
+        assertEquals("The size of the component should be 1.", graph.sizeOfComponent(2), 1);
+        assertEquals("The size of the component should be 1.", graph.sizeOfComponent(3), 1);
+        assertEquals("The size of the component should be 2.", graph.sizeOfComponent(4), 2);
     }
 
     /**
@@ -147,46 +174,91 @@ public class BasicUndirectedUnweightedAMGraphTest
     }
 
     /**
+     * Tests that the number of components when adding edges updates properly.
+     */
+    @Test
+    public void addEdgeCheckedTest1()
+    {
+        // We will add the edge 0-4 and 0-1.
+        graph.addEdgeChecked(0, 4); graph.addEdgeChecked(0, 1);
+        assertEquals("There should be 3 components.", graph.numberOfComponents(), 3);
+        assertEquals("The size of the component should be 3.", graph.sizeOfComponent(0), 3);
+        assertEquals("The size of the component should be 3.", graph.sizeOfComponent(1), 3);
+        assertEquals("The size of the component should be 1.", graph.sizeOfComponent(2), 1);
+        assertEquals("The size of the component should be 1.", graph.sizeOfComponent(3), 1);
+        assertEquals("The size of the component should be 3.", graph.sizeOfComponent(4), 3);
+        // We will add the edge 2-3.
+        graph.addEdgeChecked(2, 3);
+        assertEquals("There should be 2 components.", graph.numberOfComponents(), 2);
+        assertEquals("The size of the component should be 3.", graph.sizeOfComponent(0), 3);
+        assertEquals("The size of the component should be 3.", graph.sizeOfComponent(1), 3);
+        assertEquals("The size of the component should be 2.", graph.sizeOfComponent(2), 2);
+        assertEquals("The size of the component should be 2.", graph.sizeOfComponent(3), 2);
+        assertEquals("The size of the component should be 3.", graph.sizeOfComponent(4), 3);
+        // Now we will join both components.
+        graph.addEdgeChecked(1, 2);
+        assertEquals("There should be 1 component.", graph.numberOfComponents(), 1);
+        assertEquals("The size of the component should be 5.", graph.sizeOfComponent(0), 5);
+        assertEquals("The size of the component should be 5.", graph.sizeOfComponent(1), 5);
+        assertEquals("The size of the component should be 5.", graph.sizeOfComponent(2), 5);
+        assertEquals("The size of the component should be 5.", graph.sizeOfComponent(3), 5);
+        assertEquals("The size of the component should be 5.", graph.sizeOfComponent(4), 5);
+    }
+
+    /**
      * Tests that the graph adds edges properly and checks that no self-cycles or double edges are formed.
      */
     @Test
-    public void addEdgeCheckedTest()
+    public void addEdgeCheckedTest2()
     {
         // We will add the edge 0-4.
         graph.addEdgeChecked(0, 4);
         assertEquals("The number of edges should be 1.", graph.E(), 1);
         assertEquals("The number of vertexes should be 5.", graph.V(), 5);
-        assertEquals("The size of the list should be 1.", 1, graph.adjacent(0).size());
-        assertEquals("The size of the list should be 0.", 0, graph.adjacent(1).size());
-        assertEquals("The size of the list should be 0.", 0, graph.adjacent(2).size());
-        assertEquals("The size of the list should be 0.", 0, graph.adjacent(3).size());
-        assertEquals("The size of the list should be 1.", 1, graph.adjacent(4).size());
+        assertEquals("There should be 4 components.", graph.numberOfComponents(), 4);
+        assertEquals("The size of the list should be 1.", graph.adjacent(0).size(), 1);
+        assertEquals("The size of the list should be 0.", graph.adjacent(1).size(), 0);
+        assertEquals("The size of the list should be 0.", graph.adjacent(2).size(), 0);
+        assertEquals("The size of the list should be 0.", graph.adjacent(3).size(), 0);
+        assertEquals("The size of the list should be 1.", graph.adjacent(4).size(), 1);
+        assertEquals("The size of the component should be 2.", graph.sizeOfComponent(0), 2);
+        assertEquals("The size of the component should be 1.", graph.sizeOfComponent(1), 1);
+        assertEquals("The size of the component should be 1.", graph.sizeOfComponent(2), 1);
+        assertEquals("The size of the component should be 1.", graph.sizeOfComponent(3), 1);
+        assertEquals("The size of the component should be 2.", graph.sizeOfComponent(4), 2);
         // We check that the items on the list are correct.
         for(Integer integer: graph.adjacent(0))
-            assertEquals("The only item on the list should be 4.", 4, (int) integer);
+            assertEquals("The only item on the list should be 4.", (int) integer, 4);
         for(Integer integer: graph.adjacent(4))
-            assertEquals("The only item on the list should be 0.", 0, (int) integer);
+            assertEquals("The only item on the list should be 0.", (int) integer, 0);
         // Now, the method shouldn't allow to add a self-cycle.
         graph.addEdgeChecked(0, 0);
         assertEquals("The number of edges should be 1.", graph.E(), 1);
-        assertEquals("The size of the list should be 1.", 1, graph.adjacent(0).size());
-        assertEquals("The size of the list should be 0.", 0, graph.adjacent(1).size());
-        assertEquals("The size of the list should be 0.", 0, graph.adjacent(2).size());
-        assertEquals("The size of the list should be 0.", 0, graph.adjacent(3).size());
-        assertEquals("The size of the list should be 1.", 1, graph.adjacent(4).size());
+        assertEquals("There should be 4 components.", graph.numberOfComponents(), 4);
+        assertEquals("The size of the list should be 1.", graph.adjacent(0).size(), 1);
+        assertEquals("The size of the list should be 0.", graph.adjacent(1).size(), 0);
+        assertEquals("The size of the list should be 0.", graph.adjacent(2).size(), 0);
+        assertEquals("The size of the list should be 0.", graph.adjacent(3).size(), 0);
+        assertEquals("The size of the list should be 1.", graph.adjacent(4).size(), 1);
+        assertEquals("The size of the component should be 2.", graph.sizeOfComponent(0), 2);
+        assertEquals("The size of the component should be 1.", graph.sizeOfComponent(1), 1);
+        assertEquals("The size of the component should be 1.", graph.sizeOfComponent(2), 1);
+        assertEquals("The size of the component should be 1.", graph.sizeOfComponent(3), 1);
+        assertEquals("The size of the component should be 2.", graph.sizeOfComponent(4), 2);
         // Now, the method shouldn't allow to add the same edge twice.
         graph.addEdgeChecked(4, 0);
-        assertEquals("The number of edges should be 1.", 1, graph.E());
-        assertEquals("The number of vertexes should be 5.", 5, graph.V());
-        assertEquals("The size of the list should be 1.", 1, graph.adjacent(0).size());
-        assertEquals("The size of the list should be 0.", 0, graph.adjacent(1).size());
-        assertEquals("The size of the list should be 0.", 0, graph.adjacent(2).size());
-        assertEquals("The size of the list should be 0.", 0, graph.adjacent(3).size());
-        assertEquals("The size of the list should be 1.", 1, graph.adjacent(4).size());
-        // Adding an edge between non-existing vertexes shouldn't throw any errors.
-        graph.addEdgeChecked(200, 201);
-        graph.addEdgeChecked(-1, -2);
-        graph.addEdgeChecked(2, 700);
+        assertEquals("The number of edges should be 1.", graph.E(), 1);
+        assertEquals("There should be 4 components.", graph.numberOfComponents(), 4);
+        assertEquals("The size of the list should be 1.", graph.adjacent(0).size(), 1);
+        assertEquals("The size of the list should be 0.", graph.adjacent(1).size(), 0);
+        assertEquals("The size of the list should be 0.", graph.adjacent(2).size(), 0);
+        assertEquals("The size of the list should be 0.", graph.adjacent(3).size(), 0);
+        assertEquals("The size of the list should be 1.", graph.adjacent(4).size(), 1);
+        assertEquals("The size of the component should be 2.", graph.sizeOfComponent(0), 2);
+        assertEquals("The size of the component should be 1.", graph.sizeOfComponent(1), 1);
+        assertEquals("The size of the component should be 1.", graph.sizeOfComponent(2), 1);
+        assertEquals("The size of the component should be 1.", graph.sizeOfComponent(3), 1);
+        assertEquals("The size of the component should be 2.", graph.sizeOfComponent(4), 2);
     }
 
     /**
@@ -255,6 +327,79 @@ public class BasicUndirectedUnweightedAMGraphTest
     }
 
     /**
+     * Tests that the graph manages the size of the components properly.
+     */
+    @Test
+    public void sizeOfComponentTest1()
+    {
+        // Edge 0-1 will be added.
+        graph.addEdge(0, 1);
+        // There should be 4 components: 0-1 of size 2 and 2, 3 and 4 of size 1.
+        assertEquals("There should be 4 components.", 4, graph.numberOfComponents());
+        for(int i = 0; i < 5; ++i)
+        {
+            if(i == 0 || i == 1)
+                    assertEquals("The size of the component should be 2.", 2, graph.sizeOfComponent(i));
+            else
+                    assertEquals("The size of the component should be 1.", 1, graph.sizeOfComponent(i));
+        }
+        // The size of components and number of components doesn't break with the addition
+        // of self-cycles or with repeated edges, due to the union finder's logic.
+        graph.addEdge(1, 0); graph.addEdge(0, 0); graph.addEdge(2, 2);
+        assertEquals("There should be 4 components.", 4, graph.numberOfComponents());
+        for(int i = 0; i < 5; ++i)
+        {
+            if(i == 0 || i == 1)
+                assertEquals("The size of the component should be 2.", 2, graph.sizeOfComponent(i));
+            else
+                assertEquals("The size of the component should be 1.", 1, graph.sizeOfComponent(i));
+        }
+    }
+
+    /**
+     * Tests that access to the size of a component of an invalid vertex ends up in an ArrayIndexOutOfBoundsException.
+     */
+    @Test(expected = ArrayIndexOutOfBoundsException.class)
+    public void sizeOfComponentTest2()
+    {
+        graph.sizeOfComponent(200);
+    }
+
+    /**
+     * Tests that the graph manages the size of the components properly and results null for invalid vertexes.
+     */
+    @Test
+    public void sizeOfComponentCheckedTest()
+    {
+        // Edge 0-1 will be added.
+        graph.addEdge(0, 1);
+        // There should be 4 components: 0-1 of size 2 and 2, 3 and 4 of size 1.
+        assertEquals("There should be 4 components.", 4, graph.numberOfComponents());
+        for(int i = 0; i < 5; ++i)
+        {
+            if(i == 0 || i == 1)
+                assertEquals("The size of the component should be 2.", 2, (int) graph.sizeOfComponentChecked(i));
+            else
+                assertEquals("The size of the component should be 1.", 1, (int) graph.sizeOfComponentChecked(i));
+        }
+        // The size of components and number of components doesn't break with the addition
+        // of self-cycles or with repeated edges, due to the union finder's logic.
+        graph.addEdge(1, 0); graph.addEdge(0, 0); graph.addEdge(2, 2);
+        assertEquals("There should be 4 components.", 4, graph.numberOfComponents());
+        for(int i = 0; i < 5; ++i)
+        {
+            if(i == 0 || i == 1)
+                assertEquals("The size of the component should be 2.", 2, (int) graph.sizeOfComponentChecked(i));
+            else
+                assertEquals("The size of the component should be 1.", 1, (int) graph.sizeOfComponentChecked(i));
+        }
+        // Access to the size of the components of invalid vertexes should result in null.
+        assertNull("The result should be null.", graph.sizeOfComponentChecked(200));
+        assertNull("The result should be null.", graph.sizeOfComponentChecked(5));
+        assertNull("The result should be null.", graph.sizeOfComponentChecked(-1));
+    }
+
+    /**
      * Tests that the graph keeps track of edges properly.
      */
     @Test
@@ -262,6 +407,8 @@ public class BasicUndirectedUnweightedAMGraphTest
     {
         // Edges 0-1 and 1-4 will be added.
         graph.addEdge(0, 1); graph.addEdge(1, 4);
+        // There should be 3 components.
+        assertEquals("There should be 3 components.", 3, graph.numberOfComponents());
         // There should be edges 0-1 and 1-4 but none other.
         for(int i = 0; i < 5; ++i)
         {
@@ -273,13 +420,16 @@ public class BasicUndirectedUnweightedAMGraphTest
                     case 4:
                         if(j == 1)
                             assertTrue("There should be an edge between " + i + " and " + j + ".", graph.hasEdge(i, j));
+                        assertEquals("The size of the component should be 3.", 3, graph.sizeOfComponent(i));
                         break;
                     case 1:
                         if(j == 0 || j == 4)
                             assertTrue("There should be an edge between " + i + " and " + j + ".", graph.hasEdge(i, j));
+                        assertEquals("The size of the component should be 3.", 3, graph.sizeOfComponent(i));
                         break;
                     default:
-                            assertFalse("There shouldn't be an edge between " + i + " and " + j + ".", graph.hasEdge(i, j));
+                        assertFalse("There shouldn't be an edge between " + i + " and " + j + ".", graph.hasEdge(i, j));
+                        assertEquals("The size of the component should be 1.", 1, graph.sizeOfComponent(i));
                         break;
                 }
             }
@@ -288,6 +438,8 @@ public class BasicUndirectedUnweightedAMGraphTest
         graph.addEdge(0, 1); graph.addEdge(1, 4);
         // Edge 2-3 will be added.
         graph.addEdge(2, 3);
+        // There should be 2 components.
+        assertEquals("There should be 2 components.", 2, graph.numberOfComponents());
         // There should be edges 0-1, 1-4 and 2-3 but none other.
         for(int i = 0; i < 5; ++i)
         {
@@ -299,18 +451,22 @@ public class BasicUndirectedUnweightedAMGraphTest
                     case 4:
                         if(j == 1)
                             assertTrue("There should be an edge between " + i + " and " + j + ".", graph.hasEdge(i, j));
+                        assertEquals("The size of the component should be 3.", 3, graph.sizeOfComponent(i));
                         break;
                     case 1:
                         if(j == 0 || j == 4)
                             assertTrue("There should be an edge between " + i + " and " + j + ".", graph.hasEdge(i, j));
+                        assertEquals("The size of the component should be 3.", 3, graph.sizeOfComponent(i));
                         break;
                     case 2:
                         if(j == 3)
                             assertTrue("There should be an edge between " + i + " and " + j + ".", graph.hasEdge(i, j));
+                        assertEquals("The size of the component should be 2.", 2, graph.sizeOfComponent(i));
                         break;
                     case 3:
                         if(j == 2)
                             assertTrue("There should be an edge between " + i + " and " + j + ".", graph.hasEdge(i, j));
+                        assertEquals("The size of the component should be 2.", 2, graph.sizeOfComponent(i));
                         break;
                     default:
                         assertFalse("There shouldn't be an edge between " + i + " and " + j + ".", graph.hasEdge(i, j));
@@ -335,6 +491,8 @@ public class BasicUndirectedUnweightedAMGraphTest
     {
         // Edges 0-1 and 1-4 will be added.
         graph.addEdge(0, 1); graph.addEdge(1, 4);
+        // There should be 3 components.
+        assertEquals("There should be 3 components.", 3, graph.numberOfComponents());
         // There should be edges 0-1 and 1-4 but none other.
         for(int i = 0; i < 5; ++i)
         {
@@ -346,13 +504,16 @@ public class BasicUndirectedUnweightedAMGraphTest
                     case 4:
                         if(j == 1)
                             assertTrue("There should be an edge between " + i + " and " + j + ".", graph.hasEdgeChecked(i, j));
+                        assertEquals("The size of the component should be 3.", 3, graph.sizeOfComponent(i));
                         break;
                     case 1:
                         if(j == 0 || j == 4)
                             assertTrue("There should be an edge between " + i + " and " + j + ".", graph.hasEdgeChecked(i, j));
+                        assertEquals("The size of the component should be 3.", 3, graph.sizeOfComponent(i));
                         break;
                     default:
                         assertFalse("There shouldn't be an edge between " + i + " and " + j + ".", graph.hasEdgeChecked(i, j));
+                        assertEquals("The size of the component should be 1.", 1, graph.sizeOfComponent(i));
                         break;
                 }
             }
@@ -362,6 +523,8 @@ public class BasicUndirectedUnweightedAMGraphTest
         // Edge 2-3 will be added.
         graph.addEdge(2, 3);
         // There should be edges 0-1, 1-4 and 2-3 but none other.
+        // There should be 2 components.
+        assertEquals("There should be 2 components.", 2, graph.numberOfComponents());
         for(int i = 0; i < 5; ++i)
         {
             for(int j = 0; j < 5; ++j)
@@ -372,18 +535,22 @@ public class BasicUndirectedUnweightedAMGraphTest
                     case 4:
                         if(j == 1)
                             assertTrue("There should be an edge between " + i + " and " + j + ".", graph.hasEdgeChecked(i, j));
+                        assertEquals("The size of the component should be 3.", 3, graph.sizeOfComponent(i));
                         break;
                     case 1:
                         if(j == 0 || j == 4)
                             assertTrue("There should be an edge between " + i + " and " + j + ".", graph.hasEdgeChecked(i, j));
+                        assertEquals("The size of the component should be 3.", 3, graph.sizeOfComponent(i));
                         break;
                     case 2:
                         if(j == 3)
                             assertTrue("There should be an edge between " + i + " and " + j + ".", graph.hasEdgeChecked(i, j));
+                        assertEquals("The size of the component should be 2.", 2, graph.sizeOfComponent(i));
                         break;
                     case 3:
                         if(j == 2)
                             assertTrue("There should be an edge between " + i + " and " + j + ".", graph.hasEdgeChecked(i, j));
+                        assertEquals("The size of the component should be 2.", 2, graph.sizeOfComponent(i));
                         break;
                     default:
                         assertFalse("There shouldn't be an edge between " + i + " and " + j + ".", graph.hasEdgeChecked(i, j));
@@ -406,7 +573,7 @@ public class BasicUndirectedUnweightedAMGraphTest
     @Test
     public void DFSTest()
     {
-        BasicUndirectedUnweightedGraph newGraph = new BasicUndirectedUnweightedGraph(7);
+        BasicUndirectedUnweightedCCGraph newGraph = new BasicUndirectedUnweightedCCGraph(7);
         // The following edges are added: 0-1, 0-2, 2-3, 2-4, 1-4 and 5-6.
         newGraph.addEdge(0, 1); newGraph.addEdge(0, 2); newGraph.addEdge(2, 3);
         newGraph.addEdge(2, 4); newGraph.addEdge(1, 4); newGraph.addEdge(5, 6);
@@ -433,45 +600,46 @@ public class BasicUndirectedUnweightedAMGraphTest
                     // Path from 0 to 1 should be 0, 1 in that order.
                     for(int vertex : path)
                         vertexes.add(vertex);
-                    assertEquals("The size should be 2.", 2, vertexes.size());
-                    assertEquals("The first item should be 1.", 1, (int) vertexes.get(0));
-                    assertEquals("The second item should be 0.", 0, (int) vertexes.get(1));
+                    assertEquals("The size should be 2.", vertexes.size(), 2);
+                    assertEquals("The first item should be 1.", (int) vertexes.get(0), 1);
+                    assertEquals("The second item should be 0.", (int) vertexes.get(1), 0);
                     break;
                 case 2:
                     // Path from 0 to 2 should be 0, 1, 4, 2 in that order.
                     for(int vertex : path)
                         vertexes.add(vertex);
-                    assertEquals("The size should be 4.", 4, vertexes.size());
-                    assertEquals("The first item should be 2.", 2, (int) vertexes.get(0));
-                    assertEquals("The second item should be 4.", 4, (int) vertexes.get(1));
-                    assertEquals("The third item should be 1.", 1, (int) vertexes.get(2));
-                    assertEquals("The fourth item should be 0.", 0, (int) vertexes.get(3));
+                    assertEquals("The size should be 4.", vertexes.size(), 4);
+                    assertEquals("The first item should be 2.", (int) vertexes.get(0), 2);
+                    assertEquals("The second item should be 4.", (int) vertexes.get(1), 4);
+                    assertEquals("The third item should be 1.", (int) vertexes.get(2), 1);
+                    assertEquals("The fourth item should be 0.", (int) vertexes.get(3), 0);
                     break;
                 case 3:
                     // Path from 0 to 3 should be 0, 1, 4, 2, 3 in that order.
                     for(int vertex : path)
                         vertexes.add(vertex);
-                    assertEquals("The size should be 5.", 5, vertexes.size());
-                    assertEquals("The first item should be 3.", 3, (int) vertexes.get(0));
-                    assertEquals("The second item should be 2.", 2, (int) vertexes.get(1));
-                    assertEquals("The third item should be 4.", 4, (int) vertexes.get(2));
-                    assertEquals("The fourth item should be 1.", 1, (int) vertexes.get(3));
-                    assertEquals("The fifth item should be 0.", 0, (int) vertexes.get(4));
+                    assertEquals("The size should be 5.", vertexes.size(), 5);
+                    assertEquals("The first item should be 3.", (int) vertexes.get(0), 3);
+                    assertEquals("The second item should be 2.", (int) vertexes.get(1), 2);
+                    assertEquals("The third item should be 4.", (int) vertexes.get(2), 4);
+                    assertEquals("The fourth item should be 1.", (int) vertexes.get(3), 1);
+                    assertEquals("The fifth item should be 0.", (int) vertexes.get(4), 0);
                     break;
                 case 4:
                     // Path from 0 to 4 should be 0, 1, 4 in that order.
                     for(int vertex : path)
                         vertexes.add(vertex);
-                    assertEquals("The size should be 3.", 3, vertexes.size());
-                    assertEquals("The first item should be 4.", 4, (int) vertexes.get(0));
-                    assertEquals("The second item should be 1.", 1, (int) vertexes.get(1));
-                    assertEquals("The third item should be 0.", 0, (int) vertexes.get(2));
+                    assertEquals("The size should be 3.", vertexes.size(), 3);
+                    assertEquals("The first item should be 4.", (int) vertexes.get(0), 4);
+                    assertEquals("The second item should be 1.", (int) vertexes.get(1), 1);
+                    assertEquals("The third item should be 0.", (int) vertexes.get(2), 0);
                     break;
                 case 5:
                 case 6:
                     // There should be no path from 0 to 5 or 6, therefore, the path should be null.
                     assertNull(path);
                     break;
+
             }
         }
     }
@@ -482,7 +650,7 @@ public class BasicUndirectedUnweightedAMGraphTest
     @Test
     public void BFSTest()
     {
-        BasicUndirectedUnweightedGraph newGraph = new BasicUndirectedUnweightedGraph(7);
+        BasicUndirectedUnweightedCCGraph newGraph = new BasicUndirectedUnweightedCCGraph(7);
         // The following edges are added: 0-1, 0-2, 2-3, 2-4, 1-4 and 5-6.
         newGraph.addEdge(0, 1); newGraph.addEdge(0, 2); newGraph.addEdge(2, 3);
         newGraph.addEdge(2, 4); newGraph.addEdge(1, 4); newGraph.addEdge(5, 6);
@@ -508,41 +676,42 @@ public class BasicUndirectedUnweightedAMGraphTest
                     // Path from 0 to 1 should be 0, 1 in that order.
                     for(int vertex : path)
                         vertexes.add(vertex);
-                    assertEquals("The size should be 2.", 2, vertexes.size());
-                    assertEquals("The first item should be 1.", 1, (int) vertexes.get(0));
-                    assertEquals("The second item should be 0.", 0, (int) vertexes.get(1));
+                    assertEquals("The size should be 2.", vertexes.size(), 2);
+                    assertEquals("The first item should be 1.", (int) vertexes.get(0), 1);
+                    assertEquals("The second item should be 0.", (int) vertexes.get(1), 0);
                     break;
                 case 2:
                     // Path from 0 to 2 should be 0, 2 in that order.
                     for(int vertex : path)
                         vertexes.add(vertex);
-                    assertEquals("The size should be 2.", 2, vertexes.size());
-                    assertEquals("The first item should be 2.", 2, (int) vertexes.get(0));
-                    assertEquals("The second item should be 0.", 0, (int) vertexes.get(1));
+                    assertEquals("The size should be 2.", vertexes.size(), 2);
+                    assertEquals("The first item should be 2.", (int) vertexes.get(0), 2);
+                    assertEquals("The second item should be 0.", (int) vertexes.get(1), 0);
                     break;
                 case 3:
                     // Path from 0 to 3 should be 0, 2, 3 in that order.
                     for(int vertex : path)
                         vertexes.add(vertex);
                     assertEquals("The size should be 3.", vertexes.size(), 3);
-                    assertEquals("The first item should be 3.", 3, (int) vertexes.get(0));
-                    assertEquals("The second item should be 2.", 2, (int) vertexes.get(1));
-                    assertEquals("The third item should be 0.", 0, (int) vertexes.get(2));
+                    assertEquals("The first item should be 3.", (int) vertexes.get(0), 3);
+                    assertEquals("The second item should be 2.", (int) vertexes.get(1), 2);
+                    assertEquals("The third item should be 0.", (int) vertexes.get(2), 0);
                     break;
                 case 4:
                     // Path from 0 to 4 should be 0, 1, 4 in that order.
                     for(int vertex : path)
                         vertexes.add(vertex);
-                    assertEquals("The size should be 3.", 3, vertexes.size());
-                    assertEquals("The first item should be 4.", 4, (int) vertexes.get(0));
-                    assertEquals("The second item should be 1.", 1, (int) vertexes.get(1));
-                    assertEquals("The third item should be 0.", 0, (int) vertexes.get(2));
+                    assertEquals("The size should be 3.", vertexes.size(), 3);
+                    assertEquals("The first item should be 4.", (int) vertexes.get(0), 4);
+                    assertEquals("The second item should be 1.", (int) vertexes.get(1), 1);
+                    assertEquals("The third item should be 0.", (int) vertexes.get(2), 0);
                     break;
                 case 5:
                 case 6:
                     // There should be no path from 0 to 5 or 6, therefore, the path should be null.
                     assertNull(path);
                     break;
+
             }
         }
     }
@@ -558,11 +727,17 @@ public class BasicUndirectedUnweightedAMGraphTest
         // None of the graph's components isn't acyclic, therefore, any combination
         // of searches for the graph should result in it being acyclic.
         BasicIsAcyclic isAcyclic1 = new BasicIsAcyclic(graph);
+        assertEquals("The number of components should be 2.", 2, graph.numberOfComponents());
+        assertEquals("The size of the component should be 4.", 4, graph.sizeOfComponent(0));
+        assertEquals("The size of the component should be 4.", 4, graph.sizeOfComponent(1));
+        assertEquals("The size of the component should be 4.", 4, graph.sizeOfComponent(2));
+        assertEquals("The size of the component should be 4.", 4, graph.sizeOfComponent(3));
+        assertEquals("The size of the component should be 1.", 1, graph.sizeOfComponent(4));
         assertTrue("The graph should be acyclic.", isAcyclic1.isAcyclic());
         for(int v = 0; v < 5; ++v)
         {
-            BasicIsAcyclic isAcyclic2 = new BasicIsAcyclic(graph, v);
-            assertTrue("The graph should be acyclic.", isAcyclic2.isAcyclic());
+            BasicIsAcyclic isAcyclic3 = new BasicIsAcyclic(graph, v);
+            assertTrue("The graph should be acyclic.", isAcyclic3.isAcyclic());
         }
     }
 
@@ -585,6 +760,7 @@ public class BasicUndirectedUnweightedAMGraphTest
         graph.addEdge(0, 1); graph.addEdge(1, 2); graph.addEdge(2, 0);
         // The graph has one cycle in the 0-1-2 component.
         BasicIsAcyclic isAcyclic1 = new BasicIsAcyclic(graph);
+        assertEquals("The number of components should be 3.", 3, graph.numberOfComponents());
         assertFalse("The graph should not be acyclic.", isAcyclic1.isAcyclic());
         BasicIsAcyclic isAcyclic2;
         // Vertex 3 and 4 are not in the same connected component as 0, 1 and 2, therefore,
@@ -598,10 +774,12 @@ public class BasicUndirectedUnweightedAMGraphTest
                 case 2:
                     isAcyclic2 = new BasicIsAcyclic(graph, v);
                     assertFalse("The graph should not be acyclic.", isAcyclic2.isAcyclic());
+                    assertEquals("The size of the component should be 3.", 3, graph.sizeOfComponent(v));
                     break;
                 default:
                     isAcyclic2 = new BasicIsAcyclic(graph, v);
                     assertTrue("The graph should be acyclic.", isAcyclic2.isAcyclic());
+                    assertEquals("The size of the component should be 1.", 1, graph.sizeOfComponent(v));
             }
         }
     }
@@ -617,6 +795,7 @@ public class BasicUndirectedUnweightedAMGraphTest
         // The graph now has a self-cycle.
         BasicIsAcyclic isAcyclic1 = new BasicIsAcyclic(graph);
         BasicIsAcyclic isAcyclic2 = new BasicIsAcyclic(graph, 0);
+        assertEquals("The number of components should be 5.", 5, graph.numberOfComponents());
         assertFalse("The graph should not be acyclic.", isAcyclic1.isAcyclic());
         assertFalse("The graph should not be acyclic.", isAcyclic2.isAcyclic());
     }
@@ -629,6 +808,9 @@ public class BasicUndirectedUnweightedAMGraphTest
     {
         // Edges 0-1, 1-3, 3-2 and 2-4 will be added.
         graph.addEdge(0, 1); graph.addEdge(1, 3); graph.addEdge(3, 2); graph.addEdge(2, 4);
+        assertEquals("The number of components should be 1.", 1, graph.numberOfComponents());
+        for(int vertex = 0; vertex < 5; ++vertex)
+            assertEquals("The size of the component should be 5.", 5, graph.sizeOfComponent(vertex));
         BasicTwoColor b2c = new BasicTwoColor(graph);
         // The graph should be two-colorable.
         assertTrue("The graph should be two-colorable.", b2c.isTwoColorable());
@@ -655,11 +837,27 @@ public class BasicUndirectedUnweightedAMGraphTest
     {
         // Edges 0-1, 0-2, 1-2 and 2-4 will be added.
         graph.addEdge(0, 1); graph.addEdge(0, 2); graph.addEdge(1, 2); graph.addEdge(2, 4);
+        assertEquals("The number of components should be 2.", 2, graph.numberOfComponents());
+        for(int vertex = 0; vertex < 5; ++vertex)
+        {
+            switch (vertex)
+            {
+                case 0:
+                case 1:
+                case 2:
+                case 4:
+                    assertEquals("The size of the component should be 4.", 4, graph.sizeOfComponent(vertex));
+                    break;
+                default:
+                    assertEquals("The size of the component should be 1.", 1, graph.sizeOfComponent(vertex));
+
+            }
+        }
         BasicTwoColor b2c = new BasicTwoColor(graph);
         // The graph shouldn't be two-colorable.
-        assertFalse("The graph shouldn't be two-colorable.", b2c.isTwoColorable());
+        assertFalse("The graph should be two-colorable.", b2c.isTwoColorable());
         // The array of colors should be null.
         assertNull("The array should be null.", b2c.getColor());
-        assertNull("The array should be null.", b2c.getColor());
+        assertNull("The array should be null.", b2c.getColorNum());
     }
 }
