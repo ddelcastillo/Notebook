@@ -19,8 +19,9 @@ To some extent, the purpose of this project is to be a **recipe book** of data s
 #### Remarks
 This project was started in the summer of 2019. As it is still quite young, not all structures and solutions have been covered or optimized. However, in time, the idea is for the contents to match the vision. It is just a matter of patience.
 
-#### Latest comment:
-**Janauary 6 2020**: Currently working on properly developing the variations of undirected unweighted graphs. This includes basic and generic implementations with their respective common algorithms.
+#### Latest comment
+**Janauary of 6 2020**: Currently working on properly developing the variations of undirected unweighted graphs. This includes basic and generic implementations with their respective common algorithms.
+
 ------------
 
 ###### Language
