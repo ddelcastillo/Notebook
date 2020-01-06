@@ -11,7 +11,7 @@ Abstractly, consider labeled boxes, each having some content of your choice. Now
 ------------
 
 #### Differences between implementations
-The following table displays a simple distinctions between the three different implementations.
+The following table displays a simple distinction between the three different implementations.
 
 | | BasicUnionFinder  | ExpandableBasicUnionFinder  | UnionFinder  |
 |---|:-:|:-:|:-:|

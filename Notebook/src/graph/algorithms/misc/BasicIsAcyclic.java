@@ -6,13 +6,15 @@ import graph.IBasicGraph;
 
 /**
  * Algorithm that represents a check to see if a simple numerical graph is acyclic.
+ * @author Daniel del Castillo A. https://github.com/ddelcastillo
+ * Class finished and corrected as of 6/1/20.
  */
 public class BasicIsAcyclic
 {
     // Attributes
 
     /**
-     * Represents the marked vertexes.
+     * Represents the marked vertices.
      */
     private static boolean[] marked;
 
@@ -45,7 +47,7 @@ public class BasicIsAcyclic
 
     /**
      * Creates a BasicIsAcyclic object that uses the given graph to check if its acyclic.
-     * Will only check the component of which the given vertex is part of.
+     * Will only check the component of which the given vertex is a part of.
      * @param pGraph Graph to use for the algorithm.
      * @param pVertex Vertex in which the acyclic search starts.
      */

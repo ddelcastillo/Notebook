@@ -8,7 +8,10 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 /**
- * Represents a simple numerical graph for N vertexes labeled from 0 to N-1.
+ * Represents a simple numerical graph for N vertices labeled from 0 to N-1.
+ * The graph has an adjacency matrix implementation.
+ * @author Daniel del Castillo A. https://github.com/ddelcastillo
+ * Class finished and corrected as of 6/1/20.
  */
 @Checked
 (note = "Methods with the 'Checked' signature enforce additional checks to avoid errors and to\n" +
@@ -19,7 +22,7 @@ public class BasicUndirectedUnweightedAMGraph implements IBasicGraph
     // Attributes
 
     /**
-     * The number of vertexes.
+     * The number of vertices.
      */
     protected int V;
 
@@ -29,15 +32,15 @@ public class BasicUndirectedUnweightedAMGraph implements IBasicGraph
     protected int E;
 
     /**
-     * The adjacency matrix that represents edges between vertexes.
+     * The adjacency matrix that represents edges between vertices.
      */
     protected boolean[][] adjacent;
 
     // Constructor
 
     /**
-     * Creates a BasicUndirectedUnweightedGraph object with N vertexes labeled from 0 to N-1.
-     * @param N The number of vertexes to add to the graph.
+     * Creates a BasicUndirectedUnweightedGraph object with N vertices labeled from 0 to N-1.
+     * @param N The number of vertices to add to the graph.
      */
     public BasicUndirectedUnweightedAMGraph(int N)
     {
@@ -62,7 +65,7 @@ public class BasicUndirectedUnweightedAMGraph implements IBasicGraph
     // Methods
 
     /**
-     * @return The number of vertexes.
+     * @return The number of vertices.
      */
     public int V()
     { return V; }
@@ -74,8 +77,8 @@ public class BasicUndirectedUnweightedAMGraph implements IBasicGraph
     { return E; }
 
     /**
-     * Allows self-cycles and doesn't check if the vertexes are valid or if the edge already exists. For this, use addEdgeChecked.
-     * Adds an edge between two vertexes. If it is the case that the edge is a self-cycle, it will add it once.
+     * Allows self-cycles and doesn't check if the vertices are valid or if the edge already exists. For this, use addEdgeChecked.
+     * Adds an edge between two vertices. If it is the case that the edge is a self-cycle, it will add it once.
      * @param pVertex1 The first vertex.
      * @param pVertex2 The second vertex.
      */
@@ -87,8 +90,8 @@ public class BasicUndirectedUnweightedAMGraph implements IBasicGraph
     }
 
     /**
-     * Doesn't allow self-cycles and checks if the vertexes are valid and if the edge exists.
-     * Adds an edge between two vertexes if the vertexes are valid, not equal and the edge doesn't already exist.
+     * Doesn't allow self-cycles and checks if the vertices are valid and if the edge already exists.
+     * Adds an edge between two vertices if the vertices are valid, not equal and the edge doesn't already exist.
      * @param pVertex1 The first vertex.
      * @param pVertex2 The second vertex.
      */
@@ -101,7 +104,7 @@ public class BasicUndirectedUnweightedAMGraph implements IBasicGraph
     /**
      * Doesn't check if pVertex is a valid vertex. For this, use adjacentChecked.
      * @param pVertex The vertex whose adjacent collection is desired.
-     * @return Collection corresponding to the adjacent vertexes of the given vertex.
+     * @return Collection corresponding to the adjacent vertices of the given vertex.
      */
     public Collection<Integer> adjacent(int pVertex)
     {
@@ -117,13 +120,13 @@ public class BasicUndirectedUnweightedAMGraph implements IBasicGraph
     /**
      * Checks that pVertex is a valid vertex.
      * @param pVertex The vertex whose adjacent collection is desired.
-     * @return Collection corresponding to the adjacent vertexes of the given vertex or {@code null} if the vertex is invalid.
+     * @return Collection corresponding to the adjacent vertices of the given vertex or {@code null} if the vertex is invalid.
      */
     public Collection<Integer> adjacentChecked(int pVertex)
     { return pVertex >= 0 && pVertex < V ? adjacent(pVertex) : null; }
 
     /**
-     * @return Array of collections corresponding to the adjacent vertexes of each vertex.
+     * @return Array of collections corresponding to the adjacent vertices of each vertex.
      */
     public Collection<Integer>[] adjacent()
     {
@@ -141,20 +144,20 @@ public class BasicUndirectedUnweightedAMGraph implements IBasicGraph
     }
 
     /**
-     * Doesn't check if the vertexes are valid. For this, use hasEdgeChecked.
+     * Doesn't check if the vertices are valid. For this, use hasEdgeChecked.
      * @param pVertex1 The first vertex.
      * @param pVertex2 The second vertex.
-     * @return True if there's an edge between the two vertexes, false if contrary.
+     * @return True if there's an edge between the two vertices, false if contrary.
      */
     public boolean hasEdge(int pVertex1, int pVertex2)
     { return adjacent[pVertex1][pVertex2]; }
 
     /**
-     * Checks if the vertexes are valid.
+     * Checks if the vertices are valid.
      * @param pVertex1 The first vertex.
      * @param pVertex2 The second vertex.
-     * @return True if there's an edge between the two vertexes, false if contrary or {@code null}
-     * if one or two of the vertexes are invalid.
+     * @return True if there's an edge between the two vertices, false if contrary or {@code null}
+     * if one or two of the vertices are invalid.
      */
     public Boolean hasEdgeChecked(int pVertex1, int pVertex2)
     {

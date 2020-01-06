@@ -7,13 +7,15 @@ import java.util.Stack;
 
 /**
  * Class that represents a search over a fixed number of vertices labeled from 0 to N-1.
+ * @author Daniel del Castillo A. https://github.com/ddelcastillo
+ * Class finished and corrected as of 6/1/20.
  */
 public class Search<T>
 {
     // Attributes
 
     /**
-     * Represents the marked vertexes.
+     * Represents the marked vertices.
      */
     protected boolean[] marked;
 

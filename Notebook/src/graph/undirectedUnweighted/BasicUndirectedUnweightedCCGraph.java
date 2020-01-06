@@ -6,9 +6,11 @@ import unionFinder.BasicUnionFinder;
 import util.Checked;
 
 /**
- * Represents a simple numerical graph for N vertexes labeled from 0 to N-1.
+ * Represents a simple numerical graph for N vertices labeled from 0 to N-1 that
+ * also tracks connected components by means of an union finder.
+ * The graph has an adjacency list implementation.
  * @author Daniel del Castillo A. https://github.com/ddelcastillo
- * Class finished and corrected as of 16/12/19.
+ * Class finished and corrected as of 6/1/20.
  */
 @Checked
 (note = "Methods with the 'Checked' signature enforce additional checks to avoid errors and to\n" +
@@ -26,8 +28,8 @@ public class BasicUndirectedUnweightedCCGraph extends BasicUndirectedUnweightedG
     // Constructor
 
     /**
-     * Creates a BasicUndirectedUnweightedCCGraph object with N vertexes labeled from 0 to N.
-     * @param N The number of vertexes to add to the graph.
+     * Creates a BasicUndirectedUnweightedCCGraph object with N vertices labeled from 0 to N.
+     * @param N The number of vertices to add to the graph.
      */
     public BasicUndirectedUnweightedCCGraph(int N)
     {
@@ -48,8 +50,8 @@ public class BasicUndirectedUnweightedCCGraph extends BasicUndirectedUnweightedG
     // Methods
 
     /**
-     * Allows self-cycles and doesn't check if the vertexes are valid or if the edge already exists. For this, use addEdgeChecked.
-     * Adds an edge between two vertexes. If it is the case that the edge is a self-cycle, it will add it once.
+     * Allows self-cycles and doesn't check if the vertices are valid or if the edge already exists. For this, use addEdgeChecked.
+     * Adds an edge between two vertices. If it is the case that the edge is a self-cycle, it will add it once.
      * @param pVertex1 The first vertex.
      * @param pVertex2 The second vertex.
      */
@@ -67,8 +69,8 @@ public class BasicUndirectedUnweightedCCGraph extends BasicUndirectedUnweightedG
     }
 
     /**
-     * Doesn't allow self-cycles and checks if the vertexes are valid and if the edge exists.
-     * Adds an edge between two vertexes if the vertexes are valid, not equal and the edge doesn't already exist.
+     * Doesn't allow self-cycles and checks if the vertices are valid and if the edge already exists.
+     * Adds an edge between two vertices if the vertices are valid, not equal and the edge doesn't already exist.
      * @param pVertex1 The first vertex.
      * @param pVertex2 The second vertex.
      */

@@ -44,7 +44,7 @@ public class BasicUndirectedUnweightedAMGraphTest
     {
         assertNotNull("The graph shouldn't be null.", graph);
         assertEquals("The number of edges should be 0.", 0, graph.E());
-        assertEquals("The number of vertexes should be 5.", 5, graph.V());
+        assertEquals("The number of vertices should be 5.", 5, graph.V());
         assertEquals("The number of lists should be 5.", 5, graph.adjacent().length);
         // We check that the adjacent list of each vertex isn't null and is empty.
         for(int i = 0; i < 5; ++i)
@@ -63,7 +63,7 @@ public class BasicUndirectedUnweightedAMGraphTest
         BasicUndirectedUnweightedAMGraph newGraph = new BasicUndirectedUnweightedAMGraph(graph);
         assertNotNull("The graph shouldn't be null.", newGraph);
         assertEquals("The number of edges should be 0.", 0, newGraph.E());
-        assertEquals("The number of vertexes should be 5.", 5, newGraph.V());
+        assertEquals("The number of vertices should be 5.", 5, newGraph.V());
         assertEquals("The number of lists should be 5.", 5, graph.adjacent().length);
         // We check that the adjacent list of each vertex isn't null and is empty.
         for(int i = 0; i < 5; ++i)
@@ -83,9 +83,9 @@ public class BasicUndirectedUnweightedAMGraphTest
         BasicUndirectedUnweightedAMGraph newGraph = new BasicUndirectedUnweightedAMGraph(graph);
         assertNotNull("The graph shouldn't be null.", newGraph);
         assertEquals("The number of edges should be 2.", 2, newGraph.E());
-        assertEquals("The number of vertexes should be 5.", 5, newGraph.V());
+        assertEquals("The number of vertices should be 5.", 5, newGraph.V());
         assertEquals("The number of lists should be 5.", 5, newGraph.adjacent().length);
-        // We check that the adjacent list of each vertex isn't null. List should have 1 or 0 vertexes.
+        // We check that the adjacent list of each vertex isn't null. List should have 1 or 0 vertices.
         for(int i = 0; i < 5; ++i)
         {
             assertNotNull("The list shouldn't be null.", newGraph.adjacent(i));
@@ -105,7 +105,7 @@ public class BasicUndirectedUnweightedAMGraphTest
         // We will add the edge 0-4.
         graph.addEdge(0, 4);
         assertEquals("The number of edges should be 1.", 1, graph.E());
-        assertEquals("The number of vertexes should be 5.", 5, graph.V());
+        assertEquals("The number of vertices should be 5.", 5, graph.V());
         assertEquals("The size of the list should be 1.", 1, graph.adjacent(0).size());
         assertEquals("The size of the list should be 0.", 0, graph.adjacent(1).size());
         assertEquals("The size of the list should be 0.", 0, graph.adjacent(2).size());
@@ -131,7 +131,7 @@ public class BasicUndirectedUnweightedAMGraphTest
         assertEquals("The size of the list should be 2.", 2, graph.adjacent(0).size());
         assertEquals("The size of the list should be 1.", 1, graph.adjacent(4).size());
         // Nothing else should have changed.
-        assertEquals("The number of vertexes should be 5.", graph.V(), 5);
+        assertEquals("The number of vertices should be 5.", graph.V(), 5);
         assertEquals("The size of the list should be 0.", 0, graph.adjacent(1).size());
         assertEquals("The size of the list should be 0.", 0, graph.adjacent(2).size());
         assertEquals("The size of the list should be 0.", 0, graph.adjacent(3).size());
@@ -155,7 +155,7 @@ public class BasicUndirectedUnweightedAMGraphTest
         // We will add the edge 0-4.
         graph.addEdgeChecked(0, 4);
         assertEquals("The number of edges should be 1.", graph.E(), 1);
-        assertEquals("The number of vertexes should be 5.", graph.V(), 5);
+        assertEquals("The number of vertices should be 5.", graph.V(), 5);
         assertEquals("The size of the list should be 1.", 1, graph.adjacent(0).size());
         assertEquals("The size of the list should be 0.", 0, graph.adjacent(1).size());
         assertEquals("The size of the list should be 0.", 0, graph.adjacent(2).size());
@@ -177,13 +177,13 @@ public class BasicUndirectedUnweightedAMGraphTest
         // Now, the method shouldn't allow to add the same edge twice.
         graph.addEdgeChecked(4, 0);
         assertEquals("The number of edges should be 1.", 1, graph.E());
-        assertEquals("The number of vertexes should be 5.", 5, graph.V());
+        assertEquals("The number of vertices should be 5.", 5, graph.V());
         assertEquals("The size of the list should be 1.", 1, graph.adjacent(0).size());
         assertEquals("The size of the list should be 0.", 0, graph.adjacent(1).size());
         assertEquals("The size of the list should be 0.", 0, graph.adjacent(2).size());
         assertEquals("The size of the list should be 0.", 0, graph.adjacent(3).size());
         assertEquals("The size of the list should be 1.", 1, graph.adjacent(4).size());
-        // Adding an edge between non-existing vertexes shouldn't throw any errors.
+        // Adding an edge between non-existing vertices shouldn't throw any errors.
         graph.addEdgeChecked(200, 201);
         graph.addEdgeChecked(-1, -2);
         graph.addEdgeChecked(2, 700);
@@ -197,11 +197,11 @@ public class BasicUndirectedUnweightedAMGraphTest
     {
         // Edges 0-1 and 1-4 will be added.
         graph.addEdge(0, 1); graph.addEdge(1, 4);
-        // The adjacent list of vertexes 2 and 3 should be empty.
+        // The adjacent list of vertices 2 and 3 should be empty.
         assertTrue("The list should be empty.", graph.adjacent(2).isEmpty());
         assertTrue("The list should be empty.", graph.adjacent(3).isEmpty());
         // The list of vertex 0 should just contain vertex 1, the list of vertex 1 should contain
-        // vertexes 0 and 4, and the list of vertex 4 should only contain vertex 1.
+        // vertices 0 and 4, and the list of vertex 4 should only contain vertex 1.
         ArrayList<Integer> adjacent = (ArrayList<Integer>) graph.adjacent(0);
         assertEquals("The size of the list should be 1.", 1, adjacent.size());
         assertEquals("The only vertex should be 1.", 1, (int) adjacent.get(0));
@@ -226,18 +226,18 @@ public class BasicUndirectedUnweightedAMGraphTest
     }
 
     /**
-     * Tests that the graph manages the adjacency list properly and returns null for invalid vertexes.
+     * Tests that the graph manages the adjacency list properly and returns null for invalid vertices.
      */
     @Test
     public void adjacentCheckedTest()
     {
         // Edges 0-1 and 1-4 will be added.
         graph.addEdge(0, 1); graph.addEdge(1, 4);
-        // The adjacent list of vertexes 2 and 3 should be empty.
+        // The adjacent list of vertices 2 and 3 should be empty.
         assertTrue("The list should be empty.", graph.adjacentChecked(2).isEmpty());
         assertTrue("The list should be empty.", graph.adjacentChecked(3).isEmpty());
         // The list of vertex 0 should just contain vertex 1, the list of vertex 1 should contain
-        // vertexes 0 and 4, and the list of vertex 4 should only contain vertex 1.
+        // vertices 0 and 4, and the list of vertex 4 should only contain vertex 1.
         ArrayList<Integer> adjacent = (ArrayList<Integer>) graph.adjacentChecked(0);
         assertEquals("The size of the list should be 1.", 1, adjacent.size());
         assertEquals("The only vertex should be 1.", 1, (int) adjacent.get(0));
@@ -321,14 +321,14 @@ public class BasicUndirectedUnweightedAMGraphTest
     }
 
     /**
-     * Tests that checking edge existence between invalid vertexes results in an ArrayIndexOutOfBoundsException.
+     * Tests that checking edge existence between invalid vertices results in an ArrayIndexOutOfBoundsException.
      */
     @Test(expected = ArrayIndexOutOfBoundsException.class)
     public void hasEdgeTest2()
     { graph.hasEdge(100, 200); }
 
     /**
-     * Tests that the graph keeps track of edges properly and doesn't allow access to invalid vertexes.
+     * Tests that the graph keeps track of edges properly and doesn't allow access to invalid vertices.
      */
     @Test
     public void hasEdgeCheckedTest()
@@ -412,60 +412,60 @@ public class BasicUndirectedUnweightedAMGraphTest
         newGraph.addEdge(2, 4); newGraph.addEdge(1, 4); newGraph.addEdge(5, 6);
         // A DFS from the origin is created.
         BasicDFS dfs = new BasicDFS(newGraph, 0);
-        // There should be a path from all vertexes except 5 and 6.
+        // There should be a path from all vertices except 5 and 6.
         for(int i = 0; i < 5; ++i)
             assertTrue("There should be a path to the vertex " + i + ".", dfs.hasPathTo(i));
         for(int i = 5; i < 7; ++i)
             assertFalse("There shouldn't be a path to the vertex " + i + ".", dfs.hasPathTo(i));
-        // The DFS checks the vertexes in the list in added order instead of numerical order, therefore,
+        // The DFS checks the vertices in the list in added order instead of numerical order, therefore,
         // since the 0-1 edge was first added for the vertex 0, the first edge checked from 0 will be 0-1,
         // then the same for the vertex 1 and so on.
         // Now we check the paths.
-        ArrayList<Integer> vertexes;
+        ArrayList<Integer> vertices;
         Iterable<Integer> path;
         for(int i = 1; i < 7; ++i)
         {
-            vertexes = new ArrayList<>();
+            vertices = new ArrayList<>();
             path = dfs.pathTo(i);
             switch(i)
             {
                 case 1:
                     // Path from 0 to 1 should be 0, 1 in that order.
                     for(int vertex : path)
-                        vertexes.add(vertex);
-                    assertEquals("The size should be 2.", 2, vertexes.size());
-                    assertEquals("The first item should be 1.", 1, (int) vertexes.get(0));
-                    assertEquals("The second item should be 0.", 0, (int) vertexes.get(1));
+                        vertices.add(vertex);
+                    assertEquals("The size should be 2.", 2, vertices.size());
+                    assertEquals("The first item should be 1.", 1, (int) vertices.get(0));
+                    assertEquals("The second item should be 0.", 0, (int) vertices.get(1));
                     break;
                 case 2:
                     // Path from 0 to 2 should be 0, 1, 4, 2 in that order.
                     for(int vertex : path)
-                        vertexes.add(vertex);
-                    assertEquals("The size should be 4.", 4, vertexes.size());
-                    assertEquals("The first item should be 2.", 2, (int) vertexes.get(0));
-                    assertEquals("The second item should be 4.", 4, (int) vertexes.get(1));
-                    assertEquals("The third item should be 1.", 1, (int) vertexes.get(2));
-                    assertEquals("The fourth item should be 0.", 0, (int) vertexes.get(3));
+                        vertices.add(vertex);
+                    assertEquals("The size should be 4.", 4, vertices.size());
+                    assertEquals("The first item should be 2.", 2, (int) vertices.get(0));
+                    assertEquals("The second item should be 4.", 4, (int) vertices.get(1));
+                    assertEquals("The third item should be 1.", 1, (int) vertices.get(2));
+                    assertEquals("The fourth item should be 0.", 0, (int) vertices.get(3));
                     break;
                 case 3:
                     // Path from 0 to 3 should be 0, 1, 4, 2, 3 in that order.
                     for(int vertex : path)
-                        vertexes.add(vertex);
-                    assertEquals("The size should be 5.", 5, vertexes.size());
-                    assertEquals("The first item should be 3.", 3, (int) vertexes.get(0));
-                    assertEquals("The second item should be 2.", 2, (int) vertexes.get(1));
-                    assertEquals("The third item should be 4.", 4, (int) vertexes.get(2));
-                    assertEquals("The fourth item should be 1.", 1, (int) vertexes.get(3));
-                    assertEquals("The fifth item should be 0.", 0, (int) vertexes.get(4));
+                        vertices.add(vertex);
+                    assertEquals("The size should be 5.", 5, vertices.size());
+                    assertEquals("The first item should be 3.", 3, (int) vertices.get(0));
+                    assertEquals("The second item should be 2.", 2, (int) vertices.get(1));
+                    assertEquals("The third item should be 4.", 4, (int) vertices.get(2));
+                    assertEquals("The fourth item should be 1.", 1, (int) vertices.get(3));
+                    assertEquals("The fifth item should be 0.", 0, (int) vertices.get(4));
                     break;
                 case 4:
                     // Path from 0 to 4 should be 0, 1, 4 in that order.
                     for(int vertex : path)
-                        vertexes.add(vertex);
-                    assertEquals("The size should be 3.", 3, vertexes.size());
-                    assertEquals("The first item should be 4.", 4, (int) vertexes.get(0));
-                    assertEquals("The second item should be 1.", 1, (int) vertexes.get(1));
-                    assertEquals("The third item should be 0.", 0, (int) vertexes.get(2));
+                        vertices.add(vertex);
+                    assertEquals("The size should be 3.", 3, vertices.size());
+                    assertEquals("The first item should be 4.", 4, (int) vertices.get(0));
+                    assertEquals("The second item should be 1.", 1, (int) vertices.get(1));
+                    assertEquals("The third item should be 0.", 0, (int) vertices.get(2));
                     break;
                 case 5:
                 case 6:
@@ -488,55 +488,55 @@ public class BasicUndirectedUnweightedAMGraphTest
         newGraph.addEdge(2, 4); newGraph.addEdge(1, 4); newGraph.addEdge(5, 6);
         // A DFS from the origin is created.
         BasicBFS bfs = new BasicBFS(newGraph, 0);
-        // There should be a path from all vertexes except 5 and 6.
+        // There should be a path from all vertices except 5 and 6.
         for(int i = 0; i < 5; ++i)
             assertTrue("There should be a path to the vertex " + i + ".", bfs.hasPathTo(i));
         for(int i = 5; i < 7; ++i)
             assertFalse("There shouldn't be a path to the vertex " + i + ".", bfs.hasPathTo(i));
-        // The BFS checks the vertexes in the list in added order instead of numerical order, therefore,
+        // The BFS checks the vertices in the list in added order instead of numerical order, therefore,
         // since the 0-1 edge was first added for the vertex 0, the first vertex added to the queue is 1,
         // then the same for each vertex remaining in the adjacent list.
-        ArrayList<Integer> vertexes;
+        ArrayList<Integer> vertices;
         Iterable<Integer> path;
         for(int i = 1; i < 7; ++i)
         {
-            vertexes = new ArrayList<>();
+            vertices = new ArrayList<>();
             path = bfs.pathTo(i);
             switch(i)
             {
                 case 1:
                     // Path from 0 to 1 should be 0, 1 in that order.
                     for(int vertex : path)
-                        vertexes.add(vertex);
-                    assertEquals("The size should be 2.", 2, vertexes.size());
-                    assertEquals("The first item should be 1.", 1, (int) vertexes.get(0));
-                    assertEquals("The second item should be 0.", 0, (int) vertexes.get(1));
+                        vertices.add(vertex);
+                    assertEquals("The size should be 2.", 2, vertices.size());
+                    assertEquals("The first item should be 1.", 1, (int) vertices.get(0));
+                    assertEquals("The second item should be 0.", 0, (int) vertices.get(1));
                     break;
                 case 2:
                     // Path from 0 to 2 should be 0, 2 in that order.
                     for(int vertex : path)
-                        vertexes.add(vertex);
-                    assertEquals("The size should be 2.", 2, vertexes.size());
-                    assertEquals("The first item should be 2.", 2, (int) vertexes.get(0));
-                    assertEquals("The second item should be 0.", 0, (int) vertexes.get(1));
+                        vertices.add(vertex);
+                    assertEquals("The size should be 2.", 2, vertices.size());
+                    assertEquals("The first item should be 2.", 2, (int) vertices.get(0));
+                    assertEquals("The second item should be 0.", 0, (int) vertices.get(1));
                     break;
                 case 3:
                     // Path from 0 to 3 should be 0, 2, 3 in that order.
                     for(int vertex : path)
-                        vertexes.add(vertex);
-                    assertEquals("The size should be 3.", vertexes.size(), 3);
-                    assertEquals("The first item should be 3.", 3, (int) vertexes.get(0));
-                    assertEquals("The second item should be 2.", 2, (int) vertexes.get(1));
-                    assertEquals("The third item should be 0.", 0, (int) vertexes.get(2));
+                        vertices.add(vertex);
+                    assertEquals("The size should be 3.", vertices.size(), 3);
+                    assertEquals("The first item should be 3.", 3, (int) vertices.get(0));
+                    assertEquals("The second item should be 2.", 2, (int) vertices.get(1));
+                    assertEquals("The third item should be 0.", 0, (int) vertices.get(2));
                     break;
                 case 4:
                     // Path from 0 to 4 should be 0, 1, 4 in that order.
                     for(int vertex : path)
-                        vertexes.add(vertex);
-                    assertEquals("The size should be 3.", 3, vertexes.size());
-                    assertEquals("The first item should be 4.", 4, (int) vertexes.get(0));
-                    assertEquals("The second item should be 1.", 1, (int) vertexes.get(1));
-                    assertEquals("The third item should be 0.", 0, (int) vertexes.get(2));
+                        vertices.add(vertex);
+                    assertEquals("The size should be 3.", 3, vertices.size());
+                    assertEquals("The first item should be 4.", 4, (int) vertices.get(0));
+                    assertEquals("The second item should be 1.", 1, (int) vertices.get(1));
+                    assertEquals("The third item should be 0.", 0, (int) vertices.get(2));
                     break;
                 case 5:
                 case 6:
@@ -588,7 +588,7 @@ public class BasicUndirectedUnweightedAMGraphTest
         assertFalse("The graph should not be acyclic.", isAcyclic1.isAcyclic());
         BasicIsAcyclic isAcyclic2;
         // Vertex 3 and 4 are not in the same connected component as 0, 1 and 2, therefore,
-        // the algorithm should return that the graph is acyclic for these vertexes.
+        // the algorithm should return that the graph is acyclic for these vertices.
         for(int v = 0; v < 5; ++v)
         {
             switch(v)

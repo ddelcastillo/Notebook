@@ -3,12 +3,26 @@
 package graph.undirectedUnweighted;
 
 import unionFinder.ExpandableBasicUnionFinder;
+import util.Checked;
 import java.util.ArrayList;
 
+/**
+ * Represents a generic undirected unweighted graph that
+ * also tracks connected components by means of an union finder.
+ * @author Daniel del Castillo A. https://github.com/ddelcastillo
+ * Class finished and corrected as of 6/1/20.
+ */
+@Checked
+(note = "Methods with the 'Checked' signature enforce additional checks to avoid errors and to\n" +
+" ensure the structure's correctness in exchange of efficiency. For fastest results, use\n" +
+" the non 'Checked' methods, however, these are liable to: NullPointer exceptions.")
 public class UndirectedUnweightedCCGraph<T> extends UndirectedUnweightedGraph<T>
 {
     // Attributes
 
+    /**
+     * The graph's union finder.
+     */
     private ExpandableBasicUnionFinder unionFinder;
 
     // Constructor
@@ -81,8 +95,8 @@ public class UndirectedUnweightedCCGraph<T> extends UndirectedUnweightedGraph<T>
     }
 
     /**
-     * Allows self-cycles and doesn't check if the vertexes are {@code null} or if the edge already exists. For this, use addEdgeChecked.
-     * Adds an edge between two vertexes. If it is the case that the edge is a self-cycle, it will add it once.
+     * Allows self-cycles and doesn't check if the vertices are {@code null} or if the edge already exists. For this, use addEdgeChecked.
+     * Adds an edge between two vertices. If it is the case that the edge is a self-cycle, it will add it once.
      * @param pVertex1 The first vertex.
      * @param pVertex2 The second vertex.
      */
@@ -109,8 +123,8 @@ public class UndirectedUnweightedCCGraph<T> extends UndirectedUnweightedGraph<T>
     }
 
     /**
-     * Doesn't allow self-cycles and checks if the vertexes are not {@code null} and if the edge exists.
-     * Adds an edge between two vertexes if the vertexes are not {@code null}, not equal and the edge doesn't already exist.
+     * Doesn't allow self-cycles and checks if the vertices are not {@code null} and if the edge exists.
+     * Adds an edge between two vertices if the vertices are not {@code null}, not equal and the edge doesn't already exist.
      * @param pVertex1 The first vertex.
      * @param pVertex2 The second vertex.
      */

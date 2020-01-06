@@ -11,7 +11,7 @@ import java.util.HashMap;
 /**
  * Represents a generic undirected unweighted graph.
  * @author Daniel del Castillo A. https://github.com/ddelcastillo
- * Class finished and corrected as of 25/12/19.
+ * Class finished and corrected as of 6/1/20.
  */
 @Checked
 (note = "Methods with the 'Checked' signature enforce additional checks to avoid errors and to\n" +
@@ -34,7 +34,7 @@ public class UndirectedUnweightedGraph<T> implements IExtendedGraph<T>
     // Attributes
 
     /**
-     * The number of vertexes.
+     * The number of vertices.
      */
     protected int V;
 
@@ -44,12 +44,12 @@ public class UndirectedUnweightedGraph<T> implements IExtendedGraph<T>
     protected int E;
 
     /**
-     * The array of adjacent list of vertexes for each vertex as numbers.
+     * The array of adjacent list of vertices for each vertex as numbers.
      */
     protected ArrayList<ArrayList<Integer>> adjacentNumber;
 
     /**
-     * The array of adjacent list of vertexes for each vertex as keys.
+     * The array of adjacent list of vertices for each vertex as keys.
      */
     protected ArrayList<ArrayList<T>> adjacentKey;
 
@@ -153,7 +153,7 @@ public class UndirectedUnweightedGraph<T> implements IExtendedGraph<T>
     // Methods
 
     /**
-     * @return The number of vertexes.
+     * @return The number of vertices.
      */
     public int V()
     { return V; }
@@ -207,8 +207,8 @@ public class UndirectedUnweightedGraph<T> implements IExtendedGraph<T>
     }
 
     /**
-     * Allows self-cycles and doesn't check if the vertexes are {@code null} or if the edge already exists. For this, use addEdgeChecked.
-     * Adds an edge between two vertexes. If it is the case that the edge is a self-cycle, it will add it once.
+     * Allows self-cycles and doesn't check if the vertices are {@code null} or if the edge already exists. For this, use addEdgeChecked.
+     * Adds an edge between two vertices. If it is the case that the edge is a self-cycle, it will add it once.
      * @param pVertex1 The first vertex.
      * @param pVertex2 The second vertex.
      */
@@ -231,7 +231,7 @@ public class UndirectedUnweightedGraph<T> implements IExtendedGraph<T>
     }
 
     /**
-     * Private procedure to add vertexes in their respective lists.
+     * Private procedure to add vertices in their respective lists.
      * @param pVertex1 The first vertex.
      * @param pVertex2 The second vertex.
      * @param pVertexNum1 The numerical key of the first vertex.
@@ -247,8 +247,8 @@ public class UndirectedUnweightedGraph<T> implements IExtendedGraph<T>
     }
 
     /**
-     * Doesn't allow self-cycles and checks if the vertexes are not {@code null} and if the edge exists.
-     * Adds an edge between two vertexes if the vertexes are not {@code null}, not equal and the edge doesn't already exist.
+     * Doesn't allow self-cycles and checks if the vertices are not {@code null} and if the edge exists.
+     * Adds an edge between two vertices if the vertices are not {@code null}, not equal and the edge doesn't already exist.
      * @param pVertex1 The first vertex.
      * @param pVertex2 The second vertex.
      */
@@ -276,7 +276,7 @@ public class UndirectedUnweightedGraph<T> implements IExtendedGraph<T>
     /**
      * Doesn't check if pVertex is not {@code null} or exists. For this, use adjacentChecked.
      * @param pVertex The vertex whose adjacent collection is desired.
-     * @return Collection corresponding to the adjacent vertexes of the given vertex.
+     * @return Collection corresponding to the adjacent vertices of the given vertex.
      */
     public Collection<T> adjacent(T pVertex)
     {
@@ -287,7 +287,7 @@ public class UndirectedUnweightedGraph<T> implements IExtendedGraph<T>
     /**
      * Checks that pVertex is not {@code null} and exists.
      * @param pVertex The vertex whose adjacent collection is desired.
-     * @return Collection corresponding to the adjacent vertexes of the given vertex or {@code null}
+     * @return Collection corresponding to the adjacent vertices of the given vertex or {@code null}
      * if pVertex is {@code null} or doesn't exist.
      */
     public Collection<T> adjacentChecked(T pVertex)
@@ -299,7 +299,7 @@ public class UndirectedUnweightedGraph<T> implements IExtendedGraph<T>
     }
 
     /**
-     * @return Collection of collections corresponding to the adjacent vertexes of each vertex.
+     * @return Collection of collections corresponding to the adjacent vertices of each vertex.
      */
     public Collection<Collection<T>> adjacent()
     { return Collections.unmodifiableList(adjacentKey); }
@@ -321,7 +321,7 @@ public class UndirectedUnweightedGraph<T> implements IExtendedGraph<T>
     /**
      * Doesn't check if pVertex is not {@code null} or exists.
      * @param pVertex The vertex whose adjacent collection is desired.
-     * @return Collection corresponding to the adjacent vertexes of the given vertex.
+     * @return Collection corresponding to the adjacent vertices of the given vertex.
      */
     public ArrayList<Integer> adjacentNumber(T pVertex)
     {
@@ -330,7 +330,7 @@ public class UndirectedUnweightedGraph<T> implements IExtendedGraph<T>
     }
 
     /**
-     * @return Collection of collections corresponding to the adjacent vertexes of each vertex.
+     * @return Collection of collections corresponding to the adjacent vertices of each vertex.
      */
     public ArrayList<ArrayList<Integer>> adjacentNumber()
     { return adjacentNumber; }

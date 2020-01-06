@@ -7,18 +7,20 @@ import graph.IBasicGraph;
 /**
  * Algorithm that represents a coloring of a simple numerical graph such that
  * only two colors are used, this, if the graph is two-colorable.
+ * @author Daniel del Castillo A. https://github.com/ddelcastillo
+ * Class finished, corrected and almost fully tested as of 6/1/20.
  */
 public class BasicTwoColor
 {
     // Attributes
 
     /**
-     * Represents the marked vertexes.
+     * Represents the marked vertices.
      */
     private static boolean[] marked;
 
     /**
-     * Represents the color of the vertexes.
+     * Represents the color of the vertices.
      */
     private static boolean[] color;
 
@@ -52,7 +54,7 @@ public class BasicTwoColor
 
     /**
      * Creates a BasicTwoColor object that uses the given graph to two-color it.
-     * Will only check the component of which the given vertex is part of.
+     * Will only check the component of which the given vertex is a part of.
      * @param pGraph Graph to use for the algorithm.
      * @param pVertex Vertex in which the coloring starts.
      */
@@ -63,6 +65,8 @@ public class BasicTwoColor
         isTwoColorable = true;
         basicTwoColor(pGraph, pVertex);
     }
+
+    // Methods
 
     /**
      * @return {@code true} if the graph is two colorable, {@code false} if contrary.

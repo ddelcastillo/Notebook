@@ -7,13 +7,15 @@ import java.util.ArrayList;
 
 /**
  * Algorithm that represents a check to see if a graph is acyclic.
+ * @author Daniel del Castillo A. https://github.com/ddelcastillo
+ * Class finished and corrected as of 6/1/20.
  */
 public class IsAcyclic<T>
 {
     // Attributes
 
     /**
-     * Represents the marked vertexes.
+     * Represents the marked vertices.
      */
     private static boolean[] marked;
 
@@ -46,7 +48,7 @@ public class IsAcyclic<T>
 
     /**
      * Creates an IsAcyclic object that uses the given graph to check if its acyclic.
-     * Will only check the component of which the given vertex is part of.
+     * Will only check the component of which the given vertex is a part of.
      * @param pGraph Graph to use for the algorithm.
      * @param pVertex Vertex in which the acyclic search starts.
      */
@@ -57,7 +59,6 @@ public class IsAcyclic<T>
         int vertex = pGraph.keyToNumber().get(pVertex);
         isAcyclic(pGraph, vertex, vertex);
     }
-
 
     // Methods
 

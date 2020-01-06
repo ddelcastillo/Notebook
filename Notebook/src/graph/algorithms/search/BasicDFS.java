@@ -7,13 +7,15 @@ import util.BasicSearch;
 
 /**
  * Algorithm that represents a depth first search for a simple numerical graph.
+ * @author Daniel del Castillo A. https://github.com/ddelcastillo
+ * Class finished and corrected as of 6/1/20.
  */
 public class BasicDFS extends BasicSearch
 {
     // Constructor
 
     /**
-     * Creates a BasicDFS object that uses the given graph and starts from the given vertex.
+     * Creates a BasicDFS object that uses the given graph and starts the search from the given vertex.
      * @param pGraph Graph to use for the algorithm.
      * @param pOrigin Vertex from which the search starts.
      */
