@@ -330,7 +330,7 @@ public class UndirectedUnweightedGraph<T> implements IExtendedGraph<T>
     }
 
     /**
-     * @return Collection of collections corresponding to the adjacent vertices of each vertex.
+     * @return ArrayList of ArrayList corresponding to the adjacent vertices of each vertex.
      */
     public ArrayList<ArrayList<Integer>> adjacentNumber()
     { return adjacentNumber; }
