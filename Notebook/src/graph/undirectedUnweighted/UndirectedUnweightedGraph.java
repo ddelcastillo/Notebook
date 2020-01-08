@@ -2,7 +2,7 @@
 
 package graph.undirectedUnweighted;
 
-import graph.IExtendedUnweightedGraph;import util.Checked;
+import graph.IExtendedGraph;import util.Checked;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -17,7 +17,7 @@ import java.util.HashMap;
 (note = "Methods with the 'Checked' signature enforce additional checks to avoid errors and to\n" +
 " ensure the structure's correctness in exchange of efficiency. For fastest results, use\n" +
 " the non 'Checked' methods, however, these are liable to: NullPointer exceptions.")
-public class UndirectedUnweightedGraph<T> implements IExtendedUnweightedGraph<T>
+public class UndirectedUnweightedGraph<T> implements IExtendedGraph<T>
 {
     // Constants
 

@@ -2,7 +2,7 @@
 
 package graph.algorithms.misc;
 
-import graph.IExtendedUnweightedGraph;
+import graph.IExtendedGraph;
 import java.util.ArrayList;
 
 /**
@@ -31,7 +31,7 @@ public class IsAcyclic<T>
      * Doesn't require the graph to be connected, i.e., will check the entire graph.
      * @param pGraph Graph to use for the algorithm.
      */
-    public IsAcyclic(IExtendedUnweightedGraph<T> pGraph)
+    public IsAcyclic(IExtendedGraph<T> pGraph)
     {
         marked = new boolean[pGraph.V()];
         isAcyclic = true;
@@ -52,7 +52,7 @@ public class IsAcyclic<T>
      * @param pGraph Graph to use for the algorithm.
      * @param pVertex Vertex in which the acyclic search starts.
      */
-    public IsAcyclic(IExtendedUnweightedGraph<T> pGraph, T pVertex)
+    public IsAcyclic(IExtendedGraph<T> pGraph, T pVertex)
     {
         marked = new boolean[pGraph.V()];
         isAcyclic = true;
@@ -73,7 +73,7 @@ public class IsAcyclic<T>
      * @param pGraph Graph to use for the algorithm.
      * @param pVertex1 Vertex from which the search starts.
      */
-    private void isAcyclic(IExtendedUnweightedGraph<T> pGraph, int pVertex1, int pVertex2)
+    private void isAcyclic(IExtendedGraph<T> pGraph, int pVertex1, int pVertex2)
     {
         marked[pVertex1] = true;
         ArrayList<Integer> adjacentNumber = pGraph.adjacentNumber().get(pVertex1);

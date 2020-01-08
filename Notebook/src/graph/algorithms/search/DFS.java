@@ -2,7 +2,7 @@
 
 package graph.algorithms.search;
 
-import graph.IExtendedUnweightedGraph;
+import graph.IExtendedGraph;
 import util.Search;
 import java.util.ArrayList;
 
@@ -20,7 +20,7 @@ public class DFS<T> extends Search<T>
      * @param pGraph Graph to use for the algorithm.
      * @param pOrigin Vertex from which the search starts.
      */
-    public DFS(IExtendedUnweightedGraph<T> pGraph, T pOrigin)
+    public DFS(IExtendedGraph<T> pGraph, T pOrigin)
     {
         super(pGraph, pOrigin);
         basicDFS(pGraph, originNumber);
@@ -33,7 +33,7 @@ public class DFS<T> extends Search<T>
      * @param pGraph Graph to use for the algorithm.
      * @param pVertex Vertex from which the search starts.
      */
-    private void basicDFS(IExtendedUnweightedGraph<T> pGraph, int pVertex)
+    private void basicDFS(IExtendedGraph<T> pGraph, int pVertex)
     {
         marked[pVertex] = true;
         ArrayList<Integer> adjacentNumber = pGraph.adjacentNumber().get(pVertex);

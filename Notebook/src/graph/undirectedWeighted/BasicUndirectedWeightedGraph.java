@@ -2,7 +2,7 @@
 
 package graph.undirectedWeighted;
 
-import graph.IBasicWeightedGraph;
+import graph.IBasicGraph;
 import util.Checked;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -15,7 +15,7 @@ import java.util.Collection;
 (note = "Methods with the 'Checked' signature enforce additional checks to avoid errors and to\n" +
 " ensure the structure's correctness in exchange of efficiency. For fastest results, use\n" +
 " the non 'Checked' methods, however, these are liable to: ArrayIndexOutOfBounds exceptions.")
-public class BasicUndirectedWeightedGraph implements IBasicWeightedGraph
+public class BasicUndirectedWeightedGraph implements IBasicGraph
 {
     // Attributes
 

@@ -2,7 +2,7 @@
 
 package util;
 
-import graph.IExtendedUnweightedGraph;
+import graph.IExtendedGraph;
 import java.util.Stack;
 
 /**
@@ -37,7 +37,7 @@ public class Search<T>
     /**
      * The corresponding graph used for the algorithm.
      */
-    protected IExtendedUnweightedGraph<T> graph;
+    protected IExtendedGraph<T> graph;
 
     // Constructor
 
@@ -46,7 +46,7 @@ public class Search<T>
      * @param pGraph Graph to use for the algorithm.
      * @param pOrigin Assigned vertex as the origin of the search.
      */
-    public Search(IExtendedUnweightedGraph<T> pGraph, T pOrigin)
+    public Search(IExtendedGraph<T> pGraph, T pOrigin)
     {
         marked = new boolean[pGraph.V()];
         edgeTo = new int[pGraph.V()];
