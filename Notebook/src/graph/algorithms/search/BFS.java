@@ -2,7 +2,7 @@
 
 package graph.algorithms.search;
 
-import graph.IExtendedGraph;
+import graph.IExtendedUnweightedGraph;
 import util.Search;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
@@ -21,7 +21,7 @@ public class BFS<T> extends Search<T>
      * @param pGraph Graph to use for the algorithm.
      * @param pOrigin Vertex from which the search starts.
      */
-    public BFS(IExtendedGraph<T> pGraph, T pOrigin)
+    public BFS(IExtendedUnweightedGraph<T> pGraph, T pOrigin)
     {
         super(pGraph, pOrigin);
         basicBFS(pGraph, originNumber);
@@ -34,7 +34,7 @@ public class BFS<T> extends Search<T>
      * @param pGraph Graph to use for the algorithm.
      * @param pVertex Vertex from which the search starts.
      */
-    private void basicBFS(IExtendedGraph<T> pGraph, int pVertex)
+    private void basicBFS(IExtendedUnweightedGraph<T> pGraph, int pVertex)
     {
         ArrayDeque<Integer> queue = new ArrayDeque<>();
         marked[pVertex] = true;

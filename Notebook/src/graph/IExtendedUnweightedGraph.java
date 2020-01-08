@@ -7,11 +7,11 @@ import java.util.Collection;
 import java.util.HashMap;
 
 /**
- * The API for an extendable generic graph.
+ * The API for an extendable unweighted generic graph.
  * @author Daniel del Castillo A. https://github.com/ddelcastillo
  * Class finished and corrected as of 6/1/20.
  */
-public interface IExtendedGraph<T> extends IGraph
+public interface IExtendedUnweightedGraph<T> extends IGraph
 {
     /**
      * Adds a vertex to the graph. Doesn't check if the vertex is {@code null} or already exists.

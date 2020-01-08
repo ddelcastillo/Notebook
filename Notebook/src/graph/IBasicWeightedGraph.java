@@ -5,19 +5,18 @@ package graph;
 import java.util.Collection;
 
 /**
- * The API for a numerical graph.
- * @author Daniel del Castillo A. https://github.com/ddelcastillo
- * Class finished and corrected as of 6/1/20.
+ * The API for a numerical weighted graph.
  */
-public interface IBasicGraph extends IGraph
+public interface IBasicWeightedGraph extends IGraph
 {
     /**
-     * Adds an edge between two vertices. Doesn't check for duplicates and allows self-cycles.
-     * If it is the case that the edge is a self-cycle, it will add it once.
+     * Allows self-cycles and doesn't check if the vertices are valid or if the edge already exists. For this, use addEdgeChecked.
+     * Adds an edge between two vertices. If it is the case that the edge is a self-cycle, it will add it once.
      * @param pVertex1 The first vertex.
      * @param pVertex2 The second vertex.
+     * @param pWeight The weight of the edge.
      */
-    void addEdge(int pVertex1, int pVertex2);
+    void addEdge(int pVertex1, int pVertex2, int pWeight);
 
     /**
      * @param pVertex The vertex whose adjacent collection is desired.

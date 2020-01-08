@@ -2,7 +2,7 @@
 
 package graph.algorithms.search;
 
-import graph.IBasicGraph;
+import graph.IBasicUnweightedGraph;
 import util.BasicSearch;
 import java.util.ArrayDeque;
 
@@ -20,7 +20,7 @@ public class BasicBFS extends BasicSearch
      * @param pGraph Graph to use for the algorithm.
      * @param pOrigin Vertex from which the search starts.
      */
-    public BasicBFS(IBasicGraph pGraph, int pOrigin)
+    public BasicBFS(IBasicUnweightedGraph pGraph, int pOrigin)
     {
         super(pGraph, pOrigin);
         basicBFS(pGraph, pOrigin);
@@ -33,7 +33,7 @@ public class BasicBFS extends BasicSearch
      * @param pGraph Graph to use for the algorithm.
      * @param pVertex Vertex from which the search starts.
      */
-    private void basicBFS(IBasicGraph pGraph, int pVertex)
+    private void basicBFS(IBasicUnweightedGraph pGraph, int pVertex)
     {
         ArrayDeque<Integer> queue = new ArrayDeque<>();
         marked[pVertex] = true;

@@ -2,13 +2,13 @@
 
 package graph.undirectedUnweighted;
 
-import graph.IBasicGraph;
+import graph.IBasicUnweightedGraph;
 import util.Checked;
 import java.util.ArrayList;
 import java.util.Collection;
 
 /**
- * Represents a simple numerical graph for N vertices labeled from 0 to N-1.
+ * Represents a simple numerical undirected and unweighted graph for N vertices labeled from 0 to N-1.
  * The graph has an adjacency matrix implementation.
  * @author Daniel del Castillo A. https://github.com/ddelcastillo
  * Class finished and corrected as of 6/1/20.
@@ -17,7 +17,7 @@ import java.util.Collection;
 (note = "Methods with the 'Checked' signature enforce additional checks to avoid errors and to\n" +
 " ensure the structure's correctness in exchange of efficiency. For fastest results, use\n" +
 " the non 'Checked' methods, however, these are liable to: ArrayIndexOutOfBounds exceptions.")
-public class BasicUndirectedUnweightedAMGraph implements IBasicGraph
+public class BasicUndirectedUnweightedAMGraph implements IBasicUnweightedGraph
 {
     // Attributes
 

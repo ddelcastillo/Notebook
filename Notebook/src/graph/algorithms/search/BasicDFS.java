@@ -2,7 +2,7 @@
 
 package graph.algorithms.search;
 
-import graph.IBasicGraph;
+import graph.IBasicUnweightedGraph;
 import util.BasicSearch;
 
 /**
@@ -19,7 +19,7 @@ public class BasicDFS extends BasicSearch
      * @param pGraph Graph to use for the algorithm.
      * @param pOrigin Vertex from which the search starts.
      */
-    public BasicDFS(IBasicGraph pGraph, int pOrigin)
+    public BasicDFS(IBasicUnweightedGraph pGraph, int pOrigin)
     {
         super(pGraph, pOrigin);
         basicDFS(pGraph, pOrigin);
@@ -32,7 +32,7 @@ public class BasicDFS extends BasicSearch
      * @param pGraph Graph to use for the algorithm.
      * @param pVertex Vertex from which the search starts.
      */
-    private void basicDFS(IBasicGraph pGraph, int pVertex)
+    private void basicDFS(IBasicUnweightedGraph pGraph, int pVertex)
     {
         marked[pVertex] = true;
         for(int vertex : pGraph.adjacent(pVertex))

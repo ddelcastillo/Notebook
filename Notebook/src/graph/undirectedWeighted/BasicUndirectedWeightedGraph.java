@@ -1,23 +1,21 @@
 // @formatter:off
 
-package graph.undirectedUnweighted;
+package graph.undirectedWeighted;
 
-import graph.IBasicUnweightedGraph;
+import graph.IBasicWeightedGraph;
 import util.Checked;
 import java.util.ArrayList;
 import java.util.Collection;
 
 /**
- * Represents a simple numerical undirected and unweighted graph for N vertices labeled from 0 to N-1.
+ * Represents a simple numerical undirected and weighted graph for N vertices labeled from 0 to N-1.
  * The graph has an adjacency list implementation.
- * @author Daniel del Castillo A. https://github.com/ddelcastillo
- * Class finished and corrected as of 6/1/20.
  */
 @Checked
 (note = "Methods with the 'Checked' signature enforce additional checks to avoid errors and to\n" +
 " ensure the structure's correctness in exchange of efficiency. For fastest results, use\n" +
 " the non 'Checked' methods, however, these are liable to: ArrayIndexOutOfBounds exceptions.")
-public class BasicUndirectedUnweightedGraph implements IBasicUnweightedGraph
+public class BasicUndirectedWeightedGraph implements IBasicWeightedGraph
 {
     // Attributes
 
@@ -36,30 +34,39 @@ public class BasicUndirectedUnweightedGraph implements IBasicUnweightedGraph
      */
     protected ArrayList<Integer>[] adjacent;
 
+    /**
+     * The matrix that represents the weight of an edge between vertexes.
+     */
+    protected int[][] weights;
+
     // Constructor
 
     /**
-     * Creates a BasicUndirectedUnweightedGraph object with N vertices labeled from 0 to N-1.
+     * Creates a BasicUndirectedWeightedGraph object with N vertices labeled from 0 to N-1.
      * @param N The number of vertices to add to the graph.
      */
-    public BasicUndirectedUnweightedGraph(int N)
+    public BasicUndirectedWeightedGraph(int N)
     {
         V = N;
         E = 0;
         adjacent = (ArrayList<Integer>[]) new ArrayList[N];
+        weights = new int[N][N];
         for(int v = 0; v < V; ++v)
             adjacent[v] = new ArrayList<>();
     }
 
     /**
-     * Creates a BasicUndirectedUnweightedGraph object copy of the given graph.
+     * Creates a BasicUndirectedWeightedGraph object copy of the given graph.
      * @param pGraph The graph to copy.
      */
-    public BasicUndirectedUnweightedGraph(BasicUndirectedUnweightedGraph pGraph)
+    public BasicUndirectedWeightedGraph(BasicUndirectedWeightedGraph pGraph)
     {
         this.V = pGraph.V;
         this.E = pGraph.E;
         this.adjacent = (ArrayList<Integer>[]) new ArrayList[pGraph.V];
+        this.weights = new int[V][V];
+        for(int i = 0; i < V; ++i)
+            System.arraycopy(pGraph.weights[i], 0, this.weights[i], 0, V);
         System.arraycopy(pGraph.adjacent, 0, this.adjacent, 0, pGraph.V);
     }
 
@@ -82,8 +89,9 @@ public class BasicUndirectedUnweightedGraph implements IBasicUnweightedGraph
      * Adds an edge between two vertices. If it is the case that the edge is a self-cycle, it will add it once.
      * @param pVertex1 The first vertex.
      * @param pVertex2 The second vertex.
+     * @param pWeight The weight of the edge.
      */
-    public void addEdge(int pVertex1, int pVertex2)
+    public void addEdge(int pVertex1, int pVertex2, int pWeight)
     {
         if(pVertex1 == pVertex2)
             adjacent[pVertex1].add(pVertex2);
@@ -92,6 +100,8 @@ public class BasicUndirectedUnweightedGraph implements IBasicUnweightedGraph
             adjacent[pVertex1].add(pVertex2);
             adjacent[pVertex2].add(pVertex1);
         }
+        weights[pVertex1][pVertex2] = pWeight;
+        weights[pVertex2][pVertex1] = pWeight;
         ++E;
     }
 
@@ -100,10 +110,11 @@ public class BasicUndirectedUnweightedGraph implements IBasicUnweightedGraph
      * Adds an edge between two vertices if the vertices are valid, not equal and the edge doesn't already exist.
      * @param pVertex1 The first vertex.
      * @param pVertex2 The second vertex.
+     * @param pWeight The weight of the edge.
      */
-    public void addEdgeChecked(int pVertex1, int pVertex2)
+    public void addEdgeChecked(int pVertex1, int pVertex2, int pWeight)
     {
-        if(pVertex1 != pVertex2 && pVertex1 >= 0 && pVertex1 < V && pVertex2 >= 0 && pVertex2 < V)
+        if(pVertex1 != pVertex2 && pVertex1 >= 0 && pVertex1 < V && pVertex2 >= 0 && pVertex2 < V && pWeight >= 0)
         {
             if (adjacent[pVertex1].size() > adjacent[pVertex2].size())
             {
@@ -111,6 +122,8 @@ public class BasicUndirectedUnweightedGraph implements IBasicUnweightedGraph
                 {
                     adjacent[pVertex1].add(pVertex2);
                     adjacent[pVertex2].add(pVertex1);
+                    weights[pVertex1][pVertex2] = pWeight;
+                    weights[pVertex2][pVertex1] = pWeight;
                     ++E;
                 }
             }
@@ -120,6 +133,8 @@ public class BasicUndirectedUnweightedGraph implements IBasicUnweightedGraph
                 {
                     adjacent[pVertex1].add(pVertex2);
                     adjacent[pVertex2].add(pVertex1);
+                    weights[pVertex1][pVertex2] = pWeight;
+                    weights[pVertex2][pVertex1] = pWeight;
                     ++E;
                 }
             }

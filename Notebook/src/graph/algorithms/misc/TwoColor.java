@@ -2,7 +2,7 @@
 
 package graph.algorithms.misc;
 
-import graph.IExtendedGraph;
+import graph.IExtendedUnweightedGraph;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -48,7 +48,7 @@ public class TwoColor<T>
      * Doesn't require the graph to be connected, i.e., will check the entire graph.
      * @param pGraph Graph to use for the algorithm.
      */
-    public TwoColor(IExtendedGraph<T> pGraph)
+    public TwoColor(IExtendedUnweightedGraph<T> pGraph)
     {
         marked = new boolean[pGraph.V()];
         color = new boolean[pGraph.V()];
@@ -72,7 +72,7 @@ public class TwoColor<T>
      * @param pGraph Graph to use for the algorithm.
      * @param pVertex Vertex in which the coloring starts.
      */
-    public TwoColor(IExtendedGraph<T> pGraph, T pVertex)
+    public TwoColor(IExtendedUnweightedGraph<T> pGraph, T pVertex)
     {
         marked = new boolean[pGraph.V()];
         color = new boolean[pGraph.V()];
@@ -110,7 +110,7 @@ public class TwoColor<T>
      * @param pGraph Graph to use for the algorithm.
      * @param pVertex Vertex from which the coloring starts.
      */
-    private void basicTwoColor(IExtendedGraph<T> pGraph, int pVertex)
+    private void basicTwoColor(IExtendedUnweightedGraph<T> pGraph, int pVertex)
     {
         marked[pVertex] = true;
         colors.put(pGraph.numberToKey().get(pVertex), color[pVertex]);

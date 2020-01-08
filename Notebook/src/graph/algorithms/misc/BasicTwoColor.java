@@ -2,7 +2,7 @@
 
 package graph.algorithms.misc;
 
-import graph.IBasicGraph;
+import graph.IBasicUnweightedGraph;
 
 /**
  * Algorithm that represents a coloring of a simple numerical graph such that
@@ -36,7 +36,7 @@ public class BasicTwoColor
      * Doesn't require the graph to be connected, i.e., will check the entire graph.
      * @param pGraph Graph to use for the algorithm.
      */
-    public BasicTwoColor(IBasicGraph pGraph)
+    public BasicTwoColor(IBasicUnweightedGraph pGraph)
     {
         marked = new boolean[pGraph.V()];
         color = new boolean[pGraph.V()];
@@ -58,7 +58,7 @@ public class BasicTwoColor
      * @param pGraph Graph to use for the algorithm.
      * @param pVertex Vertex in which the coloring starts.
      */
-    public BasicTwoColor(IBasicGraph pGraph, int pVertex)
+    public BasicTwoColor(IBasicUnweightedGraph pGraph, int pVertex)
     {
         marked = new boolean[pGraph.V()];
         color = new boolean[pGraph.V()];
@@ -99,7 +99,7 @@ public class BasicTwoColor
      * @param pGraph Graph to use for the algorithm.
      * @param pVertex Vertex from which the coloring starts.
      */
-    private void basicTwoColor(IBasicGraph pGraph, int pVertex)
+    private void basicTwoColor(IBasicUnweightedGraph pGraph, int pVertex)
     {
         marked[pVertex] = true;
         for(int vertex : pGraph.adjacent(pVertex))

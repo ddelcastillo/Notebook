@@ -2,7 +2,7 @@
 
 package graph.algorithms.misc;
 
-import graph.IBasicGraph;
+import graph.IBasicUnweightedGraph;
 
 /**
  * Algorithm that represents a check to see if a simple numerical graph is acyclic.
@@ -30,7 +30,7 @@ public class BasicIsAcyclic
      * Doesn't require the graph to be connected, i.e., will check the entire graph.
      * @param pGraph Graph to use for the algorithm.
      */
-    public BasicIsAcyclic(IBasicGraph pGraph)
+    public BasicIsAcyclic(IBasicUnweightedGraph pGraph)
     {
         marked = new boolean[pGraph.V()];
         isAcyclic = true;
@@ -51,7 +51,7 @@ public class BasicIsAcyclic
      * @param pGraph Graph to use for the algorithm.
      * @param pVertex Vertex in which the acyclic search starts.
      */
-    public BasicIsAcyclic(IBasicGraph pGraph, int pVertex)
+    public BasicIsAcyclic(IBasicUnweightedGraph pGraph, int pVertex)
     {
         marked = new boolean[pGraph.V()];
         isAcyclic = true;
@@ -71,7 +71,7 @@ public class BasicIsAcyclic
      * @param pGraph Graph to use for the algorithm.
      * @param pVertex1 Vertex from which the search starts.
      */
-    private void basicIsAcyclic(IBasicGraph pGraph, int pVertex1, int pVertex2)
+    private void basicIsAcyclic(IBasicUnweightedGraph pGraph, int pVertex1, int pVertex2)
     {
         marked[pVertex1] = true;
         for(int vertex : pGraph.adjacent(pVertex1))

@@ -6,7 +6,7 @@ import unionFinder.BasicUnionFinder;
 import util.Checked;
 
 /**
- * Represents a simple numerical graph for N vertices labeled from 0 to N-1 that
+ * Represents a simple numerical undirected and unweighted graph for N vertices labeled from 0 to N-1 that
  * also tracks connected components by means of an union finder.
  * The graph has an adjacency list implementation.
  * @author Daniel del Castillo A. https://github.com/ddelcastillo
