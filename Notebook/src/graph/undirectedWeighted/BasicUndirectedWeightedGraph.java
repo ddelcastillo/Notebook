@@ -37,7 +37,7 @@ public class BasicUndirectedWeightedGraph implements IBasicGraph
     /**
      * The matrix that represents the weight of an edge between vertexes.
      */
-    protected int[][] weights;
+    protected double[][] weights;
 
     // Constructor
 
@@ -50,7 +50,7 @@ public class BasicUndirectedWeightedGraph implements IBasicGraph
         V = N;
         E = 0;
         adjacent = (ArrayList<Integer>[]) new ArrayList[N];
-        weights = new int[N][N];
+        weights = new double[N][N];
         for(int v = 0; v < V; ++v)
             adjacent[v] = new ArrayList<>();
     }
@@ -64,7 +64,7 @@ public class BasicUndirectedWeightedGraph implements IBasicGraph
         this.V = pGraph.V;
         this.E = pGraph.E;
         this.adjacent = (ArrayList<Integer>[]) new ArrayList[pGraph.V];
-        this.weights = new int[V][V];
+        this.weights = new double[V][V];
         for(int i = 0; i < V; ++i)
             System.arraycopy(pGraph.weights[i], 0, this.weights[i], 0, V);
         System.arraycopy(pGraph.adjacent, 0, this.adjacent, 0, pGraph.V);
@@ -86,12 +86,12 @@ public class BasicUndirectedWeightedGraph implements IBasicGraph
 
     /**
      * Allows self-cycles and doesn't check if the vertices are valid or if the edge already exists. For this, use addEdgeChecked.
-     * Adds an edge between two vertices. If it is the case that the edge is a self-cycle, it will add it once.
+     * Adds a weighted edge between two vertices. If it is the case that the edge is a self-cycle, it will add it once.
      * @param pVertex1 The first vertex.
      * @param pVertex2 The second vertex.
      * @param pWeight The weight of the edge.
      */
-    public void addEdge(int pVertex1, int pVertex2, int pWeight)
+    public void addEdge(int pVertex1, int pVertex2, double pWeight)
     {
         if(pVertex1 == pVertex2)
             adjacent[pVertex1].add(pVertex2);
@@ -107,12 +107,12 @@ public class BasicUndirectedWeightedGraph implements IBasicGraph
 
     /**
      * Doesn't allow self-cycles and checks if the vertices are valid and if the edge already exists.
-     * Adds an edge between two vertices if the vertices are valid, not equal and the edge doesn't already exist.
+     * Adds a weighted edge between two vertices if the vertices are valid, not equal and the edge doesn't already exist.
      * @param pVertex1 The first vertex.
      * @param pVertex2 The second vertex.
      * @param pWeight The weight of the edge.
      */
-    public void addEdgeChecked(int pVertex1, int pVertex2, int pWeight)
+    public void addEdgeChecked(int pVertex1, int pVertex2, double pWeight)
     {
         if(pVertex1 != pVertex2 && pVertex1 >= 0 && pVertex1 < V && pVertex2 >= 0 && pVertex2 < V && pWeight >= 0)
         {
@@ -140,6 +140,24 @@ public class BasicUndirectedWeightedGraph implements IBasicGraph
             }
         }
     }
+
+    /**
+     * Doesn't check if both vertexes are valid. Fox this, use weightChecked.
+     * @param pVertex1 The first vertex.
+     * @param pVertex2 The second vertex.
+     * @return The weight of the edge between the two vertexes.
+     */
+    public double weight(int pVertex1, int pVertex2)
+    { return weights[pVertex1][pVertex2]; }
+
+    /**
+     * Checks if both vertexes are valid.
+     * @param pVertex1 The first vertex.
+     * @param pVertex2 The second vertex.
+     * @return The weight of the edge between the two vertexes if they're valid, {@code null} if contrary.
+     */
+    public Double weightChecked(int pVertex1, int pVertex2)
+    { return pVertex1 >= 0 && pVertex1 < V && pVertex2 >= 0 && pVertex2 < V ? weights[pVertex1][pVertex2] : null; }
 
     /**
      * Doesn't check if pVertex is a valid vertex. For this, use adjacentChecked.
