@@ -81,7 +81,8 @@ public class BasicUndirectedWeightedGraphTest
     @Test
     public void initializationTest3()
     {
-        graph.addEdge(0, 4, 1); graph.addEdge(1, 2, 1);
+        graph.addEdge(0, 4, 1);
+        graph.addEdge(1, 2, 1);
         BasicUndirectedWeightedGraph newGraph = new BasicUndirectedWeightedGraph(graph);
         assertNotNull("The graph shouldn't be null.", newGraph);
         assertEquals("The number of edges should be 2.", 2, newGraph.E());
@@ -94,7 +95,29 @@ public class BasicUndirectedWeightedGraphTest
             if(i == 3)
                 assertEquals("The list should be empty.", 0, newGraph.adjacent(i).size());
             else
+            {
+                // All edges but 0-4 and 1-2, which have a weight 1, have a weight of 0.
+                switch (i)
+                {
+                    case 0:
+                        assertEquals("The weight should be 1.", 1, (int) graph.weight(i, 4));
+                        assertEquals("The weight should be 1.", 1, (int) graph.weight(4, i));
+                        break;
+                    case 1:
+                        assertEquals("The weight should be 1.", 1, (int) graph.weight(i, 2));
+                        assertEquals("The weight should be 1.", 1, (int) graph.weight(2, i));
+                        break;
+                    case 2:
+                        assertEquals("The weight should be 1.", 1, (int) graph.weight(i, 1));
+                        assertEquals("The weight should be 1.", 1, (int) graph.weight(1, i));
+                        break;
+                    case 4:
+                        assertEquals("The weight should be 1.", 1, (int) graph.weight(i, 0));
+                        assertEquals("The weight should be 1.", 1, (int) graph.weight(0, i));
+                        break;
+                }
                 assertEquals("The list should contain one vertex.", 1, newGraph.adjacent(i).size());
+            }
         }
     }
 
