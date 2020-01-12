@@ -131,6 +131,8 @@ public class BasicUndirectedWeightedGraphTest
         graph.addEdge(0, 4, 1);
         assertEquals("The number of edges should be 1.", 1, graph.E());
         assertEquals("The number of vertices should be 5.", 5, graph.V());
+        assertEquals("The weight should be 1.", 1, (int) graph.weight(0, 4));
+        assertEquals("The weight should be 1.", 1, (int) graph.weight(4, 0));
         assertEquals("The size of the list should be 1.", 1, graph.adjacent(0).size());
         assertEquals("The size of the list should be 0.", 0, graph.adjacent(1).size());
         assertEquals("The size of the list should be 0.", 0, graph.adjacent(2).size());
@@ -143,6 +145,7 @@ public class BasicUndirectedWeightedGraphTest
             assertEquals("The only item on the list should be 0.", 0, (int) integer);
         // Now, the method should allow to add a self-cycle.
         graph.addEdge(0, 0, 2);
+        assertEquals("The weight should be 2.", 2, (int) graph.weight(0, 0));
         assertEquals("The number of edges should be 2.", 2, graph.E());
         assertEquals("The size of the list should be 2.", 2, graph.adjacent(0).size());
         // Nothing else should have changed.
@@ -152,6 +155,8 @@ public class BasicUndirectedWeightedGraphTest
         assertEquals("The size of the list should be 1.", 1, graph.adjacent(4).size());
         // Now, the method should allow to add the same edge twice.
         graph.addEdge(4, 0, 3);
+        assertEquals("The weight should be 3.", 3, (int) graph.weight(0, 4));
+        assertEquals("The weight should be 3.", 3, (int) graph.weight(4, 0));
         assertEquals("The number of edges should be 3.", 3, graph.E());
         assertEquals("The size of the list should be 3.", 3, graph.adjacent(0).size());
         assertEquals("The size of the list should be 2.", 2, graph.adjacent(4).size());
