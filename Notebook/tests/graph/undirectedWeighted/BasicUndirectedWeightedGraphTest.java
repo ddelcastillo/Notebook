@@ -50,7 +50,7 @@ public class BasicUndirectedWeightedGraphTest
             assertNotNull("The list shouldn't be null.", graph.adjacent(i));
             assertTrue("The list should be empty.", graph.adjacent(i).isEmpty());
             for(int j = 0; j < 5; ++j)
-                assertEquals("The weight should be 0.", 0, (int) graph.weight(i, j));
+                assertEquals("The weight should be 0.", 0, (int) graph.getWeight(i, j));
         }
     }
 
@@ -71,7 +71,7 @@ public class BasicUndirectedWeightedGraphTest
             assertNotNull("The list shouldn't be null.", newGraph.adjacent(i));
             assertTrue("The list should be empty.", newGraph.adjacent(i).isEmpty());
             for(int j = 0; j < 5; ++j)
-                assertEquals("The weight should be 0.", 0, (int) graph.weight(i, j));
+                assertEquals("The weight should be 0.", 0, (int) graph.getWeight(i, j));
         }
     }
 
@@ -100,20 +100,20 @@ public class BasicUndirectedWeightedGraphTest
                 switch (i)
                 {
                     case 0:
-                        assertEquals("The weight should be 1.", 1, (int) graph.weight(i, 4));
-                        assertEquals("The weight should be 1.", 1, (int) graph.weight(4, i));
+                        assertEquals("The weight should be 1.", 1, (int) graph.getWeight(i, 4));
+                        assertEquals("The weight should be 1.", 1, (int) graph.getWeight(4, i));
                         break;
                     case 1:
-                        assertEquals("The weight should be 1.", 1, (int) graph.weight(i, 2));
-                        assertEquals("The weight should be 1.", 1, (int) graph.weight(2, i));
+                        assertEquals("The weight should be 1.", 1, (int) graph.getWeight(i, 2));
+                        assertEquals("The weight should be 1.", 1, (int) graph.getWeight(2, i));
                         break;
                     case 2:
-                        assertEquals("The weight should be 1.", 1, (int) graph.weight(i, 1));
-                        assertEquals("The weight should be 1.", 1, (int) graph.weight(1, i));
+                        assertEquals("The weight should be 1.", 1, (int) graph.getWeight(i, 1));
+                        assertEquals("The weight should be 1.", 1, (int) graph.getWeight(1, i));
                         break;
                     case 4:
-                        assertEquals("The weight should be 1.", 1, (int) graph.weight(i, 0));
-                        assertEquals("The weight should be 1.", 1, (int) graph.weight(0, i));
+                        assertEquals("The weight should be 1.", 1, (int) graph.getWeight(i, 0));
+                        assertEquals("The weight should be 1.", 1, (int) graph.getWeight(0, i));
                         break;
                 }
                 assertEquals("The list should contain one vertex.", 1, newGraph.adjacent(i).size());
@@ -131,8 +131,8 @@ public class BasicUndirectedWeightedGraphTest
         graph.addEdge(0, 4, 1);
         assertEquals("The number of edges should be 1.", 1, graph.E());
         assertEquals("The number of vertices should be 5.", 5, graph.V());
-        assertEquals("The weight should be 1.", 1, (int) graph.weight(0, 4));
-        assertEquals("The weight should be 1.", 1, (int) graph.weight(4, 0));
+        assertEquals("The weight should be 1.", 1, (int) graph.getWeight(0, 4));
+        assertEquals("The weight should be 1.", 1, (int) graph.getWeight(4, 0));
         assertEquals("The size of the list should be 1.", 1, graph.adjacent(0).size());
         assertEquals("The size of the list should be 0.", 0, graph.adjacent(1).size());
         assertEquals("The size of the list should be 0.", 0, graph.adjacent(2).size());
@@ -145,7 +145,7 @@ public class BasicUndirectedWeightedGraphTest
             assertEquals("The only item on the list should be 0.", 0, (int) integer);
         // Now, the method should allow to add a self-cycle.
         graph.addEdge(0, 0, 2);
-        assertEquals("The weight should be 2.", 2, (int) graph.weight(0, 0));
+        assertEquals("The weight should be 2.", 2, (int) graph.getWeight(0, 0));
         assertEquals("The number of edges should be 2.", 2, graph.E());
         assertEquals("The size of the list should be 2.", 2, graph.adjacent(0).size());
         // Nothing else should have changed.
@@ -155,8 +155,8 @@ public class BasicUndirectedWeightedGraphTest
         assertEquals("The size of the list should be 1.", 1, graph.adjacent(4).size());
         // Now, the method should allow to add the same edge twice.
         graph.addEdge(4, 0, 3);
-        assertEquals("The weight should be 3.", 3, (int) graph.weight(0, 4));
-        assertEquals("The weight should be 3.", 3, (int) graph.weight(4, 0));
+        assertEquals("The weight should be 3.", 3, (int) graph.getWeight(0, 4));
+        assertEquals("The weight should be 3.", 3, (int) graph.getWeight(4, 0));
         assertEquals("The number of edges should be 3.", 3, graph.E());
         assertEquals("The size of the list should be 3.", 3, graph.adjacent(0).size());
         assertEquals("The size of the list should be 2.", 2, graph.adjacent(4).size());
@@ -186,8 +186,8 @@ public class BasicUndirectedWeightedGraphTest
         graph.addEdgeChecked(0, 4, 2);
         assertEquals("The number of edges should be 1.", graph.E(), 1);
         assertEquals("The number of vertices should be 5.", graph.V(), 5);
-        assertEquals("The weight should be 2.", 2, (int) graph.weight(0, 4));
-        assertEquals("The weight should be 2.", 2, (int) graph.weight(4, 0));
+        assertEquals("The weight should be 2.", 2, (int) graph.getWeight(0, 4));
+        assertEquals("The weight should be 2.", 2, (int) graph.getWeight(4, 0));
         assertEquals("The size of the list should be 1.", 1, graph.adjacent(0).size());
         assertEquals("The size of the list should be 0.", 0, graph.adjacent(1).size());
         assertEquals("The size of the list should be 0.", 0, graph.adjacent(2).size());
@@ -201,7 +201,7 @@ public class BasicUndirectedWeightedGraphTest
         // Now, the method shouldn't allow to add a self-cycle.
         graph.addEdgeChecked(0, 0, 2);
         assertEquals("The number of edges should be 1.", graph.E(), 1);
-        assertEquals("The weight should be 0.", 0, (int) graph.weight(0, 0));
+        assertEquals("The weight should be 0.", 0, (int) graph.getWeight(0, 0));
         assertEquals("The size of the list should be 1.", 1, graph.adjacent(0).size());
         assertEquals("The size of the list should be 0.", 0, graph.adjacent(1).size());
         assertEquals("The size of the list should be 0.", 0, graph.adjacent(2).size());
@@ -210,8 +210,8 @@ public class BasicUndirectedWeightedGraphTest
         // Now, the method shouldn't allow to add the same edge twice.
         graph.addEdgeChecked(4, 0, 3);
         assertEquals("The number of edges should be 1.", 1, graph.E());
-        assertEquals("The weight should be 2.", 2, (int) graph.weight(0, 4));
-        assertEquals("The weight should be 2.", 2, (int) graph.weight(4, 0));
+        assertEquals("The weight should be 2.", 2, (int) graph.getWeight(0, 4));
+        assertEquals("The weight should be 2.", 2, (int) graph.getWeight(4, 0));
         assertEquals("The number of vertices should be 5.", 5, graph.V());
         assertEquals("The size of the list should be 1.", 1, graph.adjacent(0).size());
         assertEquals("The size of the list should be 0.", 0, graph.adjacent(1).size());
@@ -231,7 +231,13 @@ public class BasicUndirectedWeightedGraphTest
     public void adjacentTest1()
     {
         // Edges 0-1 and 1-4 will be added.
-        graph.addEdge(0, 1, 2); graph.addEdge(1, 4, 3);
+        graph.addEdge(0, 1, 2);
+        graph.addEdge(1, 4, 3);
+        // The weight of 0-1 is 2 and of 1-4 is 3.
+        assertEquals("The weight should be 2.", 2, (int) graph.getWeight(0, 1));
+        assertEquals("The weight should be 2.", 2, (int) graph.getWeight(1, 0));
+        assertEquals("The weight should be 3.", 3, (int) graph.getWeight(1, 4));
+        assertEquals("The weight should be 3.", 3, (int) graph.getWeight(4, 1));
         // The adjacent list of vertices 2 and 3 should be empty.
         assertTrue("The list should be empty.", graph.adjacent(2).isEmpty());
         assertTrue("The list should be empty.", graph.adjacent(3).isEmpty());
@@ -267,7 +273,13 @@ public class BasicUndirectedWeightedGraphTest
     public void adjacentCheckedTest()
     {
         // Edges 0-1 and 1-4 will be added.
-        graph.addEdge(0, 1, 2); graph.addEdge(1, 4, 3);
+        graph.addEdge(0, 1, 2);
+        graph.addEdge(1, 4, 3);
+        // The weight of 0-1 is 2 and of 1-4 is 3.
+        assertEquals("The weight should be 2.", 2, (int) graph.getWeight(0, 1));
+        assertEquals("The weight should be 2.", 2, (int) graph.getWeight(1, 0));
+        assertEquals("The weight should be 3.", 3, (int) graph.getWeight(1, 4));
+        assertEquals("The weight should be 3.", 3, (int) graph.getWeight(4, 1));
         // The adjacent list of vertices 2 and 3 should be empty.
         assertTrue("The list should be empty.", graph.adjacentChecked(2).isEmpty());
         assertTrue("The list should be empty.", graph.adjacentChecked(3).isEmpty());
@@ -287,6 +299,76 @@ public class BasicUndirectedWeightedGraphTest
         assertNull("The adjacency list should be null.", graph.adjacentChecked(200));
         assertNull("The adjacency list should be null.", graph.adjacentChecked(5));
         assertNull("The adjacency list should be null.", graph.adjacentChecked(-1));
+    }
+
+    @Test
+    public void weightTest1()
+    {
+        // Edge 0-4 will be added with a weight of 4.
+        graph.addEdge(0, 4, 4);
+        // All other edges should weight 0 except 0-4.
+        for(int i = 0; i < 5; ++i)
+        {
+            for(int j = 0; j < 5; ++j)
+            {
+                if((i == 0 && j == 4) || (i == 4 && j == 0))
+                {
+                    assertEquals("The weight should be 4.", 4, (int) graph.getWeight(i, j));
+                    assertEquals("The weight should be 4.", 4, (int) graph.getWeight(j, i));
+                }
+                else
+                {
+                    assertEquals("The weight should be 0.", 0, (int) graph.getWeight(i, j));
+                    assertEquals("The weight should be 0.", 0, (int) graph.getWeight(j, i));
+                }
+            }
+        }
+        // Edge 1-0 will be added with a weight of 3.
+        graph.addEdge(1, 0, 3);
+        for(int i = 0; i < 5; ++i)
+        {
+            for(int j = 0; j < 5; ++j)
+            {
+                if((i == 0 && j == 4) || (i == 4 && j == 0))
+                {
+                    assertEquals("The weight should be 4.", 4, (int) graph.getWeight(i, j));
+                    assertEquals("The weight should be 4.", 4, (int) graph.getWeight(j, i));
+                }
+                else if((i == 0 && j == 1) || (i == 1 && j == 0))
+                {
+                    assertEquals("The weight should be 3.", 3, (int) graph.getWeight(i, j));
+                    assertEquals("The weight should be 3.", 3, (int) graph.getWeight(j, i));
+                }
+                else
+                {
+                    assertEquals("The weight should be 0.", 0, (int) graph.getWeight(i, j));
+                    assertEquals("The weight should be 0.", 0, (int) graph.getWeight(j, i));
+                }
+            }
+        }
+        // Adding the same edge twice with a different weight should rewrite it.
+        graph.addEdge(0, 1, 5);
+        for(int i = 0; i < 5; ++i)
+        {
+            for(int j = 0; j < 5; ++j)
+            {
+                if((i == 0 && j == 4) || (i == 4 && j == 0))
+                {
+                    assertEquals("The weight should be 4.", 4, (int) graph.getWeight(i, j));
+                    assertEquals("The weight should be 4.", 4, (int) graph.getWeight(j, i));
+                }
+                else if((i == 0 && j == 1) || (i == 1 && j == 0))
+                {
+                    assertEquals("The weight should be 5.", 5, (int) graph.getWeight(i, j));
+                    assertEquals("The weight should be 5.", 5, (int) graph.getWeight(j, i));
+                }
+                else
+                {
+                    assertEquals("The weight should be 0.", 0, (int) graph.getWeight(i, j));
+                    assertEquals("The weight should be 0.", 0, (int) graph.getWeight(j, i));
+                }
+            }
+        }
     }
 
     /**

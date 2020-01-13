@@ -147,7 +147,7 @@ public class BasicUndirectedWeightedGraph implements IBasicGraph
      * @param pVertex2 The second vertex.
      * @return The weight of the edge between the two vertexes.
      */
-    public double weight(int pVertex1, int pVertex2)
+    public double getWeight(int pVertex1, int pVertex2)
     { return weights[pVertex1][pVertex2]; }
 
     /**
@@ -158,6 +158,39 @@ public class BasicUndirectedWeightedGraph implements IBasicGraph
      */
     public Double weightChecked(int pVertex1, int pVertex2)
     { return pVertex1 >= 0 && pVertex1 < V && pVertex2 >= 0 && pVertex2 < V ? weights[pVertex1][pVertex2] : null; }
+
+    /**
+     * Doesn't check if the vertexes are valid, if the weight is positive
+     * or if the edge exists. For this, use setWeightChecked.
+     * Sets the weight for an edge.
+     * @param pVertex1 The first vertex.
+     * @param pVertex2 The second vertex.
+     * @param pWeight The weight of the edge between the two vertexes.
+     */
+    public void setWeight(int pVertex1, int pVertex2, int pWeight)
+    { weights[pVertex1][pVertex2] =  pWeight; weights[pVertex2][pVertex1] =  pWeight; }
+
+    /**
+     * Checks if the vertexes are valid, if the weight is positive and if the edge exists.
+     * Sets the weight for an edge.
+     * @param pVertex1 The first vertex.
+     * @param pVertex2 The second vertex.
+     * @param pWeight The weight of the edge between the two vertexes.
+     */
+    public void setWeightChecked(int pVertex1, int pVertex2, int pWeight)
+    {
+        if(pVertex1 >= 0 && pVertex1 < V && pVertex2 >= 0 && pVertex2 < V && pWeight >= 0)
+            if(adjacent[pVertex1].size() > adjacent[pVertex2].size())
+            {
+                if(adjacent[pVertex2].contains(pVertex1))
+                    setWeight(pVertex1, pVertex2, pWeight);
+            }
+        else
+            {
+                if(adjacent[pVertex1].contains(pVertex2))
+                    setWeight(pVertex1, pVertex2, pWeight);
+            }
+    }
 
     /**
      * Doesn't check if pVertex is a valid vertex. For this, use adjacentChecked.
