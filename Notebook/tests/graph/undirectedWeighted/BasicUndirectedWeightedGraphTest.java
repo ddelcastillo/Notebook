@@ -301,6 +301,9 @@ public class BasicUndirectedWeightedGraphTest
         assertNull("The adjacency list should be null.", graph.adjacentChecked(-1));
     }
 
+    /**
+     * Tests that the graph returns edge weight properly.
+     */
     @Test
     public void getWeightTest1()
     {
@@ -371,10 +374,90 @@ public class BasicUndirectedWeightedGraphTest
         }
     }
 
-    @Test
+    /**
+     * Tests that access to the weight of an invalid vertex results in an ArrayIndexOutOfBoundsException.
+     */
+    @Test(expected = ArrayIndexOutOfBoundsException.class)
     public void getWeightTest2()
-    {
+    { graph.getWeight(1, 200); }
 
+    /**
+     * Tests that the graph returns edge weight properly and checks for valid vertexes and edges.
+     */
+    @Test
+    public void getWeightCheckedTest()
+    {
+        // Edge 0-4 will be added with a weight of 4.
+        graph.addEdge(0, 4, 4);
+        // All other edges should be null since they don't exist.
+        for(int i = 0; i < 5; ++i)
+        {
+            for(int j = 0; j < 5; ++j)
+            {
+                if((i == 0 && j == 4) || (i == 4 && j == 0))
+                {
+                    assertEquals("The weight should be 4.", 4, graph.getWeightChecked(i, j).intValue());
+                    assertEquals("The weight should be 4.", 4, graph.getWeightChecked(j, i).intValue());
+                }
+                else
+                {
+                    assertNull("The weight should be 0.", graph.getWeightChecked(j, i));
+                    assertNull("The weight should be 0.", graph.getWeightChecked(i, j));
+                }
+            }
+        }
+        // Edge 1-0 will be added with a weight of 3.
+        graph.addEdge(1, 0, 3);
+        for(int i = 0; i < 5; ++i)
+        {
+            for(int j = 0; j < 5; ++j)
+            {
+                if((i == 0 && j == 4) || (i == 4 && j == 0))
+                {
+                    assertEquals("The weight should be 4.", 4, graph.getWeightChecked(i, j).intValue());
+                    assertEquals("The weight should be 4.", 4, graph.getWeightChecked(j, i).intValue());
+                }
+                else if((i == 0 && j == 1) || (i == 1 && j == 0))
+                {
+                    assertEquals("The weight should be 3.", 3, graph.getWeightChecked(i, j).intValue());
+                    assertEquals("The weight should be 3.", 3, graph.getWeightChecked(j, i).intValue());
+                }
+                else
+                {
+                    assertNull("The weight should be 0.", graph.getWeightChecked(j, i));
+                    assertNull("The weight should be 0.", graph.getWeightChecked(i, j));
+                }
+            }
+        }
+        // Adding the same edge twice with a different weight should rewrite it.
+        graph.addEdge(0, 1, 5);
+        for(int i = 0; i < 5; ++i)
+        {
+            for(int j = 0; j < 5; ++j)
+            {
+                if((i == 0 && j == 4) || (i == 4 && j == 0))
+                {
+                    assertEquals("The weight should be 4.", 4, graph.getWeightChecked(i, j).intValue());
+                    assertEquals("The weight should be 4.", 4, graph.getWeightChecked(j, i).intValue());
+                }
+                else if((i == 0 && j == 1) || (i == 1 && j == 0))
+                {
+                    assertEquals("The weight should be 5.", 5, graph.getWeightChecked(i, j).intValue());
+                    assertEquals("The weight should be 5.", 5, graph.getWeightChecked(j, i).intValue());
+                }
+                else
+                {
+                    assertNull("The weight should be 0.", graph.getWeightChecked(j, i));
+                    assertNull("The weight should be 0.", graph.getWeightChecked(i, j));
+                }
+            }
+        }
+        // Weight of non-existent vertexes and/or edges should result in null.
+        assertNull("The weight should be 0.", graph.getWeightChecked(200, 300));
+        assertNull("The weight should be 0.", graph.getWeightChecked(2, -20));
+        assertNull("The weight should be 0.", graph.getWeightChecked(20, 3));
+        assertNull("The weight should be 0.", graph.getWeightChecked(2, 10));
+        assertNull("The weight should be 0.", graph.getWeightChecked(-1, 3));
     }
 
     /**
