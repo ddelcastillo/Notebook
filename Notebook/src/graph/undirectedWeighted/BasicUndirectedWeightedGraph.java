@@ -142,7 +142,7 @@ public class BasicUndirectedWeightedGraph implements IBasicGraph
     }
 
     /**
-     * Doesn't check if both vertexes are valid. Fox this, use weightChecked.
+     * Doesn't check if both vertexes are valid or if the edge exists. For this, use weightChecked.
      * @param pVertex1 The first vertex.
      * @param pVertex2 The second vertex.
      * @return The weight of the edge between the two vertexes.
@@ -151,13 +151,23 @@ public class BasicUndirectedWeightedGraph implements IBasicGraph
     { return weights[pVertex1][pVertex2]; }
 
     /**
-     * Checks if both vertexes are valid.
+     * Checks if both vertexes are valid and that the edge exists.
      * @param pVertex1 The first vertex.
      * @param pVertex2 The second vertex.
      * @return The weight of the edge between the two vertexes if they're valid, {@code null} if contrary.
      */
-    public Double weightChecked(int pVertex1, int pVertex2)
-    { return pVertex1 >= 0 && pVertex1 < V && pVertex2 >= 0 && pVertex2 < V ? weights[pVertex1][pVertex2] : null; }
+    public Double getWeightChecked(int pVertex1, int pVertex2)
+    {
+        if(pVertex1 >= 0 && pVertex1 < V && pVertex2 >= 0 && pVertex2 < V)
+        {
+            if(adjacent[pVertex1].size() > adjacent[pVertex2].size())
+                    return adjacent[pVertex2].contains(pVertex1) ? weights[pVertex1][pVertex2] : null;
+            else
+                    return adjacent[pVertex1].contains(pVertex2) ? weights[pVertex1][pVertex2] : null;
+        }
+        else
+            return null;
+    }
 
     /**
      * Doesn't check if the vertexes are valid, if the weight is positive
@@ -185,7 +195,7 @@ public class BasicUndirectedWeightedGraph implements IBasicGraph
                 if(adjacent[pVertex2].contains(pVertex1))
                     setWeight(pVertex1, pVertex2, pWeight);
             }
-        else
+            else
             {
                 if(adjacent[pVertex1].contains(pVertex2))
                     setWeight(pVertex1, pVertex2, pWeight);

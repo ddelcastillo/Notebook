@@ -302,7 +302,7 @@ public class BasicUndirectedWeightedGraphTest
     }
 
     @Test
-    public void weightTest1()
+    public void getWeightTest1()
     {
         // Edge 0-4 will be added with a weight of 4.
         graph.addEdge(0, 4, 4);
@@ -369,6 +369,12 @@ public class BasicUndirectedWeightedGraphTest
                 }
             }
         }
+    }
+
+    @Test
+    public void getWeightTest2()
+    {
+
     }
 
     /**
