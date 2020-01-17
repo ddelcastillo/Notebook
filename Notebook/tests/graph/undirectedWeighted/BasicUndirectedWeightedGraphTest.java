@@ -514,6 +514,14 @@ public class BasicUndirectedWeightedGraphTest
     }
 
     /**
+     * Tests that setting the weight of an edge (existent or not) between invalid vertexes results in
+     * an ArrayIndexOutOfBoundException.
+     */
+    @Test(expected = ArrayIndexOutOfBoundsException.class)
+    public void setWeightTest2()
+    { graph.setWeight(100, 200, 3); }
+
+    /**
      * Tests that the DFS algorithm works properly.
      */
     @Test
