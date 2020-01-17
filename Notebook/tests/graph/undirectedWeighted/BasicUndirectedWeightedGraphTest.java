@@ -461,6 +461,59 @@ public class BasicUndirectedWeightedGraphTest
     }
 
     /**
+     * Tests that the graph sets a weight on an edge properly.
+     */
+    @Test
+    public void setWeightTest1()
+    {
+        // Edge 0-4 will be added with a weight of 100 and then modified to 200.
+        graph.addEdge(0, 4, 100);
+        graph.setWeight(0, 4, (int) graph.getWeight(0, 4)*2);
+        // All other edges should weight 0 except 0-4.
+        for(int i = 0; i < 5; ++i)
+        {
+            for(int j = 0; j < 5; ++j)
+            {
+                if((i == 0 && j == 4) || (i == 4 && j == 0))
+                {
+                    assertEquals("The weight should be 200.", 200, (int) graph.getWeight(i, j));
+                    assertEquals("The weight should be 200.", 200, (int) graph.getWeight(j, i));
+                }
+                else
+                {
+                    assertEquals("The weight should be 0.", 0, (int) graph.getWeight(i, j));
+                    assertEquals("The weight should be 0.", 0, (int) graph.getWeight(j, i));
+                }
+            }
+        }
+        // Edge 2-3 will be added with a weight of 50 and then modified to -50.
+        graph.addEdge(2, 3, 50);
+        graph.setWeight(3, 2, (int) graph.getWeight(3, 2)*(-1));
+        // All other edges should weight 0 except 0-4 and 2-3.
+        for(int i = 0; i < 5; ++i)
+        {
+            for(int j = 0; j < 5; ++j)
+            {
+                if((i == 0 && j == 4) || (i == 4 && j == 0))
+                {
+                    assertEquals("The weight should be 200.", 200, (int) graph.getWeight(i, j));
+                    assertEquals("The weight should be 200.", 200, (int) graph.getWeight(j, i));
+                }
+                else if((i == 2 && j == 3) || (i == 3 && j == 2))
+                {
+                    assertEquals("The weight should be -50.", -50, (int) graph.getWeight(i, j));
+                    assertEquals("The weight should be -50.", -50, (int) graph.getWeight(j, i));
+                }
+                else
+                {
+                    assertEquals("The weight should be 0.", 0, (int) graph.getWeight(i, j));
+                    assertEquals("The weight should be 0.", 0, (int) graph.getWeight(j, i));
+                }
+            }
+        }
+    }
+
+    /**
      * Tests that the DFS algorithm works properly.
      */
     @Test
