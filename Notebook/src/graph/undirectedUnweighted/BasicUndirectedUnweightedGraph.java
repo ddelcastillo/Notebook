@@ -4,14 +4,16 @@ package graph.undirectedUnweighted;
 
 import graph.IBasicGraph;
 import util.Checked;
+
 import java.util.ArrayList;
 import java.util.Collection;
 
 /**
  * Represents a simple numerical undirected and unweighted graph for N vertices labeled from 0 to N-1.
- * The graph has an adjacency list implementation.
+ * The graph has both an adjacency matrix and an adjacency list implementation.
  * @author Daniel del Castillo A. https://github.com/ddelcastillo
- * Class finished and corrected as of 6/1/20.
+ * Class finished and corrected as of 31/12/20.
+ * Class last revised on 1/1/21.
  */
 @Checked
 (note = "Methods with the 'Checked' signature enforce additional checks to avoid errors and to\n" +
@@ -32,7 +34,12 @@ public class BasicUndirectedUnweightedGraph implements IBasicGraph
     protected int E;
 
     /**
-     * The array of adjacent lists for each vertex.
+     * The adjacency matrix that represents edges between vertices.
+     */
+    protected boolean[][] adjacentMatrix;
+
+    /**
+     * The array of adjacent vertex lists for each node.
      */
     protected ArrayList<Integer>[] adjacent;
 
@@ -46,6 +53,7 @@ public class BasicUndirectedUnweightedGraph implements IBasicGraph
     {
         V = N;
         E = 0;
+        adjacentMatrix = new boolean[N][N];
         adjacent = (ArrayList<Integer>[]) new ArrayList[N];
         for(int v = 0; v < V; ++v)
             adjacent[v] = new ArrayList<>();
@@ -59,6 +67,9 @@ public class BasicUndirectedUnweightedGraph implements IBasicGraph
     {
         this.V = pGraph.V;
         this.E = pGraph.E;
+        this.adjacentMatrix = new boolean[pGraph.V][pGraph.V];
+        for(int i = 0; i < V; ++i)
+            System.arraycopy(pGraph.adjacentMatrix[i], 0, this.adjacentMatrix[i], 0, V);
         this.adjacent = (ArrayList<Integer>[]) new ArrayList[pGraph.V];
         System.arraycopy(pGraph.adjacent, 0, this.adjacent, 0, pGraph.V);
     }
@@ -85,6 +96,8 @@ public class BasicUndirectedUnweightedGraph implements IBasicGraph
      */
     public void addEdge(int pVertex1, int pVertex2)
     {
+        adjacentMatrix[pVertex1][pVertex2] = true;
+        adjacentMatrix[pVertex2][pVertex1] = true;
         if(pVertex1 == pVertex2)
             adjacent[pVertex1].add(pVertex2);
         else
@@ -103,27 +116,8 @@ public class BasicUndirectedUnweightedGraph implements IBasicGraph
      */
     public void addEdgeChecked(int pVertex1, int pVertex2)
     {
-        if(pVertex1 != pVertex2 && pVertex1 >= 0 && pVertex1 < V && pVertex2 >= 0 && pVertex2 < V)
-        {
-            if (adjacent[pVertex1].size() > adjacent[pVertex2].size())
-            {
-                if(!adjacent[pVertex2].contains(pVertex1))
-                {
-                    adjacent[pVertex1].add(pVertex2);
-                    adjacent[pVertex2].add(pVertex1);
-                    ++E;
-                }
-            }
-            else
-            {
-                if(!adjacent[pVertex1].contains(pVertex2))
-                {
-                    adjacent[pVertex1].add(pVertex2);
-                    adjacent[pVertex2].add(pVertex1);
-                    ++E;
-                }
-            }
-        }
+        if(pVertex1 != pVertex2 && pVertex1 >= 0 && pVertex1 < V && pVertex2 >= 0 && pVertex2 < V && !adjacentMatrix[pVertex1][pVertex2])
+                addEdge(pVertex1, pVertex2);
     }
 
     /**
@@ -147,4 +141,28 @@ public class BasicUndirectedUnweightedGraph implements IBasicGraph
      */
     public Collection<Integer>[] adjacent()
     { return adjacent; }
+
+    /**
+     * Doesn't check if the vertices are valid. For this, use hasEdgeChecked.
+     * @param pVertex1 The first vertex.
+     * @param pVertex2 The second vertex.
+     * @return True if there's an edge between the two vertices, false if contrary.
+     */
+    public boolean hasEdge(int pVertex1, int pVertex2)
+    { return adjacentMatrix[pVertex1][pVertex2]; }
+
+    /**
+     * Checks if the vertices are valid.
+     * @param pVertex1 The first vertex.
+     * @param pVertex2 The second vertex.
+     * @return True if there's an edge between the two vertices, false if contrary or {@code null}
+     * if one or two of the vertices are invalid.
+     */
+    public Boolean hasEdgeChecked(int pVertex1, int pVertex2)
+    {
+        if(pVertex1 >= 0 && pVertex2 >= 0 && pVertex1 < V && pVertex2 < V)
+            return adjacentMatrix[pVertex1][pVertex2];
+        else
+            return null;
+    }
 }

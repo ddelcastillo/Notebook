@@ -9,7 +9,7 @@ import java.util.Collections;
 import java.util.HashMap;
 
 /**
- * Represents a generic undirected unweighted graph.
+ * Represents a generic undirected and unweighted graph.
  * @author Daniel del Castillo A. https://github.com/ddelcastillo
  * Class finished and corrected as of 6/1/20.
  */
@@ -44,7 +44,7 @@ public class UndirectedUnweightedGraph<T> implements IExtendedGraph<T>
     protected int E;
 
     /**
-     * The array of adjacent list of vertices for each vertex as numbers.
+     * The array of adjacent vertex lists for each node.
      */
     protected ArrayList<ArrayList<Integer>> adjacentNumber;
 

@@ -12,6 +12,7 @@ import java.util.Collection;
  * The graph has an adjacency matrix implementation.
  * @author Daniel del Castillo A. https://github.com/ddelcastillo
  * Class finished and corrected as of 6/1/20.
+ * Class last revised on 3/1/21.
  */
 @Checked
 (note = "Methods with the 'Checked' signature enforce additional checks to avoid errors and to\n" +
@@ -39,7 +40,7 @@ public class BasicUndirectedUnweightedAMGraph implements IBasicGraph
     // Constructor
 
     /**
-     * Creates a BasicUndirectedUnweightedGraph object with N vertices labeled from 0 to N-1.
+     * Creates a BasicUndirectedUnweightedAMGraph object with N vertices labeled from 0 to N-1.
      * @param N The number of vertices to add to the graph.
      */
     public BasicUndirectedUnweightedAMGraph(int N)
@@ -50,7 +51,7 @@ public class BasicUndirectedUnweightedAMGraph implements IBasicGraph
     }
 
     /**
-     * Creates a BasicUndirectedUnweightedGraph object copy of the given graph.
+     * Creates a BasicUndirectedUnweightedAMGraph object copy of the given graph.
      * @param pGraph The graph to copy.
      */
     public BasicUndirectedUnweightedAMGraph(BasicUndirectedUnweightedAMGraph pGraph)

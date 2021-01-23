@@ -406,7 +406,7 @@ public class BasicUndirectedUnweightedAMGraphTest
     @Test
     public void DFSTest()
     {
-        BasicUndirectedUnweightedGraph newGraph = new BasicUndirectedUnweightedGraph(7);
+        BasicUndirectedUnweightedALGraph newGraph = new BasicUndirectedUnweightedALGraph(7);
         // The following edges are added: 0-1, 0-2, 2-3, 2-4, 1-4 and 5-6.
         newGraph.addEdge(0, 1); newGraph.addEdge(0, 2); newGraph.addEdge(2, 3);
         newGraph.addEdge(2, 4); newGraph.addEdge(1, 4); newGraph.addEdge(5, 6);
@@ -482,7 +482,7 @@ public class BasicUndirectedUnweightedAMGraphTest
     @Test
     public void BFSTest()
     {
-        BasicUndirectedUnweightedGraph newGraph = new BasicUndirectedUnweightedGraph(7);
+        BasicUndirectedUnweightedALGraph newGraph = new BasicUndirectedUnweightedALGraph(7);
         // The following edges are added: 0-1, 0-2, 2-3, 2-4, 1-4 and 5-6.
         newGraph.addEdge(0, 1); newGraph.addEdge(0, 2); newGraph.addEdge(2, 3);
         newGraph.addEdge(2, 4); newGraph.addEdge(1, 4); newGraph.addEdge(5, 6);

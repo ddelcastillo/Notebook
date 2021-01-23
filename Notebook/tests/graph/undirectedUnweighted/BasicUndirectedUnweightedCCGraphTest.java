@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import static org.junit.Assert.*;
 
 /**
- * Class that tests the BasicUndirectedUnweightedCCGraph class.
+ * Class that tests the BasicUndirectedUnweightedALCCGraph class.
  */
 public class BasicUndirectedUnweightedCCGraphTest
 {
@@ -23,7 +23,7 @@ public class BasicUndirectedUnweightedCCGraphTest
     /**
      * The graph.
      */
-    private BasicUndirectedUnweightedCCGraph graph;
+    private BasicUndirectedUnweightedALCCGraph graph;
 
     // Setups
 
@@ -32,7 +32,7 @@ public class BasicUndirectedUnweightedCCGraphTest
      */
     @Before
     public void setup()
-    { graph = new BasicUndirectedUnweightedCCGraph(5); }
+    { graph = new BasicUndirectedUnweightedALCCGraph(5); }
 
     // Tests
 
@@ -61,7 +61,7 @@ public class BasicUndirectedUnweightedCCGraphTest
     @Test
     public void initializationTest2()
     {
-        BasicUndirectedUnweightedCCGraph newGraph = new BasicUndirectedUnweightedCCGraph(graph);
+        BasicUndirectedUnweightedALCCGraph newGraph = new BasicUndirectedUnweightedALCCGraph(graph);
         assertNotNull("The graph shouldn't be null.", newGraph);
         assertEquals("The number of edges should be 0.", newGraph.E(), 0);
         assertEquals("The number of vertices should be 5.", newGraph.V(), 5);
@@ -82,7 +82,7 @@ public class BasicUndirectedUnweightedCCGraphTest
     public void initializationTest3()
     {
         graph.addEdge(0, 4); graph.addEdge(1, 2);
-        BasicUndirectedUnweightedCCGraph newGraph = new BasicUndirectedUnweightedCCGraph(graph);
+        BasicUndirectedUnweightedALCCGraph newGraph = new BasicUndirectedUnweightedALCCGraph(graph);
         assertNotNull("The graph shouldn't be null.", newGraph);
         assertEquals("The number of edges should be 2.", 2, newGraph.E());
         assertEquals("The number of vertices should be 5.", 5, newGraph.V());
@@ -405,7 +405,7 @@ public class BasicUndirectedUnweightedCCGraphTest
     @Test
     public void DFSTest()
     {
-        BasicUndirectedUnweightedCCGraph newGraph = new BasicUndirectedUnweightedCCGraph(7);
+        BasicUndirectedUnweightedALCCGraph newGraph = new BasicUndirectedUnweightedALCCGraph(7);
         // The following edges are added: 0-1, 0-2, 2-3, 2-4, 1-4 and 5-6.
         newGraph.addEdge(0, 1); newGraph.addEdge(0, 2); newGraph.addEdge(2, 3);
         newGraph.addEdge(2, 4); newGraph.addEdge(1, 4); newGraph.addEdge(5, 6);
@@ -482,7 +482,7 @@ public class BasicUndirectedUnweightedCCGraphTest
     @Test
     public void BFSTest()
     {
-        BasicUndirectedUnweightedCCGraph newGraph = new BasicUndirectedUnweightedCCGraph(7);
+        BasicUndirectedUnweightedALCCGraph newGraph = new BasicUndirectedUnweightedALCCGraph(7);
         // The following edges are added: 0-1, 0-2, 2-3, 2-4, 1-4 and 5-6.
         newGraph.addEdge(0, 1); newGraph.addEdge(0, 2); newGraph.addEdge(2, 3);
         newGraph.addEdge(2, 4); newGraph.addEdge(1, 4); newGraph.addEdge(5, 6);

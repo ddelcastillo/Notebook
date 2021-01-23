@@ -2,28 +2,26 @@
 
 package graph.undirectedUnweighted;
 
-import graph.algorithms.misc.BasicIsAcyclic;
 import graph.algorithms.misc.BasicTwoColor;
 import graph.algorithms.search.BasicBFS;
 import graph.algorithms.search.BasicDFS;
+import graph.algorithms.misc.BasicIsAcyclic;
 import org.junit.Before;
 import org.junit.Test;
-
 import java.util.ArrayList;
-
 import static org.junit.Assert.*;
 
 /**
- * Class that tests the BasicUndirectedUnweightedMXGraph class.
+ * Class that tests the BasicUndirectedUnweightedALGraph class.
  */
-public class BasicUndirectedUnweightedMXGraphTest
+public class BasicUndirectedUnweightedALGraphTest
 {
     // Attributes
 
     /**
      * The graph.
      */
-    private BasicUndirectedUnweightedMXGraph graph;
+    private BasicUndirectedUnweightedALGraph graph;
 
     // Setups
 
@@ -32,7 +30,7 @@ public class BasicUndirectedUnweightedMXGraphTest
      */
     @Before
     public void setup()
-    { graph = new BasicUndirectedUnweightedMXGraph(5); }
+    { graph = new BasicUndirectedUnweightedALGraph(5); }
 
     // Tests
 
@@ -60,7 +58,7 @@ public class BasicUndirectedUnweightedMXGraphTest
     @Test
     public void initializationTest2()
     {
-        BasicUndirectedUnweightedMXGraph newGraph = new BasicUndirectedUnweightedMXGraph(graph);
+        BasicUndirectedUnweightedALGraph newGraph = new BasicUndirectedUnweightedALGraph(graph);
         assertNotNull("The graph shouldn't be null.", newGraph);
         assertEquals("The number of edges should be 0.", 0, newGraph.E());
         assertEquals("The number of vertices should be 5.", 5, newGraph.V());
@@ -80,7 +78,7 @@ public class BasicUndirectedUnweightedMXGraphTest
     public void initializationTest3()
     {
         graph.addEdge(0, 4); graph.addEdge(1, 2);
-        BasicUndirectedUnweightedMXGraph newGraph = new BasicUndirectedUnweightedMXGraph(graph);
+        BasicUndirectedUnweightedALGraph newGraph = new BasicUndirectedUnweightedALGraph(graph);
         assertNotNull("The graph shouldn't be null.", newGraph);
         assertEquals("The number of edges should be 2.", 2, newGraph.E());
         assertEquals("The number of vertices should be 5.", 5, newGraph.V());
@@ -255,158 +253,12 @@ public class BasicUndirectedUnweightedMXGraphTest
     }
 
     /**
-     * Tests that the graph keeps track of edges properly.
-     */
-    @Test
-    public void hasEdgeTest1()
-    {
-        // Edges 0-1 and 1-4 will be added.
-        graph.addEdge(0, 1); graph.addEdge(1, 4);
-        // There should be edges 0-1 and 1-4 but none other.
-        for(int i = 0; i < 5; ++i)
-        {
-            for(int j = 0; j < 5; ++j)
-            {
-                switch (i)
-                {
-                    case 0:
-                    case 4:
-                        if(j == 1)
-                            assertTrue("There should be an edge between " + i + " and " + j + ".", graph.hasEdge(i, j));
-                        break;
-                    case 1:
-                        if(j == 0 || j == 4)
-                            assertTrue("There should be an edge between " + i + " and " + j + ".", graph.hasEdge(i, j));
-                        break;
-                    default:
-                            assertFalse("There shouldn't be an edge between " + i + " and " + j + ".", graph.hasEdge(i, j));
-                        break;
-                }
-            }
-        }
-        // Edges will be added again.
-        graph.addEdge(0, 1); graph.addEdge(1, 4);
-        // Edge 2-3 will be added.
-        graph.addEdge(2, 3);
-        // There should be edges 0-1, 1-4 and 2-3 but none other.
-        for(int i = 0; i < 5; ++i)
-        {
-            for(int j = 0; j < 5; ++j)
-            {
-                switch (i)
-                {
-                    case 0:
-                    case 4:
-                        if(j == 1)
-                            assertTrue("There should be an edge between " + i + " and " + j + ".", graph.hasEdge(i, j));
-                        break;
-                    case 1:
-                        if(j == 0 || j == 4)
-                            assertTrue("There should be an edge between " + i + " and " + j + ".", graph.hasEdge(i, j));
-                        break;
-                    case 2:
-                        if(j == 3)
-                            assertTrue("There should be an edge between " + i + " and " + j + ".", graph.hasEdge(i, j));
-                        break;
-                    case 3:
-                        if(j == 2)
-                            assertTrue("There should be an edge between " + i + " and " + j + ".", graph.hasEdge(i, j));
-                        break;
-                    default:
-                        assertFalse("There shouldn't be an edge between " + i + " and " + j + ".", graph.hasEdge(i, j));
-                        break;
-                }
-            }
-        }
-    }
-
-    /**
-     * Tests that checking edge existence between invalid vertices results in an ArrayIndexOutOfBoundsException.
-     */
-    @Test(expected = ArrayIndexOutOfBoundsException.class)
-    public void hasEdgeTest2()
-    { graph.hasEdge(100, 200); }
-
-    /**
-     * Tests that the graph keeps track of edges properly and doesn't allow access to invalid vertices.
-     */
-    @Test
-    public void hasEdgeCheckedTest()
-    {
-        // Edges 0-1 and 1-4 will be added.
-        graph.addEdge(0, 1); graph.addEdge(1, 4);
-        // There should be edges 0-1 and 1-4 but none other.
-        for(int i = 0; i < 5; ++i)
-        {
-            for(int j = 0; j < 5; ++j)
-            {
-                switch (i)
-                {
-                    case 0:
-                    case 4:
-                        if(j == 1)
-                            assertTrue("There should be an edge between " + i + " and " + j + ".", graph.hasEdgeChecked(i, j));
-                        break;
-                    case 1:
-                        if(j == 0 || j == 4)
-                            assertTrue("There should be an edge between " + i + " and " + j + ".", graph.hasEdgeChecked(i, j));
-                        break;
-                    default:
-                        assertFalse("There shouldn't be an edge between " + i + " and " + j + ".", graph.hasEdgeChecked(i, j));
-                        break;
-                }
-            }
-        }
-        // Edges will be added again.
-        graph.addEdge(0, 1); graph.addEdge(1, 4);
-        // Edge 2-3 will be added.
-        graph.addEdge(2, 3);
-        // There should be edges 0-1, 1-4 and 2-3 but none other.
-        for(int i = 0; i < 5; ++i)
-        {
-            for(int j = 0; j < 5; ++j)
-            {
-                switch (i)
-                {
-                    case 0:
-                    case 4:
-                        if(j == 1)
-                            assertTrue("There should be an edge between " + i + " and " + j + ".", graph.hasEdgeChecked(i, j));
-                        break;
-                    case 1:
-                        if(j == 0 || j == 4)
-                            assertTrue("There should be an edge between " + i + " and " + j + ".", graph.hasEdgeChecked(i, j));
-                        break;
-                    case 2:
-                        if(j == 3)
-                            assertTrue("There should be an edge between " + i + " and " + j + ".", graph.hasEdgeChecked(i, j));
-                        break;
-                    case 3:
-                        if(j == 2)
-                            assertTrue("There should be an edge between " + i + " and " + j + ".", graph.hasEdgeChecked(i, j));
-                        break;
-                    default:
-                        assertFalse("There shouldn't be an edge between " + i + " and " + j + ".", graph.hasEdgeChecked(i, j));
-                        break;
-                }
-            }
-        }
-        // There shouldn't be an edge between invalid edges (resulting in null).
-        assertNull("The result should be null.", graph.hasEdgeChecked(-100, -200));
-        assertNull("The result should be null.", graph.hasEdgeChecked(100, 200));
-        assertNull("The result should be null.", graph.hasEdgeChecked(1, 5));
-        assertNull("The result should be null.", graph.hasEdgeChecked(5, 1));
-        assertNull("The result should be null.", graph.hasEdgeChecked(-1, 2));
-        assertNull("The result should be null.", graph.hasEdgeChecked(2, -1));
-    }
-
-    /**
      * Tests that the DFS algorithm works properly.
      */
     @Test
     public void DFSTest()
     {
-        BasicUndirectedUnweightedGraph newGraph = new BasicUndirectedUnweightedGraph(7);
+        BasicUndirectedUnweightedALGraph newGraph = new BasicUndirectedUnweightedALGraph(7);
         // The following edges are added: 0-1, 0-2, 2-3, 2-4, 1-4 and 5-6.
         newGraph.addEdge(0, 1); newGraph.addEdge(0, 2); newGraph.addEdge(2, 3);
         newGraph.addEdge(2, 4); newGraph.addEdge(1, 4); newGraph.addEdge(5, 6);
@@ -482,7 +334,7 @@ public class BasicUndirectedUnweightedMXGraphTest
     @Test
     public void BFSTest()
     {
-        BasicUndirectedUnweightedGraph newGraph = new BasicUndirectedUnweightedGraph(7);
+        BasicUndirectedUnweightedALGraph newGraph = new BasicUndirectedUnweightedALGraph(7);
         // The following edges are added: 0-1, 0-2, 2-3, 2-4, 1-4 and 5-6.
         newGraph.addEdge(0, 1); newGraph.addEdge(0, 2); newGraph.addEdge(2, 3);
         newGraph.addEdge(2, 4); newGraph.addEdge(1, 4); newGraph.addEdge(5, 6);
